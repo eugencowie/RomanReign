@@ -3,6 +3,5 @@
 *.suo
 *.DotSettings
 
-# Build directories
-bin/
-obj/
+# Build directory
+Build/
