@@ -1,0 +1,8 @@
+# Visual Studio
+.vs/
+*.suo
+*.DotSettings
+
+# Build directories
+bin/
+obj/
