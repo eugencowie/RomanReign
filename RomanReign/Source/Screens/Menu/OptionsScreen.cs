@@ -10,8 +10,7 @@ namespace RomanReign
         Game m_game;
         ScreenManager m_screenManager;
 
-        Sprite m_title;
-
+        Sprite m_heading;
         Sprite m_backButton;
 
         MouseState m_prevMs;
@@ -26,10 +25,10 @@ namespace RomanReign
         {
             Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
 
-            m_title = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Options"));
-            m_title.Origin = m_title.Texture.Bounds.Center.ToVector2();
-            m_title.Position.X = viewport.Center.X;
-            m_title.Position.Y = 100;
+            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Options"));
+            m_heading.Origin = m_heading.Texture.Bounds.Center.ToVector2();
+            m_heading.Position.X = viewport.Center.X;
+            m_heading.Position.Y = 100;
 
             m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Back"));
             m_backButton.Origin = m_backButton.Texture.Bounds.Center.ToVector2();
@@ -66,7 +65,7 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
-            m_title.Draw(spriteBatch);
+            m_heading.Draw(spriteBatch);
 
             m_backButton.Draw(spriteBatch);
 

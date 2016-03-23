@@ -4,6 +4,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// This is the first screen which is displayed when the game is run. It displays a splash
+    /// screen for three seconds before switching to the main menu screen.
+    /// </summary>
     class SplashScreen : IScreen
     {
         Game m_game;
@@ -37,6 +41,7 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // If the elapsed time reaches three seconds, switch to the main menu screen.
             if (m_elapsedTime > 3f)
             {
                 m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
