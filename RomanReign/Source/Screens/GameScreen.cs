@@ -10,6 +10,8 @@ namespace RomanReign
         Game m_game;
         ScreenManager m_screenManager;
 
+        bool m_isCovered;
+
         public GameScreen(Game game, ScreenManager screenManager)
         {
             m_game = game;
@@ -18,6 +20,7 @@ namespace RomanReign
 
         public void Initialize(ContentManager content)
         {
+            m_screenManager.Push(new IntroScreen(m_game, m_screenManager));
         }
 
         public void Dispose()
@@ -26,9 +29,12 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (!m_isCovered)
             {
-                m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                }
             }
         }
 
@@ -38,10 +44,12 @@ namespace RomanReign
 
         public void Covered()
         {
+            m_isCovered = true;
         }
 
         public void Uncovered()
         {
+            m_isCovered = false;
         }
     }
 }
