@@ -9,12 +9,12 @@ namespace RomanReign
     /// </summary>
     public class RomanReignGame : Game
     {
-        GraphicsDeviceManager m_graphics;
         SpriteBatch m_spriteBatch;
+        ScreenManager m_screenManager;
 
         public RomanReignGame()
         {
-            m_graphics = new GraphicsDeviceManager(this)
+            var graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = 1280,
                 PreferredBackBufferHeight = 720
@@ -29,16 +29,19 @@ namespace RomanReign
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            m_screenManager = new ScreenManager(Content, m_spriteBatch);
+            m_screenManager.SwitchTo(new SplashScreen(this, m_screenManager));
         }
         
         protected override void UnloadContent()
         {
+            m_screenManager.Dispose();
         }
         
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            m_screenManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -46,6 +49,8 @@ namespace RomanReign
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            m_screenManager.Draw(gameTime);
 
             base.Draw(gameTime);
         }
