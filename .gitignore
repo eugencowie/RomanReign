@@ -1,6 +1,7 @@
 # Visual Studio
 .vs/
 *.suo
+*.user
 *.DotSettings
 
 # Build directory
