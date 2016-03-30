@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// The pause screen, which is displayed when the game is paused.
+    /// </summary>
     class PauseScreen : IScreen
     {
         Game m_game;
@@ -28,6 +31,7 @@ namespace RomanReign
             m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Pause"));
             m_fadeBackground.ScaleToSize(viewport.Size.ToVector2());
 
+            // Load the exit button sprite.
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit_White"));
             m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
             m_exitButton.Position.X = viewport.Center.X;
@@ -40,13 +44,16 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // If the escape key is pressed and released then remove this screen to return to the game.
             if (Input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screenManager.Pop();
             }
 
+            // If the left mouse button has just been pressed and released...
             if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
+                // ...and the mouse is positioned over the exit button then switch to the main menu.
                 if (m_exitButton.Bounds.Contains(Input.Mouse.Position))
                 {
                     m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));

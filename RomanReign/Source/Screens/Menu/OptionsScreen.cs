@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// The options menu screen, which allows the user to change game options.
+    /// </summary>
     class OptionsScreen : IScreen
     {
         Game m_game;
@@ -23,11 +26,13 @@ namespace RomanReign
         {
             Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
 
+            // Load the heading sprite.
             m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Options"));
             m_heading.Origin = m_heading.Texture.Bounds.Center.ToVector2();
             m_heading.Position.X = viewport.Center.X;
             m_heading.Position.Y = 100;
 
+            // Load the back button sprite.
             m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Back"));
             m_backButton.Origin = m_backButton.Texture.Bounds.Center.ToVector2();
             m_backButton.Position.X = viewport.Center.X;
@@ -40,14 +45,16 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // If the escape key is pressed and released then remove this screen to return to the main menu.
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 m_screenManager.Pop();
             }
 
-            // If the left mouse button has just been pressed and then released...
+            // If the left mouse button has just been pressed and released...
             if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
+                // ...and the mouse is positioned over the back button then remove this screen.
                 if (m_backButton.Bounds.Contains(Input.Mouse.Position))
                 {
                     m_screenManager.Pop();

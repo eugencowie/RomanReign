@@ -5,15 +5,18 @@ using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// The game screen, which contains the actual game.
+    /// </summary>
     class GameScreen : IScreen
     {
+        // This field contains the current level. It can be access from ANY class simply by
+        // using GameScreen.Level (for example, most game objects will contain a variable
+        // which is set to point at this field so that they can access the level object).
         public static Level Level { get; private set; }
 
         Game m_game;
         ScreenManager m_screenManager;
-
-        Sprite m_background;
-        float m_backgroundScale = 0.01f;
 
         bool m_isCovered;
 
@@ -22,18 +25,15 @@ namespace RomanReign
             m_game = game;
             m_screenManager = screenManager;
 
+            // Create the level object.
             Level = new Level();
         }
 
         public void Initialize(ContentManager content)
         {
+            // Load the level. This essentially loads every game object which is contained in the
+            // level object, such as the map, player, enemies, etc.
             Level.Initialize(content);
-
-            Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
-
-            // Load the background sprite and scale it to cover the entire screen.
-            m_background = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Game"));
-            m_background.ScaleToSize(viewport.Size.ToVector2());
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
@@ -54,24 +54,20 @@ namespace RomanReign
                     m_screenManager.Push(new PauseScreen(m_game, m_screenManager));
                 }
 
-                m_background.UniformScale += m_backgroundScale;
-
-                if (m_background.UniformScale > 1.5f || m_background.UniformScale < 1.0f)
-                    m_backgroundScale *= -1;
-
+                // Update the level. This essentially updates every object within the level object.
                 Level.Update(gameTime);
             }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
-
-            m_background.Draw(spriteBatch);
-
+            // Draw the level. This is the only screen where we do not call spriteBatch.Begin() and
+            // spriteBatch.End(). Instead, those functions are called within the Level.Draw() function.
+            //
+            // This is because we need to call those spriteBatch functions multiple times with different
+            // parameters in order to use the game camera. More details in the Level.Draw() function.
+            //
             Level.Draw(gameTime, spriteBatch);
-
-            spriteBatch.End();
         }
 
         public void Covered()

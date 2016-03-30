@@ -17,10 +17,11 @@ namespace RomanReign
             var graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferWidth = 1280,
-                PreferredBackBufferHeight = 720
+                PreferredBackBufferHeight = 720,
+                //IsFullScreen = true
             };
 
-            // Make the mouse cursor visible.
+            // Make the mouse cursor visible. Note: does not work in fullscreen.
             IsMouseVisible = true;
 
             Content.RootDirectory = "Content";
@@ -32,7 +33,7 @@ namespace RomanReign
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
             m_screenManager = new ScreenManager(Content, m_spriteBatch);
 
-            // Switch to the splash screen.
+            // Switch to the splash screen as soon as the program is loaded.
             m_screenManager.SwitchTo(new SplashScreen(this, m_screenManager));
         }
         
@@ -46,11 +47,14 @@ namespace RomanReign
         
         protected override void Update(GameTime gameTime)
         {
+            // This input helper has Begin() and End() functions just like a SpriteBatch, which
+            // need to be called before and after the screenManager.Update() function.
             Input.Begin();
 
             // This function runs the Update() function of every currently active screen.
             m_screenManager.Update(gameTime);
 
+            // See above.
             Input.End();
 
             base.Update(gameTime);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
@@ -39,27 +38,31 @@ namespace RomanReign
             m_background.ScaleToSize(viewport.Size.ToVector2());
 
             // Load the heading sprite, set the origin to be the center of the sprite, and set the
-            // position to be centered horizontally.
+            // position to be centered on the X axis and 100 pixels on the Y axis.
             m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Menu"));
             m_heading.Origin = m_heading.Texture.Bounds.Center.ToVector2();
             m_heading.Position.X = viewport.Center.X;
             m_heading.Position.Y = 100;
 
+            // Load the start button sprite and do the same as the previous sprite.
             m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Start"));
             m_startButton.Origin = m_startButton.Texture.Bounds.Center.ToVector2();
             m_startButton.Position.X = viewport.Center.X;
             m_startButton.Position.Y = 300;
 
+            // Load the options button sprite.
             m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Options"));
             m_optionsButton.Origin = m_optionsButton.Texture.Bounds.Center.ToVector2();
             m_optionsButton.Position.X = viewport.Center.X;
             m_optionsButton.Position.Y = 400;
 
+            // Load the credits button sprite.
             m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Credits"));
             m_creditsButton.Origin = m_creditsButton.Texture.Bounds.Center.ToVector2();
             m_creditsButton.Position.X = viewport.Center.X;
             m_creditsButton.Position.Y = 500;
 
+            // Load the exit button sprite.
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit"));
             m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
             m_exitButton.Position.X = viewport.Center.X;
@@ -72,11 +75,12 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            // The options and credits screens are overlaid on top of this screen, so we must check
-            // to see whether this screen is currently covered by any other any screens.
+            // The options and credits screens will be overlaid on top of this screen, so we must
+            // check to see whether this screen is currently being covered by any other any screens
+            // before we run our update code.
             if (!m_isCovered)
             {
-                // If the left mouse button has just been pressed and then released...
+                // If the left mouse button has just been pressed and released...
                 if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
                 {
                     // ...and the mouse is positioned over the start button, switch to the game screen.
@@ -110,10 +114,10 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
-            // Draw the background regardless of whether there are any other screens covering this one.
+            // Draw the background, regardless of whether or not there are any other screens covering this one.
             m_background.Draw(spriteBatch);
 
-            // But only draw the heading/buttons if there are no other screens covering this one.
+            // But only draw the heading/buttons/etc if there are no other screens covering this one.
             if (!m_isCovered)
             {
                 m_heading.Draw(spriteBatch);

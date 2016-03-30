@@ -7,7 +7,7 @@ namespace RomanReign
 {
     /// <summary>
     /// This is the first screen which is displayed when the game is run. It displays a splash
-    /// screen for three seconds before switching to the main menu screen.
+    /// screen texture for three seconds before switching to the main menu screen.
     /// </summary>
     class SplashScreen : IScreen
     {
@@ -41,12 +41,14 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            // If the elapsed time reaches three seconds, switch to the main menu screen.
+            // If the elapsed time reaches three seconds or the escape key is pressed, switch to
+            // the main menu screen.
             if (m_elapsedTime > 3f || Input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
             }
 
+            // Increase the elapsed time variable every frame.
             m_elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
@@ -54,6 +56,7 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
+            // Draw the background sprite.
             m_background.Draw(spriteBatch);
 
             spriteBatch.End();

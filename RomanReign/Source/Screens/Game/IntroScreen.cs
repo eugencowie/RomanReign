@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// The intro cutscene screen, which displays a sequence of sprites.
+    /// </summary>
     class IntroScreen : IScreen
     {
         Game m_game;
@@ -31,16 +34,17 @@ namespace RomanReign
             m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro1"));
             m_background1.ScaleToSize(viewport.Size.ToVector2());
 
+            // Load the second background sprite.
             m_background2 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro2"));
             m_background2.ScaleToSize(viewport.Size.ToVector2());
 
+            // Load the second background sprite.
             m_background3 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro3"));
             m_background3.ScaleToSize(viewport.Size.ToVector2());
 
+            // Load the second background sprite.
             m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro4"));
             m_background4.ScaleToSize(viewport.Size.ToVector2());
-
-            m_elapsedTime = 0;
         }
 
         public void Dispose()
@@ -49,11 +53,13 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // If the elapsed time reaches 7.5 seconds or the escape key is pressed, remove this screen.
             if (m_elapsedTime > 7.5f || Input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screenManager.Pop();
             }
 
+            // Increase the elapsed time variable every frame.
             m_elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
@@ -61,6 +67,7 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
+            // Display the each image sequentially with a delay of 1.5 seconds between each one.
             if (m_elapsedTime < 1.5f)
             {
                 m_background1.Draw(spriteBatch);
