@@ -12,6 +12,8 @@ namespace RomanReign
 
         Sprite m_fadeBackground;
 
+        Sprite m_exitButton;
+
         public PauseScreen(Game game, ScreenManager screenManager)
         {
             m_game = game;
@@ -25,6 +27,11 @@ namespace RomanReign
             // Load the background sprite and scale it to cover the entire screen.
             m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Pause"));
             m_fadeBackground.ScaleToSize(viewport.Size.ToVector2());
+
+            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit_White"));
+            m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
+            m_exitButton.Position.X = viewport.Center.X;
+            m_exitButton.Position.Y = 400;
         }
 
         public void Dispose()
@@ -37,6 +44,14 @@ namespace RomanReign
             {
                 m_screenManager.Pop();
             }
+
+            if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
+            {
+                if (m_exitButton.Bounds.Contains(Input.Mouse.Position))
+                {
+                    m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                }
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -44,6 +59,8 @@ namespace RomanReign
             spriteBatch.Begin();
 
             m_fadeBackground.Draw(spriteBatch);
+
+            m_exitButton.Draw(spriteBatch);
 
             spriteBatch.End();
         }
