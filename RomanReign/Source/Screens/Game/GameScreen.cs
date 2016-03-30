@@ -44,7 +44,7 @@ namespace RomanReign
             {
                 if (Input.IsKeyJustReleased(Keys.Escape))
                 {
-                    m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                    m_screenManager.Push(new PauseScreen(m_game, m_screenManager));
                 }
 
                 m_background.UniformScale += m_backgroundScale;
