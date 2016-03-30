@@ -4,33 +4,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RomanReign
 {
-    class Level : IGameObject
+    class HUD : IGameObject
     {
-        public HUD HUD;
+        Level m_level => GameScreen.Level;
 
-        public Level()
-        {
-            HUD = new HUD();
-        }
+        Sprite m_testSprite;
 
         public void Initialize(ContentManager content)
         {
-            HUD.Initialize(content);
+            m_testSprite = new Sprite(content.Load<Texture2D>("Textures/HUD/Test"));
+            m_testSprite.Position = new Vector2(20, 20);
         }
 
         public void Dispose()
         {
-            HUD.Dispose();
         }
 
         public void Update(GameTime gameTime)
         {
-            HUD.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            HUD.Draw(gameTime, spriteBatch);
+            m_testSprite.Draw(spriteBatch);
         }
     }
 }

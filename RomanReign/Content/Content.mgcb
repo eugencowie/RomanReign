@@ -189,3 +189,14 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Game/Background_Game.png
 
+#begin Textures/HUD/Test.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Textures/HUD/Test.png
+
