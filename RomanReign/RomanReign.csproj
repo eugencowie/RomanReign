@@ -39,6 +39,7 @@
     <ApplicationIcon>Content\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Source\Objects\Level.cs" />
     <Compile Include="Source\RomanReignGame.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Source\Screens\Menu\MenuScreen.cs" />
     <Compile Include="Source\Screens\Menu\OptionsScreen.cs" />
     <Compile Include="Source\Screens\Menu\SplashScreen.cs" />
+    <Compile Include="Source\Utilities\IGameObject.cs" />
     <Compile Include="Source\Utilities\Input.cs" />
     <Compile Include="Source\Utilities\IScreen.cs" />
     <Compile Include="Source\Utilities\ScreenManager.cs" />

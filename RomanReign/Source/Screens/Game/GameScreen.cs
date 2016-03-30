@@ -7,6 +7,8 @@ namespace RomanReign
 {
     class GameScreen : IScreen
     {
+        public static Level Level { get; private set; }
+
         Game m_game;
         ScreenManager m_screenManager;
 
@@ -19,10 +21,14 @@ namespace RomanReign
         {
             m_game = game;
             m_screenManager = screenManager;
+
+            Level = new Level();
         }
 
         public void Initialize(ContentManager content)
         {
+            Level.Initialize(content);
+
             Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
 
             // Load the background sprite and scale it to cover the entire screen.
@@ -36,6 +42,7 @@ namespace RomanReign
 
         public void Dispose()
         {
+            Level.Dispose();
         }
 
         public void Update(GameTime gameTime)
@@ -51,6 +58,8 @@ namespace RomanReign
 
                 if (m_background.UniformScale > 1.5f || m_background.UniformScale < 1.0f)
                     m_backgroundScale *= -1;
+
+                Level.Update(gameTime);
             }
         }
 
@@ -59,6 +68,8 @@ namespace RomanReign
             spriteBatch.Begin();
 
             m_background.Draw(spriteBatch);
+
+            Level.Draw(gameTime, spriteBatch);
 
             spriteBatch.End();
         }
