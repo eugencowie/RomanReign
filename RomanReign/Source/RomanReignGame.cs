@@ -46,8 +46,12 @@ namespace RomanReign
         
         protected override void Update(GameTime gameTime)
         {
+            Input.Begin();
+
             // This function runs the Update() function of every currently active screen.
             m_screenManager.Update(gameTime);
+
+            Input.End();
 
             base.Update(gameTime);
         }

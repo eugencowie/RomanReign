@@ -31,7 +31,7 @@ namespace RomanReign
         {
             if (!m_isCovered)
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                if (Input.IsKeyJustReleased(Keys.Escape))
                 {
                     m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
                 }

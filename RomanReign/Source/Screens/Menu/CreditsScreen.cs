@@ -13,8 +13,6 @@ namespace RomanReign
         Sprite m_heading;
         Sprite m_backButton;
 
-        MouseState m_prevMs;
-
         public CreditsScreen(Game game, ScreenManager screenManager)
         {
             m_game = game;
@@ -42,23 +40,19 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            MouseState ms = Mouse.GetState();
-
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 m_screenManager.Pop();
             }
 
             // If the left mouse button has just been pressed and then released...
-            if (m_prevMs.LeftButton == ButtonState.Pressed && ms.LeftButton == ButtonState.Released)
+            if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
-                if (m_backButton.Bounds.Contains(ms.Position))
+                if (m_backButton.Bounds.Contains(Input.Mouse.Position))
                 {
                     m_screenManager.Pop();
                 }
             }
-
-            m_prevMs = ms;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

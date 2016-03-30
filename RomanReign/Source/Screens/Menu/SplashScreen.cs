@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
@@ -41,7 +42,7 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the elapsed time reaches three seconds, switch to the main menu screen.
-            if (m_elapsedTime > 3f)
+            if (m_elapsedTime > 3f || Input.IsKeyJustReleased(Keys.Enter))
             {
                 m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
             }

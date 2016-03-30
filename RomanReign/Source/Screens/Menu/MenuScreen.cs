@@ -22,8 +22,6 @@ namespace RomanReign
         Sprite m_creditsButton;
         Sprite m_exitButton;
 
-        MouseState m_prevMs;
-
         bool m_isCovered;
 
         public MenuScreen(Game game, ScreenManager screenManager)
@@ -74,42 +72,38 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            MouseState ms = Mouse.GetState();
-
             // The options and credits screens are overlaid on top of this screen, so we must check
             // to see whether this screen is currently covered by any other any screens.
             if (!m_isCovered)
             {
                 // If the left mouse button has just been pressed and then released...
-                if (m_prevMs.LeftButton == ButtonState.Pressed && ms.LeftButton == ButtonState.Released)
+                if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
                 {
                     // ...and the mouse is positioned over the start button, switch to the game screen.
-                    if (m_startButton.Bounds.Contains(ms.Position))
+                    if (m_startButton.Bounds.Contains(Input.Mouse.Position))
                     {
                         m_screenManager.SwitchTo(new GameScreen(m_game, m_screenManager));
                     }
 
                     // ...and the mouse is positioned over the options button, overlay the options screen.
-                    if (m_optionsButton.Bounds.Contains(ms.Position))
+                    if (m_optionsButton.Bounds.Contains(Input.Mouse.Position))
                     {
                         m_screenManager.Push(new OptionsScreen(m_game, m_screenManager));
                     }
 
                     // ...and the mouse is positioned over the credits button, overlay the credits screen.
-                    if (m_creditsButton.Bounds.Contains(ms.Position))
+                    if (m_creditsButton.Bounds.Contains(Input.Mouse.Position))
                     {
                         m_screenManager.Push(new CreditsScreen(m_game, m_screenManager));
                     }
 
                     // ...and the mouse is positioned over the exit button, quit the game.
-                    if (m_exitButton.Bounds.Contains(ms.Position))
+                    if (m_exitButton.Bounds.Contains(Input.Mouse.Position))
                     {
                         m_game.Exit();
                     }
                 }
             }
-
-            m_prevMs = ms;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
