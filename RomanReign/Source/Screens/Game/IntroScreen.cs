@@ -28,20 +28,16 @@ namespace RomanReign
 
             // Load the background sprite and scale it to cover the entire screen.
             m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro1"));
-            m_background1.Scale.X = (float)viewport.Width / m_background1.Texture.Width;
-            m_background1.Scale.Y = (float)viewport.Height / m_background1.Texture.Height;
+            m_background1.ScaleToSize(viewport.Size.ToVector2());
 
             m_background2 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro2"));
-            m_background2.Scale.X = (float)viewport.Width / m_background2.Texture.Width;
-            m_background2.Scale.Y = (float)viewport.Height / m_background2.Texture.Height;
+            m_background2.ScaleToSize(viewport.Size.ToVector2());
 
             m_background3 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro3"));
-            m_background3.Scale.X = (float)viewport.Width / m_background3.Texture.Width;
-            m_background3.Scale.Y = (float)viewport.Height / m_background3.Texture.Height;
+            m_background3.ScaleToSize(viewport.Size.ToVector2());
 
             m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro4"));
-            m_background4.Scale.X = (float)viewport.Width / m_background4.Texture.Width;
-            m_background4.Scale.Y = (float)viewport.Height / m_background4.Texture.Height;
+            m_background4.ScaleToSize(viewport.Size.ToVector2());
 
             m_elapsedTime = 0;
         }

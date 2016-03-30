@@ -53,5 +53,11 @@ namespace RomanReign
                     0f);
             }
         }
+
+        public void ScaleToSize(Vector2 size)
+        {
+            Scale.X = size.X / Texture.Width;
+            Scale.Y = size.Y / Texture.Height;
+        }
     }
 }

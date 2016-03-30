@@ -38,8 +38,7 @@ namespace RomanReign
 
             // Load the background sprite and scale it to cover the entire screen.
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Menu"));
-            m_background.Scale.X = (float)viewport.Width / m_background.Texture.Width;
-            m_background.Scale.Y = (float)viewport.Height / m_background.Texture.Height;
+            m_background.ScaleToSize(viewport.Size.ToVector2());
 
             // Load the heading sprite, set the origin to be the center of the sprite, and set the
             // position to be centered horizontally.
