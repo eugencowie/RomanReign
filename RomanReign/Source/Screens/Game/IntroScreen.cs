@@ -49,7 +49,7 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            if (m_elapsedTime > 7.5f || Input.IsKeyJustReleased(Keys.Enter))
+            if (m_elapsedTime > 7.5f || Input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screenManager.Pop();
             }

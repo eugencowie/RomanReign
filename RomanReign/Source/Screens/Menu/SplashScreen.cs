@@ -42,7 +42,7 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the elapsed time reaches three seconds, switch to the main menu screen.
-            if (m_elapsedTime > 3f || Input.IsKeyJustReleased(Keys.Enter))
+            if (m_elapsedTime > 3f || Input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
             }

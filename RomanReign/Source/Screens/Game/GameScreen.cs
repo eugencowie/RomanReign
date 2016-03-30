@@ -49,7 +49,7 @@ namespace RomanReign
 
                 m_background.UniformScale += m_backgroundScale;
 
-                if (m_background.UniformScale > 1.5f || m_background.UniformScale < 0.5f)
+                if (m_background.UniformScale > 1.5f || m_background.UniformScale < 1.0f)
                     m_backgroundScale *= -1;
             }
         }
