@@ -59,5 +59,11 @@ namespace RomanReign
             Scale.X = size.X / Texture.Width;
             Scale.Y = size.Y / Texture.Height;
         }
+
+        public void SetOpacity(float opacity)
+        {
+            byte alpha = (byte)(opacity * 255);
+            Color.A = alpha;
+        }
     }
 }

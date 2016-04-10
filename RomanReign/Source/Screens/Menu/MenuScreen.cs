@@ -80,6 +80,13 @@ namespace RomanReign
             // before we run our update code.
             if (!m_isCovered)
             {
+                foreach (Sprite button in new [] { m_startButton, m_optionsButton, m_creditsButton, m_exitButton })
+                {
+                    bool mouseOver = button.Bounds.Contains(Input.Mouse.Position);
+                    float opacity = mouseOver ? 0.5f : 1;
+                    button.SetOpacity(opacity);
+                }
+
                 // If the left mouse button has just been pressed and released...
                 if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
                 {
