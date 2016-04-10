@@ -38,20 +38,18 @@ namespace RomanReign
         /// <summary>
         /// Load the background sprite and scale it to cover the entire screen.
         /// </summary>
-        public void Initialize(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
 
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Splash"));
             m_background.ScaleToSize(viewport.Size.ToVector2());
-
-            m_elapsedTime = 0;
         }
 
         /// <summary>
         ///
         /// </summary>
-        public void Dispose()
+        public void UnloadContent()
         {
         }
 

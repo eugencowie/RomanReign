@@ -23,7 +23,7 @@ namespace RomanReign
             m_screenManager = screenManager;
         }
 
-        public void Initialize(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
 
@@ -38,7 +38,7 @@ namespace RomanReign
             m_exitButton.Position.Y = 400;
         }
 
-        public void Dispose()
+        public void UnloadContent()
         {
         }
 

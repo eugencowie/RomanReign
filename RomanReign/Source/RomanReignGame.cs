@@ -55,7 +55,7 @@ namespace RomanReign
         /// </summary>
         protected override void UnloadContent()
         {
-            m_screenManager.Dispose();
+            m_screenManager.UnloadContent();
         }
         
         /// <summary>

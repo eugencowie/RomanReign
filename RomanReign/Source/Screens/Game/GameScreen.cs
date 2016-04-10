@@ -29,7 +29,7 @@ namespace RomanReign
             Level = new Level();
         }
 
-        public void Initialize(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             // Load the level. This essentially loads every game object which is contained in the
             // level object, such as the map, player, enemies, etc.
@@ -40,7 +40,7 @@ namespace RomanReign
             m_screenManager.Push(new IntroScreen(m_game, m_screenManager));
         }
 
-        public void Dispose()
+        public void UnloadContent()
         {
             Level.Dispose();
         }

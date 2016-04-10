@@ -6,6 +6,18 @@ using System.Linq;
 
 namespace RomanReign
 {
+    interface IScreen
+    {
+        void LoadContent(ContentManager content);
+        void UnloadContent();
+
+        void Update(GameTime gameTime);
+        void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
+        void Covered();
+        void Uncovered();
+    }
+
     class ScreenManager
     {
         ContentManager m_content;
@@ -19,7 +31,7 @@ namespace RomanReign
             m_spriteBatch = spriteBatch;
         }
 
-        public void Dispose()
+        public void UnloadContent()
         {
             Clear();
         }
@@ -88,7 +100,7 @@ namespace RomanReign
             }
 
             m_screens.Add(screen);
-            screen.Initialize(m_content);
+            screen.LoadContent(m_content);
         }
 
         /// <summary>
@@ -98,7 +110,7 @@ namespace RomanReign
         {
             if (m_screens.Any())
             {
-                Top.Dispose();
+                Top.UnloadContent();
                 m_screens.RemoveAt(m_screens.IndexOf(Top));
 
                 if (m_screens.Any())
