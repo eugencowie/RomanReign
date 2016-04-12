@@ -15,8 +15,11 @@ namespace RomanReign
         // provide access to various important functions and properties, for example the
         // size of the screen.
 
-        Game m_game;
-        ScreenManager m_screenManager;
+        RomanReignGame m_game;
+
+        InputManager  m_input    => m_game.InputManager;
+        ScreenManager m_screens  => m_game.ScreenManager;
+        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // The sprite class provides several useful properties for dealing with textures
         // such as scale and a bounding box for collision detection. Below we declare a
@@ -24,15 +27,14 @@ namespace RomanReign
         // number of seconds since the screen was loaded.
 
         Sprite m_background;
-        float m_elapsedTime;
+        float  m_elapsedTime;
 
         /// <summary>
         /// The constructor here simply sets the game and screen manager variables.
         /// </summary>
-        public SplashScreen(Game game, ScreenManager screenManager)
+        public SplashScreen(RomanReignGame game)
         {
             m_game = game;
-            m_screenManager = screenManager;
         }
 
         /// <summary>
@@ -40,10 +42,9 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
-
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Splash"));
-            m_background.ScaleToSize(viewport.Size.ToVector2());
+
+            m_background.ScaleToSize(m_viewport.Size.ToVector2());
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (m_elapsedTime > 3f || Input.IsKeyJustReleased(Keys.Escape))
+            if (m_elapsedTime > 3f || m_input.IsKeyJustReleased(Keys.Escape))
             {
-                m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                m_screens.SwitchTo(new MenuScreen(m_game));
             }
 
             m_elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

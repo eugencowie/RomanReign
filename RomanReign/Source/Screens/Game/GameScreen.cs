@@ -10,22 +10,24 @@ namespace RomanReign
     /// </summary>
     class GameScreen : IScreen
     {
+        RomanReignGame m_game;
+
+        InputManager m_input => m_game.InputManager;
+        ScreenManager m_screens => m_game.ScreenManager;
+        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+
         // This field contains the current level. It can be access from ANY class simply by
         // using GameScreen.Level (for example, most game objects will contain a variable
         // which is set to point at this field so that they can access the level object).
-        public static Level Level { get; private set; }
 
-        Game m_game;
-        ScreenManager m_screenManager;
+        public static Level Level { get; private set; }
 
         bool m_isCovered;
 
-        public GameScreen(Game game, ScreenManager screenManager)
+        public GameScreen(RomanReignGame game)
         {
             m_game = game;
-            m_screenManager = screenManager;
 
-            // Create the level object.
             Level = new Level();
         }
 
@@ -37,7 +39,7 @@ namespace RomanReign
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
-            m_screenManager.Push(new IntroScreen(m_game, m_screenManager));
+            m_screens.Push(new IntroScreen(m_game));
         }
 
         public void UnloadContent()
@@ -49,9 +51,9 @@ namespace RomanReign
         {
             if (!m_isCovered)
             {
-                if (Input.IsKeyJustReleased(Keys.Escape))
+                if (m_input.IsKeyJustReleased(Keys.Escape))
                 {
-                    m_screenManager.Push(new PauseScreen(m_game, m_screenManager));
+                    m_screens.Push(new PauseScreen(m_game));
                 }
 
                 // Update the level. This essentially updates every object within the level object.

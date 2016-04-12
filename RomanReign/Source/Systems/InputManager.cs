@@ -5,18 +5,18 @@ namespace RomanReign
 {
     enum MouseButtons { Left, Middle, Right, XButton1, XButton2 }
 
-    class Input
+    class InputManager
     {
-        public static GamePadState[] PrevGamepad = new GamePadState[4];
-        public static GamePadState[] Gamepad = new GamePadState[4];
+        public GamePadState[] PrevGamepad = new GamePadState[4];
+        public GamePadState[] Gamepad = new GamePadState[4];
 
-        public static KeyboardState PrevKeyboard;
-        public static KeyboardState Keyboard;
+        public KeyboardState PrevKeyboard;
+        public KeyboardState Keyboard;
 
-        public static MouseState PrevMouse;
-        public static MouseState Mouse;
+        public MouseState PrevMouse;
+        public MouseState Mouse;
 
-        public static void Begin()
+        public void Begin()
         {
             Gamepad[0] = GamePad.GetState(PlayerIndex.One);
             Gamepad[1] = GamePad.GetState(PlayerIndex.Two);
@@ -27,7 +27,7 @@ namespace RomanReign
             Mouse = Microsoft.Xna.Framework.Input.Mouse.GetState();
         }
 
-        public static void End()
+        public void End()
         {
             for (int i=0; i<4; i++)
             {
@@ -38,12 +38,12 @@ namespace RomanReign
             PrevMouse = Mouse;
         }
 
-        public static bool IsKeyJustReleased(Keys keys)
+        public bool IsKeyJustReleased(Keys keys)
         {
             return (Keyboard.IsKeyUp(keys) && PrevKeyboard.IsKeyDown(keys));
         }
 
-        public static bool IsMouseButtonJustReleased(MouseButtons buttons)
+        public bool IsMouseButtonJustReleased(MouseButtons buttons)
         {
             ButtonState currentState = ButtonState.Released;
             ButtonState prevState = ButtonState.Released;

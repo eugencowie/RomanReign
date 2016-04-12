@@ -10,31 +10,31 @@ namespace RomanReign
     /// </summary>
     class PauseScreen : IScreen
     {
-        Game m_game;
-        ScreenManager m_screenManager;
+        RomanReignGame m_game;
+
+        InputManager m_input => m_game.InputManager;
+        ScreenManager m_screens => m_game.ScreenManager;
+        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         Sprite m_fadeBackground;
 
         Sprite m_exitButton;
 
-        public PauseScreen(Game game, ScreenManager screenManager)
+        public PauseScreen(RomanReignGame game)
         {
             m_game = game;
-            m_screenManager = screenManager;
         }
 
         public void LoadContent(ContentManager content)
         {
-            Rectangle viewport = m_game.GraphicsDevice.Viewport.Bounds;
-
             // Load the background sprite and scale it to cover the entire screen.
             m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Pause"));
-            m_fadeBackground.ScaleToSize(viewport.Size.ToVector2());
+            m_fadeBackground.ScaleToSize(m_viewport.Size.ToVector2());
 
             // Load the exit button sprite.
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit_White"));
             m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
-            m_exitButton.Position.X = viewport.Center.X;
+            m_exitButton.Position.X = m_viewport.Center.X;
             m_exitButton.Position.Y = 400;
         }
 
@@ -45,18 +45,18 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the escape key is pressed and released then remove this screen to return to the game.
-            if (Input.IsKeyJustReleased(Keys.Escape))
+            if (m_input.IsKeyJustReleased(Keys.Escape))
             {
-                m_screenManager.Pop();
+                m_screens.Pop();
             }
 
             // If the left mouse button has just been pressed and released...
-            if (Input.IsMouseButtonJustReleased(MouseButtons.Left))
+            if (m_input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
                 // ...and the mouse is positioned over the exit button then switch to the main menu.
-                if (m_exitButton.Bounds.Contains(Input.Mouse.Position))
+                if (m_exitButton.Bounds.Contains(m_input.Mouse.Position))
                 {
-                    m_screenManager.SwitchTo(new MenuScreen(m_game, m_screenManager));
+                    m_screens.SwitchTo(new MenuScreen(m_game));
                 }
             }
         }
