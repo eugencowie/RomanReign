@@ -41,7 +41,6 @@
   <ItemGroup>
     <Compile Include="Source\Objects\Camera.cs" />
     <Compile Include="Source\Objects\HUD.cs" />
-    <Compile Include="Source\Objects\Level.cs" />
     <Compile Include="Source\RomanReignGame.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

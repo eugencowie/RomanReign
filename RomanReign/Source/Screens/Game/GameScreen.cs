@@ -10,17 +10,16 @@ namespace RomanReign
     /// </summary>
     class GameScreen : IScreen
     {
-        RomanReignGame m_game;
+        public Camera Camera => m_camera;
+        public HUD Hud => m_hud;
 
+        RomanReignGame m_game;
         InputManager m_input => m_game.InputManager;
         ScreenManager m_screens => m_game.ScreenManager;
         Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
-        // This field contains the current level. It can be access from ANY class simply by
-        // using GameScreen.Level (for example, most game objects will contain a variable
-        // which is set to point at this field so that they can access the level object).
-
-        public static Level Level { get; private set; }
+        Camera m_camera;
+        HUD m_hud;
 
         bool m_isCovered;
 
@@ -28,14 +27,14 @@ namespace RomanReign
         {
             m_game = game;
 
-            Level = new Level();
+            m_camera = new Camera();
+            m_hud = new HUD();
         }
 
         public void LoadContent(ContentManager content)
         {
-            // Load the level. This essentially loads every game object which is contained in the
-            // level object, such as the map, player, enemies, etc.
-            Level.Initialize(content);
+            m_camera.LoadContent(content);
+            m_hud.LoadContent(content);
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
@@ -44,7 +43,8 @@ namespace RomanReign
 
         public void UnloadContent()
         {
-            Level.Dispose();
+            m_hud.UnloadContent();
+            m_camera.UnloadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -56,20 +56,32 @@ namespace RomanReign
                     m_screens.Push(new PauseScreen(m_game));
                 }
 
-                // Update the level. This essentially updates every object within the level object.
-                Level.Update(gameTime);
+                m_camera.Update(gameTime);
+                m_hud.Update(gameTime);
             }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // Draw the level. This is the only screen where we do not call spriteBatch.Begin() and
-            // spriteBatch.End(). Instead, those functions are called within the Level.Draw() function.
             //
-            // This is because we need to call those spriteBatch functions multiple times with different
-            // parameters in order to use the game camera. More details in the Level.Draw() function.
+            // TODO: explanation of how the camera works.
             //
-            Level.Draw(gameTime, spriteBatch);
+
+            spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix());
+
+            spriteBatch.End();
+
+            //
+            // Now we want to draw the HUD without our coordinates being transformed using the
+            // camera, so we need to call spriteBatch.Begin() again, this time without using
+            // the camera transformation matrix.
+            //
+
+            spriteBatch.Begin();
+
+            m_hud.Draw(gameTime, spriteBatch);
+
+            spriteBatch.End();
         }
 
         public void Covered()

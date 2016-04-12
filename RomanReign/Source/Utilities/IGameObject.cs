@@ -6,8 +6,8 @@ namespace RomanReign
 {
     interface IGameObject
     {
-        void Initialize(ContentManager content);
-        void Dispose();
+        void LoadContent(ContentManager content);
+        void UnloadContent();
 
         void Update(GameTime gameTime);
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);

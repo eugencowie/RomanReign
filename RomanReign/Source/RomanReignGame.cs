@@ -50,9 +50,8 @@ namespace RomanReign
         /// </summary>
         protected override void LoadContent()
         {
-            m_spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            m_inputManager = new InputManager();
+            m_spriteBatch   = new SpriteBatch(GraphicsDevice);
+            m_inputManager  = new InputManager();
             m_screenManager = new ScreenManager(Content, m_spriteBatch);
 
             m_screenManager.SwitchTo(new SplashScreen(this));
