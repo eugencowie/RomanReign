@@ -6,31 +6,36 @@ using Microsoft.Xna.Framework.Input;
 namespace RomanReign
 {
     /// <summary>
-    /// This is the first screen which is displayed when the game is run. It displays a
+    /// This is the first screen which is displayed when the game is run.  It displays a
     /// splash screen texture for three seconds before switching to the main menu screen.
     /// </summary>
     class SplashScreen : IScreen
     {
-        // The game and screen manager variables are present in all of the screens. They
-        // provide access to various important functions and properties, for example the
-        // size of the screen.
+        // This variable allows us to access important functions and variables in the
+        // main game class. You will see this variable in *all* of the screen classes.
 
         RomanReignGame m_game;
+
+        // These variables are basically "shortcuts" to certain variables within the main
+        // game class. They are only used so that we don't have to type out the whole bit
+        // of code (for example to get the viewport size we can simply use the m_viewport
+        // variable instead of m_game.GraphicsDevice.Viewport.Bounds).
 
         InputManager  m_input    => m_game.InputManager;
         ScreenManager m_screens  => m_game.ScreenManager;
         Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // The sprite class provides several useful properties for dealing with textures
-        // such as scale and a bounding box for collision detection. Below we declare a
-        // sprite for the background as well as a floating point number to represent the
-        // number of seconds since the screen was loaded.
+        // Our sprite class provides several useful functions for dealing with textures. In
+        // the next bit of code, we declare a sprite variable for the background as well as
+        // a floating point number to hold the number of seconds since the screen was shown.
 
         Sprite m_background;
         float  m_elapsedTime;
 
         /// <summary>
-        /// The constructor here simply sets the game and screen manager variables.
+        /// This constructor is run when the splash screen object is created. The only
+        /// thing it does is set up the m_game variable so that we can access it later.
         /// </summary>
         public SplashScreen(RomanReignGame game)
         {
@@ -38,7 +43,8 @@ namespace RomanReign
         }
 
         /// <summary>
-        /// Load the background sprite and scale it to cover the entire screen.
+        /// This function is run when we add this screen to the screen manager. In it, we
+        /// load the background sprite texture and scale it to cover the entire screen.
         /// </summary>
         public void LoadContent(ContentManager content)
         {
@@ -48,15 +54,19 @@ namespace RomanReign
         }
 
         /// <summary>
-        ///
+        /// This function is called when the screen is removed from the screen manager, or
+        /// if the game exits while the screen is active. We don't have anything that must
+        /// be done when that happens, so we leave this function empty.
         /// </summary>
         public void UnloadContent()
         {
         }
 
         /// <summary>
-        /// If the elapsed time reaches three seconds or the escape key is pressed, switch
-        /// to the main menu screen. Increase the elapsed time variable every frame.
+        /// This function is called every frame while the screen is active. In it, we check
+        /// if the elapsed time has reached three seconds or the escape key was pressed, if
+        /// so then we switch to the main menu screen.  At the end we make sure to actually
+        /// increase the elapsed time variable every frame.
         /// </summary>
         public void Update(GameTime gameTime)
         {
@@ -69,7 +79,8 @@ namespace RomanReign
         }
 
         /// <summary>
-        /// Draw the background sprite.
+        /// This function is called every frame while the screen is active. In it, we just
+        /// draw the splash screen background sprite.
         /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -81,14 +92,18 @@ namespace RomanReign
         }
 
         /// <summary>
-        ///
+        /// This function is called when the screen is covered up by another screen. We
+        /// are not 'pushing' any other screens on top of this one, so we don't need to
+        /// do anything in this function.
         /// </summary>
         public void Covered()
         {
         }
 
         /// <summary>
-        ///
+        /// This function is called when the screen on top of this one is removed, making
+        /// this the top-most screen. This screen should never have any screens on top of
+        /// it so we do not need to do anything in this function.
         /// </summary>
         public void Uncovered()
         {
