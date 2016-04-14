@@ -46,7 +46,7 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the escape key is pressed and released then remove this screen to return to the main menu.
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (m_input.IsKeyJustReleased(Keys.Escape))
             {
                 m_screens.Pop();
             }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
@@ -38,45 +39,57 @@ namespace RomanReign
             PrevMouse = Mouse;
         }
 
+        public bool IsKeyDown(Keys keys) => Keyboard.IsKeyDown(keys);
+        public bool IsKeyUp(Keys keys) => Keyboard.IsKeyUp(keys);
+
         public bool IsKeyJustReleased(Keys keys)
         {
             return (Keyboard.IsKeyUp(keys) && PrevKeyboard.IsKeyDown(keys));
         }
 
-        public bool IsMouseButtonJustReleased(MouseButtons buttons)
+        public ButtonState GetMouseButtonState(MouseButtons buttons)
         {
-            ButtonState currentState = ButtonState.Released;
-            ButtonState prevState = ButtonState.Released;
-
             switch (buttons)
             {
-                case MouseButtons.Left:
-                    currentState = Mouse.LeftButton;
-                    prevState = PrevMouse.LeftButton;
-                    break;
+                case MouseButtons.Left:     return Mouse.LeftButton;
+                case MouseButtons.Middle:   return Mouse.MiddleButton;
+                case MouseButtons.Right:    return Mouse.RightButton;
+                case MouseButtons.XButton1: return Mouse.XButton1;
+                case MouseButtons.XButton2: return Mouse.XButton2;
 
-                case MouseButtons.Middle:
-                    currentState = Mouse.MiddleButton;
-                    prevState = PrevMouse.MiddleButton;
-                    break;
-
-                case MouseButtons.Right:
-                    currentState = Mouse.RightButton;
-                    prevState = PrevMouse.RightButton;
-                    break;
-
-                case MouseButtons.XButton1:
-                    currentState = Mouse.XButton1;
-                    prevState = PrevMouse.XButton1;
-                    break;
-
-                case MouseButtons.XButton2:
-                    currentState = Mouse.XButton2;
-                    prevState = PrevMouse.XButton2;
-                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("button " + buttons + "does not exist");
             }
+        }
 
-            return (currentState == ButtonState.Released && prevState == ButtonState.Pressed);
+        public ButtonState GetPrevMouseButtonState(MouseButtons buttons)
+        {
+            switch (buttons)
+            {
+                case MouseButtons.Left:     return PrevMouse.LeftButton;
+                case MouseButtons.Middle:   return PrevMouse.MiddleButton;
+                case MouseButtons.Right:    return PrevMouse.RightButton;
+                case MouseButtons.XButton1: return PrevMouse.XButton1;
+                case MouseButtons.XButton2: return PrevMouse.XButton2;
+
+                default:
+                    throw new ArgumentOutOfRangeException("button " + buttons + "does not exist");
+            }
+        }
+
+        public bool IsMouseButtonJustReleased(MouseButtons buttons)
+        {
+            return (GetMouseButtonState(buttons) == ButtonState.Released && GetPrevMouseButtonState(buttons) == ButtonState.Pressed);
+        }
+
+        public bool IsMouseButtonDown(MouseButtons buttons)
+        {
+            return GetMouseButtonState(buttons) == ButtonState.Pressed;
+        }
+
+        public bool IsMouseButtonUp(MouseButtons buttons)
+        {
+            return GetMouseButtonState(buttons) == ButtonState.Released;
         }
     }
 }
