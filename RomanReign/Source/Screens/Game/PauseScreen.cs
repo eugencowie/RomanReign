@@ -33,7 +33,7 @@ namespace RomanReign
 
             // Load the exit button sprite.
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit_White"));
-            m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
+            m_exitButton.Origin = new Vector2(0.5f, 0.5f);
             m_exitButton.Position.X = m_viewport.Center.X;
             m_exitButton.Position.Y = 400;
         }

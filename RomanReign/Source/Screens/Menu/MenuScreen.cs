@@ -33,40 +33,38 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            // Load the background sprite and scale it to cover the entire screen.
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Menu"));
             m_background.ScaleToSize(m_viewport.Size.ToVector2());
 
-            // Load the heading sprite, set the origin to be the center of the sprite, and set the
-            // position to be centered on the X axis and 100 pixels on the Y axis.
-            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Menu"));
-            m_heading.Origin = m_heading.Texture.Bounds.Center.ToVector2();
-            m_heading.Position.X = m_viewport.Center.X;
-            m_heading.Position.Y = 100;
+            // These next sprites are all special because we want the origin of the sprite
+            // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
+            // makes positioning them easier). To do this, we set the origin property. The
+            // origin property is a Vector2 where 0,0 is top-left and 1,1 is bottom-right.
 
-            // Load the start button sprite and do the same as the previous sprite.
-            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Start"));
-            m_startButton.Origin = m_startButton.Texture.Bounds.Center.ToVector2();
-            m_startButton.Position.X = m_viewport.Center.X;
-            m_startButton.Position.Y = 300;
+            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Menu")) {
+                Position = new Vector2(m_viewport.Center.X, 100),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
 
-            // Load the options button sprite.
-            m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Options"));
-            m_optionsButton.Origin = m_optionsButton.Texture.Bounds.Center.ToVector2();
-            m_optionsButton.Position.X = m_viewport.Center.X;
-            m_optionsButton.Position.Y = 400;
+            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Start")) {
+                Position = new Vector2(m_viewport.Center.X, 300),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
 
-            // Load the credits button sprite.
-            m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Credits"));
-            m_creditsButton.Origin = m_creditsButton.Texture.Bounds.Center.ToVector2();
-            m_creditsButton.Position.X = m_viewport.Center.X;
-            m_creditsButton.Position.Y = 500;
+            m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Options")) {
+                Position = new Vector2(m_viewport.Center.X, 400),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
 
-            // Load the exit button sprite.
-            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit"));
-            m_exitButton.Origin = m_exitButton.Texture.Bounds.Center.ToVector2();
-            m_exitButton.Position.X = m_viewport.Center.X;
-            m_exitButton.Position.Y = 600;
+            m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Credits")) {
+                Position = new Vector2(m_viewport.Center.X, 500),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
+
+            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit")) {
+                Position = new Vector2(m_viewport.Center.X, 600),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
         }
 
         public void UnloadContent()

@@ -26,17 +26,17 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            // Load the heading sprite.
-            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Options"));
-            m_heading.Origin = m_heading.Texture.Bounds.Center.ToVector2();
-            m_heading.Position.X = m_viewport.Center.X;
-            m_heading.Position.Y = 100;
+            // See Screens/Menu/MenuSreen.cs for an explanation of how sprite origins work.
 
-            // Load the back button sprite.
-            m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Back"));
-            m_backButton.Origin = m_backButton.Texture.Bounds.Center.ToVector2();
-            m_backButton.Position.X = m_viewport.Center.X;
-            m_backButton.Position.Y = 600;
+            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Options")) {
+                Position = new Vector2(m_viewport.Center.X, 100),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
+
+            m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Back")) {
+                Position = new Vector2(m_viewport.Center.X, 600),
+                Origin = new Vector2(0.5f, 0.5f)
+            };
         }
 
         public void UnloadContent()
