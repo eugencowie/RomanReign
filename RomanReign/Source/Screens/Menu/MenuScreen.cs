@@ -5,32 +5,59 @@ using Microsoft.Xna.Framework.Graphics;
 namespace RomanReign
 {
     /// <summary>
-    /// The main (or primary) menu screen, which contains buttons for starting/quitting the
-    /// game as well as buttons to show the options menu screen or the credits menu screen.
+    /// This is the main menu screen, which contains buttons for starting/quitting the game
+    /// as well as buttons to show the options menu screen or the credits menu screen. This
+    /// screen is also responsible for drawing the menu background graphics which are drawn
+    /// behind any other menu screens (such as options/credits screens).
     /// </summary>
     class MenuScreen : IScreen
     {
+        // These are the same set of variables that are present in all of the screen
+        // classes. See Screens/Menu/SplashScreen.cs for more information about them.
+
         RomanReignGame m_game;
 
         InputManager m_input => m_game.InputManager;
         ScreenManager m_screens => m_game.ScreenManager;
         Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
-        Sprite m_background;
-        Sprite m_heading;
+        // We need a sprite to use as the menu background.  This sprite should always be
+        // drawn when we have any of the menu screens activated. For a brief description
+        // of our sprite class, see Screens/Menu/SplashScreen.cs - or Utilties/Sprite.cs
+        // if you want to see the actual code for the class.
 
+        Sprite m_background;
+
+        // We have a sprite for the heading (or title) of the screen and then a whole
+        // bunch of sprites for all of the various buttons.
+
+        Sprite m_heading;
         Sprite m_startButton;
         Sprite m_optionsButton;
         Sprite m_creditsButton;
         Sprite m_exitButton;
 
+        // Unlike the splash screen, this screen is designed to be covered up by other menu
+        // screens (such as the options screen or credits screen).  This means that we need
+        // to know when the screen is covered and when it is not, which is what we use this
+        // boolean variable for.
+
         bool m_isCovered;
 
+        /// <summary>
+        /// This constructor is run when the menu screen object is created.  Just like the
+        /// other screens, the only thing it does is set up the m_game variable.
+        /// </summary>
         public MenuScreen(RomanReignGame game)
         {
             m_game = game;
         }
 
+        /// <summary>
+        /// This function is run when we add this screen to the screen manager. In it, we
+        /// load our background sprite as scale it to cover the entire screen. After that,
+        /// we load the heading sprite and all of the button sprites.
+        /// </summary>
         public void LoadContent(ContentManager content)
         {
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Menu"));
@@ -67,17 +94,27 @@ namespace RomanReign
             };
         }
 
+        /// <summary>
+        /// This function is called when the screen is removed from the screen manager, or
+        /// if the game exits while the screen is active. We don't have anything that must
+        /// be done when that happens, so we leave this function empty.
+        /// </summary>
         public void UnloadContent()
         {
         }
 
+        /// <summary>
+        /// This function is called every frame while the screen is active.
+        /// </summary>
         public void Update(GameTime gameTime)
         {
-            // The options and credits screens will be overlaid on top of this screen, so we must
-            // check to see whether this screen is currently being covered by any other any screens
-            // before we run our update code.
+            // The options and credits screens will be overlaid on top of this screen, so
+            // we must check to see whether this screen is currently being covered by any
+            // other any screens before we run our update code.
             if (!m_isCovered)
             {
+                // This is temporary and will be removed - it just makes any button that we
+                // hover over slightly transparent.
                 foreach (Sprite button in new [] { m_startButton, m_optionsButton, m_creditsButton, m_exitButton })
                 {
                     bool mouseOver = button.Bounds.Contains(m_input.Mouse.Position);
@@ -85,48 +122,43 @@ namespace RomanReign
                     button.SetOpacity(opacity);
                 }
 
-                // If the left mouse button has just been pressed and released...
+                // Next, we check if the left mouse button has just been pressed and then
+                // released. If so, we check to see if the mouse is over any of the buttons
+                // and take any appropriate action.
                 if (m_input.IsMouseButtonJustReleased(MouseButtons.Left))
                 {
-                    // ...and the mouse is positioned over the start button, switch to the game screen.
                     if (m_startButton.Bounds.Contains(m_input.Mouse.Position))
-                    {
                         m_screens.SwitchTo(new GameScreen(m_game));
-                    }
 
-                    // ...and the mouse is positioned over the options button, overlay the options screen.
                     if (m_optionsButton.Bounds.Contains(m_input.Mouse.Position))
-                    {
                         m_screens.Push(new OptionsScreen(m_game));
-                    }
 
-                    // ...and the mouse is positioned over the credits button, overlay the credits screen.
                     if (m_creditsButton.Bounds.Contains(m_input.Mouse.Position))
-                    {
                         m_screens.Push(new CreditsScreen(m_game));
-                    }
 
-                    // ...and the mouse is positioned over the exit button, quit the game.
                     if (m_exitButton.Bounds.Contains(m_input.Mouse.Position))
-                    {
                         m_game.Exit();
-                    }
                 }
             }
         }
 
+        /// <summary>
+        /// This function is called every frame while the screen is active. In it, we just
+        /// draw all of the sprites.
+        /// </summary>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
 
-            // Draw the background, regardless of whether or not there are any other screens covering this one.
+            // We always want to draw the background, regardless of whether or not there
+            // are any other screens covering this one.
             m_background.Draw(spriteBatch);
 
-            // But only draw the heading/buttons/etc if there are no other screens covering this one.
+            // We only want to draw the heading/buttons/etc if there are no other screens
+            // covering this one.
             if (!m_isCovered)
             {
                 m_heading.Draw(spriteBatch);
-
                 m_startButton.Draw(spriteBatch);
                 m_optionsButton.Draw(spriteBatch);
                 m_creditsButton.Draw(spriteBatch);
@@ -136,11 +168,19 @@ namespace RomanReign
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// This function is called when the screen is covered up by another screen. All
+        /// we do here is set the m_isCovered variable to true.
+        /// </summary>
         public void Covered()
         {
             m_isCovered = true;
         }
 
+        /// <summary>
+        /// This function is called when the screen on top of this one is removed, making
+        /// this the top-most screen. All we do here is set m_isCovered to false.
+        /// </summary>
         public void Uncovered()
         {
             m_isCovered = false;
