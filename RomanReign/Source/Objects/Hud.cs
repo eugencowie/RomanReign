@@ -4,19 +4,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RomanReign
 {
-    class HUD : IGameObject
+    class Hud : IGameObject
     {
-        Level m_level => GameScreen.Level;
-
         Sprite m_testSprite;
 
-        public void Initialize(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             m_testSprite = new Sprite(content.Load<Texture2D>("Textures/HUD/Test"));
             m_testSprite.Position = new Vector2(20, 20);
         }
 
-        public void Dispose()
+        public void UnloadContent()
         {
         }
 

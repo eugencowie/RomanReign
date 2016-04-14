@@ -6,13 +6,11 @@ namespace RomanReign
 {
     class Camera : IGameObject
     {
-        Level m_level => GameScreen.Level;
-
-        public void Initialize(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
         }
 
-        public void Dispose()
+        public void UnloadContent()
         {
         }
 

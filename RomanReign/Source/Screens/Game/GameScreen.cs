@@ -11,7 +11,7 @@ namespace RomanReign
     class GameScreen : IScreen
     {
         public Camera Camera => m_camera;
-        public HUD Hud => m_hud;
+        public Hud Hud => m_hud;
 
         RomanReignGame m_game;
         InputManager m_input => m_game.InputManager;
@@ -19,7 +19,7 @@ namespace RomanReign
         Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         Camera m_camera;
-        HUD m_hud;
+        Hud m_hud;
 
         bool m_isCovered;
 
@@ -28,7 +28,7 @@ namespace RomanReign
             m_game = game;
 
             m_camera = new Camera();
-            m_hud = new HUD();
+            m_hud = new Hud();
         }
 
         public void LoadContent(ContentManager content)

@@ -25,7 +25,6 @@ namespace RomanReign
         ScreenManager m_screens  => m_game.ScreenManager;
         Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
-        // The sprite class provides several useful properties for dealing with textures
         // Our sprite class provides several useful functions for dealing with textures. In
         // the next bit of code, we declare a sprite variable for the background as well as
         // a floating point number to hold the number of seconds since the screen was shown.
