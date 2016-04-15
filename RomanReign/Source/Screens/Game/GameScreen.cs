@@ -28,7 +28,7 @@ namespace RomanReign
             m_game = game;
 
             m_camera = new Camera();
-            m_hud = new Hud();
+            m_hud = new Hud(m_game);
         }
 
         public void LoadContent(ContentManager content)
