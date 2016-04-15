@@ -6,6 +6,7 @@ namespace RomanReign
     class Sprite
     {
         public Texture2D Texture = null;
+        public Rectangle? SourceRect = null;
         public Vector2 Origin = Vector2.Zero;
         public Color Color = Color.White;
 
@@ -17,11 +18,17 @@ namespace RomanReign
 
         public bool Visible = true;
 
-        Vector2 m_absoluteOrigin => Texture.Bounds.Size.ToVector2() * Origin;
-        Vector2 m_topLeft => Position - (m_absoluteOrigin * (Scale * UniformScale));
-        Vector2 m_size => Texture.Bounds.Size.ToVector2() * (Scale * UniformScale);
+        protected         Vector2 AbsoluteScale   => Scale * UniformScale;
+        protected virtual Vector2 AbsoluteSrcSize => Texture.Bounds.Size.ToVector2();
 
-        public Rectangle Bounds => new Rectangle((int)m_topLeft.X, (int)m_topLeft.Y, (int)m_size.X, (int)m_size.Y);
+        protected Vector2 AbsoluteOrigin  => AbsoluteSrcSize * Origin;
+        protected Vector2 AbsoluteTopLeft => Position - (AbsoluteOrigin * AbsoluteScale);
+        protected Vector2 AbsoluteSize    => AbsoluteSrcSize * AbsoluteScale;
+
+        public Rectangle Bounds
+        {
+            get { return new Rectangle((int)AbsoluteTopLeft.X, (int)AbsoluteTopLeft.Y, (int)AbsoluteSize.X, (int)AbsoluteSize.Y); }
+        }
 
         public Sprite(Texture2D texture)
         {
@@ -35,26 +42,14 @@ namespace RomanReign
                 spriteBatch.Draw(
                     Texture,
                     Position,
-                    null,
+                    SourceRect,
                     Color,
                     0f,
-                    m_absoluteOrigin,
-                    Scale * UniformScale,
+                    AbsoluteOrigin,
+                    AbsoluteScale,
                     Effects,
                     0f);
             }
-        }
-
-        public void SetAbsoluteOrigin(float absoluteX, float absoluteY)
-        {
-            Origin.X = absoluteX / Texture.Width;
-            Origin.Y = absoluteY / Texture.Height;
-        }
-
-        public void ScaleToSize(float width, float height)
-        {
-            Scale.X = width / Texture.Width;
-            Scale.Y = height / Texture.Height;
         }
 
         public void SetOpacity(float opacity)
@@ -63,14 +58,28 @@ namespace RomanReign
             Color.A = alpha;
         }
 
-        public void SetAbsoluteOrigin(Vector2 absoluteOrigin)
+        public void ScaleToSize(float width, float height)
         {
-            SetAbsoluteOrigin(absoluteOrigin.X, absoluteOrigin.Y);
+            Scale.X = width / Texture.Width;
+            Scale.Y = height / Texture.Height;
+
+            UniformScale = 1f;
         }
 
         public void ScaleToSize(Vector2 size)
         {
             ScaleToSize(size.X, size.Y);
+        }
+
+        public void SetAbsoluteOrigin(float absoluteX, float absoluteY)
+        {
+            Origin.X = absoluteX / Texture.Width;
+            Origin.Y = absoluteY / Texture.Height;
+        }
+
+        public void SetAbsoluteOrigin(Vector2 absoluteOrigin)
+        {
+            SetAbsoluteOrigin(absoluteOrigin.X, absoluteOrigin.Y);
         }
     }
 }
