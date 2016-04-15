@@ -51,6 +51,7 @@
     <Compile Include="Source\Screens\Menu\MenuScreen.cs" />
     <Compile Include="Source\Screens\Menu\OptionsScreen.cs" />
     <Compile Include="Source\Screens\Menu\SplashScreen.cs" />
+    <Compile Include="Source\Utilities\AnimatedSprite.cs" />
     <Compile Include="Source\Utilities\IGameObject.cs" />
     <Compile Include="Source\Systems\InputManager.cs" />
     <Compile Include="Source\Systems\ScreenManager.cs" />
