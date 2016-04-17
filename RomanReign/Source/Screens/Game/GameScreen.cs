@@ -33,7 +33,6 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            m_camera.LoadContent(content);
             m_hud.LoadContent(content);
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
@@ -44,7 +43,6 @@ namespace RomanReign
         public void UnloadContent()
         {
             m_hud.UnloadContent();
-            m_camera.UnloadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -56,7 +54,6 @@ namespace RomanReign
                     m_screens.Push(new PauseScreen(m_game));
                 }
 
-                m_camera.Update(gameTime);
                 m_hud.Update(gameTime);
             }
         }

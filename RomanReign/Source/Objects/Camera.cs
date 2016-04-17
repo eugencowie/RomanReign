@@ -1,31 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace RomanReign
 {
-    class Camera : IGameObject
+    class Camera
     {
-        public void LoadContent(ContentManager content)
-        {
-        }
-
-        public void UnloadContent()
-        {
-        }
-
-        public void Update(GameTime gameTime)
-        {
-        }
-
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-        }
+        public Vector2 Position = Vector2.Zero;
+        public Vector2 Origin   = Vector2.Zero;
+        public float   Rotation = 0f;
+        public float   Zoom     = 1f;
 
         public Matrix GetViewMatrix()
         {
-            // TODO
-            return Matrix.Identity;
+            return
+                Matrix.CreateTranslation(new Vector3(Origin, 0f)) *
+                Matrix.CreateTranslation(new Vector3(-Position, 0f)) *
+                Matrix.CreateRotationZ(Rotation) *
+                Matrix.CreateScale(Zoom, Zoom, 1f);
         }
     }
 }
