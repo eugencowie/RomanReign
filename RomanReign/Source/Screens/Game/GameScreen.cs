@@ -10,16 +10,18 @@ namespace RomanReign
     /// </summary>
     class GameScreen : IScreen
     {
+        public Hud    Hud    => m_hud;
         public Camera Camera => m_camera;
-        public Hud Hud => m_hud;
+        public Player Player => m_player;
 
         RomanReignGame m_game;
         InputManager m_input => m_game.InputManager;
         ScreenManager m_screens => m_game.ScreenManager;
         Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
+        Hud    m_hud;
         Camera m_camera;
-        Hud m_hud;
+        Player m_player;
 
         bool m_isCovered;
 
@@ -27,13 +29,19 @@ namespace RomanReign
         {
             m_game = game;
 
-            m_camera = new Camera();
-            m_hud = new Hud(m_game);
+            m_hud = new Hud();
+
+            m_camera = new Camera(this, m_game) {
+                Origin = m_viewport.Center.ToVector2()
+            };
+
+            m_player = new Player(m_game);
         }
 
         public void LoadContent(ContentManager content)
         {
             m_hud.LoadContent(content);
+            m_player.LoadContent(content);
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
@@ -53,7 +61,9 @@ namespace RomanReign
                     m_screens.Push(new PauseScreen(m_game));
                 }
 
-                m_hud.Update(gameTime);
+                m_player.Update(gameTime);
+
+                m_camera.Update();
             }
         }
 
@@ -64,6 +74,8 @@ namespace RomanReign
             //
 
             spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix());
+
+            m_player.Draw(spriteBatch);
 
             spriteBatch.End();
 

@@ -9,6 +9,20 @@ namespace RomanReign
         public float   Rotation = 0f;
         public float   Zoom     = 1f;
 
+        GameScreen m_screen;
+        RomanReignGame m_game;
+
+        public Camera(GameScreen screen, RomanReignGame game)
+        {
+            m_screen = screen;
+            m_game = game;
+        }
+
+        public void Update()
+        {
+            Position = m_screen.Player.Position;
+        }
+
         public Matrix GetViewMatrix()
         {
             return
