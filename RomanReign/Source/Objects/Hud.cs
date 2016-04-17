@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace RomanReign
 {
-    class Hud : IGameObject
+    class Hud
     {
         RomanReignGame m_game;
 
@@ -23,10 +23,6 @@ namespace RomanReign
             };
         }
 
-        public void UnloadContent()
-        {
-        }
-
         public void Update(GameTime gameTime)
         {
             m_testSprite.Update(gameTime);
@@ -37,7 +33,7 @@ namespace RomanReign
             m_testSprite.SetOpacity(opacity);
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             m_testSprite.Draw(spriteBatch);
         }

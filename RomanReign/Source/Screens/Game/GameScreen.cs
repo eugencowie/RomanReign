@@ -42,7 +42,6 @@ namespace RomanReign
 
         public void UnloadContent()
         {
-            m_hud.UnloadContent();
         }
 
         public void Update(GameTime gameTime)
@@ -76,7 +75,7 @@ namespace RomanReign
 
             spriteBatch.Begin();
 
-            m_hud.Draw(gameTime, spriteBatch);
+            m_hud.Draw(spriteBatch);
 
             spriteBatch.End();
         }
