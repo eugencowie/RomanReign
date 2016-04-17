@@ -12,6 +12,7 @@ namespace RomanReign
     {
         public Hud    Hud    => m_hud;
         public Camera Camera => m_camera;
+        public Map    Map    => m_map;
         public Player Player => m_player;
 
         RomanReignGame m_game;
@@ -21,6 +22,7 @@ namespace RomanReign
 
         Hud    m_hud;
         Camera m_camera;
+        Map    m_map;
         Player m_player;
 
         bool m_isCovered;
@@ -35,12 +37,15 @@ namespace RomanReign
                 Origin = m_viewport.Center.ToVector2()
             };
 
+            m_map = new Map("Textures/Game/Background_Game");
+
             m_player = new Player(m_game);
         }
 
         public void LoadContent(ContentManager content)
         {
             m_hud.LoadContent(content);
+            m_map.LoadContent(content);
             m_player.LoadContent(content);
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
@@ -75,6 +80,7 @@ namespace RomanReign
 
             spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix());
 
+            m_map.Draw(spriteBatch);
             m_player.Draw(spriteBatch);
 
             spriteBatch.End();
