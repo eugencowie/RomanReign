@@ -10,20 +10,28 @@ namespace RomanReign
     /// </summary>
     class GameScreen : IScreen
     {
+        // Allow game objects to be accessed from outside of this class.
+
         public Hud    Hud    => m_hud;
         public Camera Camera => m_camera;
         public Map    Map    => m_map;
         public Player Player => m_player;
 
+        // Standard screen variables.
+
         RomanReignGame m_game;
-        InputManager m_input => m_game.InputManager;
-        ScreenManager m_screens => m_game.ScreenManager;
-        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+        InputManager   m_input    => m_game.InputManager;
+        ScreenManager  m_screens  => m_game.ScreenManager;
+        Rectangle      m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+
+        // Game objects.
 
         Hud    m_hud;
         Camera m_camera;
         Map    m_map;
         Player m_player;
+
+        // Other
 
         bool m_isCovered;
 
