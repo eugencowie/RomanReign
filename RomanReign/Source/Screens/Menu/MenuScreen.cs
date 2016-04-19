@@ -60,7 +60,7 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/Background_Menu"));
+            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_menu"));
             m_background.ScaleToSize(m_viewport.Size.ToVector2());
 
             // These next sprites are all special because we want the origin of the sprite
@@ -68,27 +68,27 @@ namespace RomanReign
             // makes positioning them easier). To do this, we set the origin property. The
             // origin property is a Vector2 where 0,0 is top-left and 1,1 is bottom-right.
 
-            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/Heading_Menu")) {
+            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_menu")) {
                 Position = new Vector2(m_viewport.Center.X, 100),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Start")) {
+            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start")) {
                 Position = new Vector2(m_viewport.Center.X, 300),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Options")) {
+            m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_options")) {
                 Position = new Vector2(m_viewport.Center.X, 400),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Credits")) {
+            m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_credits")) {
                 Position = new Vector2(m_viewport.Center.X, 500),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit")) {
+            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_exit")) {
                 Position = new Vector2(m_viewport.Center.X, 600),
                 Origin = new Vector2(0.5f, 0.5f)
             };

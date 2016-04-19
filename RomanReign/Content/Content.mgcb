@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Textures/Menu/Button_Back.png
+#begin Textures/Menu/btn_back.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -22,9 +22,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Back.png
+/build:Textures/Menu/btn_back.png
 
-#begin Textures/Menu/Button_Credits.png
+#begin Textures/Menu/btn_credits.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -33,9 +33,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Credits.png
+/build:Textures/Menu/btn_credits.png
 
-#begin Textures/Menu/Button_Exit.png
+#begin Textures/Menu/btn_exit.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -44,9 +44,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Exit.png
+/build:Textures/Menu/btn_exit.png
 
-#begin Textures/Menu/Button_Options.png
+#begin Textures/Menu/btn_options.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -55,9 +55,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Options.png
+/build:Textures/Menu/btn_options.png
 
-#begin Textures/Menu/Button_Start.png
+#begin Textures/Menu/btn_start.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -66,9 +66,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Start.png
+/build:Textures/Menu/btn_start.png
 
-#begin Textures/Menu/Heading_Credits.png
+#begin Textures/Menu/title_credits.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -77,9 +77,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Heading_Credits.png
+/build:Textures/Menu/title_credits.png
 
-#begin Textures/Menu/Heading_Options.png
+#begin Textures/Menu/title_options.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -88,9 +88,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Heading_Options.png
+/build:Textures/Menu/title_options.png
 
-#begin Textures/Menu/Background_Menu.png
+#begin Textures/Menu/bg_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -99,9 +99,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Background_Menu.png
+/build:Textures/Menu/bg_menu.png
 
-#begin Textures/Menu/Background_Splash.png
+#begin Textures/Menu/bg_splash.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -110,9 +110,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Background_Splash.png
+/build:Textures/Menu/bg_splash.png
 
-#begin Textures/Menu/Heading_Menu.png
+#begin Textures/Menu/title_menu.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -121,9 +121,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Heading_Menu.png
+/build:Textures/Menu/title_menu.png
 
-#begin Textures/Game/Background_Intro1.png
+#begin Textures/Game/bg_intro_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -132,9 +132,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Intro1.png
+/build:Textures/Game/bg_intro_1.png
 
-#begin Textures/Game/Background_Intro2.png
+#begin Textures/Game/bg_intro_2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -143,9 +143,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Intro2.png
+/build:Textures/Game/bg_intro_2.png
 
-#begin Textures/Game/Background_Intro3.png
+#begin Textures/Game/bg_intro_3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -154,9 +154,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Intro3.png
+/build:Textures/Game/bg_intro_3.png
 
-#begin Textures/Game/Background_Intro4.png
+#begin Textures/Game/bg_intro_4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -165,9 +165,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Intro4.png
+/build:Textures/Game/bg_intro_4.png
 
-#begin Textures/Game/Background_Pause.png
+#begin Textures/Game/bg_pause.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -176,9 +176,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Pause.png
+/build:Textures/Game/bg_pause.png
 
-#begin Textures/Game/Background_Game.png
+#begin Textures/Game/bg_game.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -187,9 +187,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/Background_Game.png
+/build:Textures/Game/bg_game.png
 
-#begin Textures/HUD/Test.png
+#begin Textures/HUD/test.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -198,9 +198,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/HUD/Test.png
+/build:Textures/HUD/test.png
 
-#begin Textures/Menu/Button_Exit_White.png
+#begin Textures/Menu/btn_exit_white.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -209,9 +209,9 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Menu/Button_Exit_White.png
+/build:Textures/Menu/btn_exit_white.png
 
-#begin Textures/Game/PlayerWalking.png
+#begin Textures/Game/player_walking.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -220,5 +220,5 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:Textures/Game/PlayerWalking.png
+/build:Textures/Game/player_walking.png
 

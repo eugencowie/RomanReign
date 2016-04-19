@@ -28,11 +28,11 @@ namespace RomanReign
         public void LoadContent(ContentManager content)
         {
             // Load the background sprite and scale it to cover the entire screen.
-            m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Pause"));
+            m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/bg_pause"));
             m_fadeBackground.ScaleToSize(m_viewport.Size.ToVector2());
 
             // Load the exit button sprite.
-            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/Button_Exit_White"));
+            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_exit_white"));
             m_exitButton.Origin = new Vector2(0.5f, 0.5f);
             m_exitButton.Position.X = m_viewport.Center.X;
             m_exitButton.Position.Y = 400;

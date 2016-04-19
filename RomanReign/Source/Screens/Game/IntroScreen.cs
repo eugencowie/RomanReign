@@ -31,19 +31,19 @@ namespace RomanReign
         public void LoadContent(ContentManager content)
         {
             // Load the background sprite and scale it to cover the entire screen.
-            m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro1"));
+            m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_1"));
             m_background1.ScaleToSize(m_viewport.Size.ToVector2());
 
             // Load the second background sprite.
-            m_background2 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro2"));
+            m_background2 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_2"));
             m_background2.ScaleToSize(m_viewport.Size.ToVector2());
 
             // Load the second background sprite.
-            m_background3 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro3"));
+            m_background3 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_3"));
             m_background3.ScaleToSize(m_viewport.Size.ToVector2());
 
             // Load the second background sprite.
-            m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/Background_Intro4"));
+            m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_4"));
             m_background4.ScaleToSize(m_viewport.Size.ToVector2());
         }
 

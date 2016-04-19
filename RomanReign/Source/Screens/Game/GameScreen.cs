@@ -45,7 +45,7 @@ namespace RomanReign
                 Origin = m_viewport.Center.ToVector2()
             };
 
-            m_map = new Map("Textures/Game/Background_Game");
+            m_map = new Map("Textures/Game/bg_game");
 
             m_player = new Player(m_game);
         }

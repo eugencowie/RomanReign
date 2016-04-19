@@ -19,7 +19,7 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            m_testAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/PlayerWalking")) {
+            m_testAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/player_walking")) {
                 Position = new Vector2(1000, 928),
                 Origin = new Vector2(0.5f, 0.5f)
             };
