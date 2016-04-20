@@ -6,19 +6,19 @@ namespace RomanReign
 {
     class Player
     {
+        public Vector2 Position => m_testAnimation.Position;
+        public Rectangle Bounds => m_testAnimation.Bounds;
+
         RomanReignGame m_game;
+        GameScreen m_screen;
 
         AnimatedSprite m_testAnimation;
 
-        public Vector2 Position => m_testAnimation.Position;
-
-        public Player(RomanReignGame game)
+        public Player(GameScreen screen, RomanReignGame game, ContentManager content)
         {
             m_game = game;
-        }
+            m_screen = screen;
 
-        public void LoadContent(ContentManager content)
-        {
             m_testAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/player_walking")) {
                 Position = new Vector2(1000, 928),
                 Origin = new Vector2(0.5f, 0.5f)
@@ -31,7 +31,8 @@ namespace RomanReign
             m_testAnimation.Update(gameTime);
 
             // Make semi-transparent on mouseover.
-            bool mouseOver = m_testAnimation.Bounds.Contains(m_game.InputManager.Mouse.Position);
+            Vector2 mouseWorldCoords = m_screen.Camera.ScreenToWorld(m_game.Input.Mouse.Position.ToVector2());
+            bool mouseOver = m_testAnimation.Bounds.Contains(mouseWorldCoords);
             float opacity = (mouseOver ? 0.5f : 1f);
             m_testAnimation.SetOpacity(opacity);
         }

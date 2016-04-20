@@ -9,18 +9,19 @@ namespace RomanReign
     /// </summary>
     class RomanReignGame : Game
     {
-        // These public variables allow other classes to access certain local variables in
-        // this class (i.e. the input manager and screen manager local variables which are
-        // declared in the next section of the code).
+        // These public fields allow other classes to access certain local variables in
+        // this class such as the input manager and screen manager local variables which
+        // are declared in the next section of the code.
 
-        public InputManager  InputManager  => m_inputManager;
-        public ScreenManager ScreenManager => m_screenManager;
-        public DebugRenderer DebugRenderer => m_debugRenderer;
+        public InputManager  Input   => m_inputManager;
+        public ScreenManager Screens => m_screenManager;
+        public DebugRenderer Debug   => m_debugRenderer;
 
         // The initial Game1 class only had a sprite batch to start with. We've added
         // a screen manager which we will use to manage all of our active screens for
-        // us as well as an input manager which we can use to check for certain input
-        // events (such as a key being pressed and then released).
+        // us, an input manager which will allow us to check for certain input events
+        // such as a key being pressed and then released,  and a debug renderer which
+        // we can use to draw collision rectangles.
 
         SpriteBatch   m_spriteBatch;
         InputManager  m_inputManager;

@@ -17,14 +17,14 @@ namespace RomanReign
 
         RomanReignGame m_game;
 
-        InputManager m_input => m_game.InputManager;
-        ScreenManager m_screens => m_game.ScreenManager;
-        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+        InputManager  m_input    => m_game.Input;
+        ScreenManager m_screens  => m_game.Screens;
+        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // We need a sprite to use as the menu background.  This sprite should always be
         // drawn when we have any of the menu screens activated. For a brief description
         // of our sprite class, see Screens/Menu/SplashScreen.cs - or Utilties/Sprite.cs
-        // if you want to see the actual code for the class.
+        // if you want to see the actual code for the sprite class.
 
         Sprite m_background;
 

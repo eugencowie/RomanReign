@@ -7,7 +7,7 @@ namespace RomanReign
 {
     /// <summary>
     /// This is the first screen which is displayed when the game is run.  It displays a
-    /// splash screen texture for three seconds before switching to the main menu screen.
+    /// splash screen texture for a few seconds before switching to the main menu screen.
     /// </summary>
     class SplashScreen : IScreen
     {
@@ -21,8 +21,8 @@ namespace RomanReign
         // of code (for example to get the viewport size we can simply use the m_viewport
         // variable instead of m_game.GraphicsDevice.Viewport.Bounds).
 
-        InputManager  m_input    => m_game.InputManager;
-        ScreenManager m_screens  => m_game.ScreenManager;
+        InputManager  m_input    => m_game.Input;
+        ScreenManager m_screens  => m_game.Screens;
         Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // Our sprite class provides several useful functions for dealing with textures. In

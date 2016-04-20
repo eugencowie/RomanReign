@@ -6,19 +6,13 @@ namespace RomanReign
 {
     class Map
     {
-        Sprite m_sprite;
-        string m_mapPath;
-
         public Rectangle Bounds => m_sprite.Bounds;
 
-        public Map(string mapPath)
-        {
-            m_mapPath = mapPath;
-        }
+        Sprite m_sprite;
 
-        public void LoadContent(ContentManager content)
+        public Map(ContentManager content, string mapPath)
         {
-            m_sprite = new Sprite(content.Load<Texture2D>(m_mapPath));
+            m_sprite = new Sprite(content.Load<Texture2D>(mapPath));
         }
 
         public void Draw(SpriteBatch spriteBatch)

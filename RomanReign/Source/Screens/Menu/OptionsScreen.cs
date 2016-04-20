@@ -17,9 +17,9 @@ namespace RomanReign
 
         RomanReignGame m_game;
 
-        InputManager m_input => m_game.InputManager;
-        ScreenManager m_screens => m_game.ScreenManager;
-        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+        InputManager  m_input => m_game.Input;
+        ScreenManager m_screens => m_game.Screens;
+        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // We need a sprite for the heading (or title) of the screen as well as a sprite
         // for the back button.
@@ -28,7 +28,7 @@ namespace RomanReign
         Sprite m_backButton;
 
         /// <summary>
-        /// This constructor is run when the menu screen object is created.
+        /// This constructor is run when the options menu screen object is created.
         /// </summary>
         public OptionsScreen(RomanReignGame game)
         {

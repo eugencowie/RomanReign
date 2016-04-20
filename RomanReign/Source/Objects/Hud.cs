@@ -8,7 +8,7 @@ namespace RomanReign
     {
         Sprite m_testSprite;
 
-        public void LoadContent(ContentManager content)
+        public Hud(ContentManager content)
         {
             m_testSprite = new Sprite(content.Load<Texture2D>("Textures/HUD/Test")) {
                 Position = new Vector2(20, 20)

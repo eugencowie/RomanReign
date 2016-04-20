@@ -12,9 +12,9 @@ namespace RomanReign
     {
         RomanReignGame m_game;
 
-        InputManager m_input => m_game.InputManager;
-        ScreenManager m_screens => m_game.ScreenManager;
-        Rectangle m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
+        InputManager  m_input    => m_game.Input;
+        ScreenManager m_screens  => m_game.Screens;
+        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         Sprite m_background1;
         Sprite m_background2;

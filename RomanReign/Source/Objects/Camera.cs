@@ -9,9 +9,10 @@ namespace RomanReign
         public float   Rotation = 0f;
         public float   Zoom     = 1f;
 
-        private Vector2   TopLeft => Position - (Origin * Zoom);
-        private Vector2   Size    => m_game.GraphicsDevice.Viewport.Bounds.Size.ToVector2() * Zoom;
-        public  Rectangle Bounds  => new Rectangle((int)TopLeft.X, (int)TopLeft.Y, (int)Size.X, (int)Size.Y);
+        private Vector2   AbsOrigin => m_game.GraphicsDevice.Viewport.Bounds.Size.ToVector2() * Origin;
+        private Vector2   TopLeft   => Position - (AbsOrigin * Zoom);
+        private Vector2   Size      => m_game.GraphicsDevice.Viewport.Bounds.Size.ToVector2() * Zoom;
+        public  Rectangle Bounds    => new Rectangle((int)TopLeft.X, (int)TopLeft.Y, (int)Size.X, (int)Size.Y);
 
         GameScreen m_screen;
         RomanReignGame m_game;
@@ -48,10 +49,26 @@ namespace RomanReign
         public Matrix GetViewMatrix()
         {
             return
-                Matrix.CreateTranslation(new Vector3(Origin, 0f)) *
+                Matrix.CreateTranslation(new Vector3(AbsOrigin, 0f)) *
                 Matrix.CreateTranslation(new Vector3(-Position, 0f)) *
                 Matrix.CreateRotationZ(Rotation) *
                 Matrix.CreateScale(Zoom, Zoom, 1f);
+        }
+
+        public Vector2 ScreenToWorld(Vector2 worldCoords)
+        {
+            Matrix mat =
+                Matrix.CreateTranslation(new Vector3(-AbsOrigin, 0f)) *
+                Matrix.CreateTranslation(new Vector3(Position, 0f)) *
+                Matrix.CreateRotationZ(-Rotation) *
+                Matrix.CreateScale(1f / Zoom, 1f / Zoom, 1f);
+
+            return Vector2.Transform(worldCoords, mat);
+        }
+
+        public Vector2 WorldToScreen(Vector2 screenCoords)
+        {
+            return Vector2.Transform(screenCoords, GetViewMatrix());
         }
     }
 }
