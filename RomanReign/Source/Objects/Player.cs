@@ -20,7 +20,7 @@ namespace RomanReign
             m_screen = screen;
 
             m_testAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/player_walking")) {
-                Position = new Vector2(1000, 928),
+                Position = m_screen.Map.Info.PlayerSpawn,
                 Origin = new Vector2(0.5f, 0.5f)
             };
         }
@@ -40,6 +40,8 @@ namespace RomanReign
         public void Draw(SpriteBatch spriteBatch)
         {
             m_testAnimation.Draw(spriteBatch);
+
+            m_game.Debug.Draw(m_testAnimation.Bounds, Color.Blue);
         }
     }
 }

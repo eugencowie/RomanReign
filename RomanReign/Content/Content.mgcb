@@ -178,17 +178,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Game/bg_pause.png
 
-#begin Textures/Game/bg_game.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:TextureFormat=Color
-/build:Textures/Game/bg_game.png
-
 #begin Textures/HUD/test.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -221,4 +210,18 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
 /build:Textures/Game/player_walking.png
+
+#begin Maps/Test.csv
+/copy:Maps/Test.csv
+
+#begin Maps/Test.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:Maps/Test.png
 

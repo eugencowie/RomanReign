@@ -19,7 +19,8 @@ namespace RomanReign
         /// </summary>
         public static void PreloadGameContent(ContentManager content)
         {
-            content.Load<Texture2D>("Textures/Game/bg_game");
+            content.Load<Texture2D>("Maps/Test");
+
             content.Load<Texture2D>("Textures/Game/bg_intro_1");
             content.Load<Texture2D>("Textures/Game/bg_intro_2");
             content.Load<Texture2D>("Textures/Game/bg_intro_3");

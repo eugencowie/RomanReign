@@ -59,7 +59,7 @@ namespace RomanReign
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_map = new Map(content, "Textures/Game/bg_game");
+            m_map = new Map(m_game, content, "Maps/Test");
 
             m_player = new Player(this, m_game, content);
 
@@ -81,6 +81,13 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
+#if DEBUG
+            if (m_game.Input.IsKeyJustReleased(Keys.F5))
+            {
+                m_game.Debug.Enabled = !m_game.Debug.Enabled;
+            }
+#endif
+
             if (!m_isCovered)
             {
                 if (m_input.IsKeyJustReleased(Keys.Escape))
