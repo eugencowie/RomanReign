@@ -13,9 +13,10 @@ namespace RomanReign
         // this class such as the input manager and screen manager local variables which
         // are declared in the next section of the code.
 
-        public InputManager  Input   => m_inputManager;
-        public ScreenManager Screens => m_screenManager;
-        public DebugRenderer Debug   => m_debugRenderer;
+        public InputManager   Input   => m_inputManager;
+        public ScreenManager  Screens => m_screenManager;
+        public PhysicsManager Physics => m_physicsManager;
+        public DebugRenderer  Debug   => m_debugRenderer;
 
         // The initial Game1 class only had a sprite batch to start with. We've added
         // a screen manager which we will use to manage all of our active screens for
@@ -23,10 +24,11 @@ namespace RomanReign
         // such as a key being pressed and then released,  and a debug renderer which
         // we can use to draw collision rectangles.
 
-        SpriteBatch   m_spriteBatch;
-        InputManager  m_inputManager;
-        ScreenManager m_screenManager;
-        DebugRenderer m_debugRenderer;
+        SpriteBatch    m_spriteBatch;
+        InputManager   m_inputManager;
+        ScreenManager  m_screenManager;
+        PhysicsManager m_physicsManager;
+        DebugRenderer  m_debugRenderer;
 
         /// <summary>
         /// The constructor is run when the program is launched. The only changes we have
@@ -55,10 +57,11 @@ namespace RomanReign
         {
             ContentPreloader.PreloadAllContent(Content);
 
-            m_spriteBatch   = new SpriteBatch(GraphicsDevice);
-            m_inputManager  = new InputManager();
-            m_screenManager = new ScreenManager(Content, m_spriteBatch);
-            m_debugRenderer = new DebugRenderer(GraphicsDevice, m_spriteBatch);
+            m_spriteBatch    = new SpriteBatch(GraphicsDevice);
+            m_inputManager   = new InputManager();
+            m_screenManager  = new ScreenManager(Content, m_spriteBatch);
+            m_physicsManager = new PhysicsManager();
+            m_debugRenderer  = new DebugRenderer(GraphicsDevice, m_spriteBatch);
 
             m_screenManager.SwitchTo(new SplashScreen(this));
         }

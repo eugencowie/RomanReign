@@ -55,9 +55,11 @@
     <Compile Include="Source\Screens\Menu\SplashScreen.cs" />
     <Compile Include="Source\Systems\ContentPreloader.cs" />
     <Compile Include="Source\Systems\DebugRenderer.cs" />
+    <Compile Include="Source\Systems\PhysicsManager.cs" />
     <Compile Include="Source\Utilities\AnimatedSprite.cs" />
     <Compile Include="Source\Systems\InputManager.cs" />
     <Compile Include="Source\Systems\ScreenManager.cs" />
+    <Compile Include="Source\Utilities\RectangleF.cs" />
     <Compile Include="Source\Utilities\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
