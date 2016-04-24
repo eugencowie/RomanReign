@@ -24,6 +24,8 @@ namespace RomanReign
         Sprite m_sprite;
         MapInfo m_info;
 
+        List<StaticBody> m_physicsBodies = new List<StaticBody>();
+
         public Map(RomanReignGame game, ContentManager content, string mapPath)
         {
             m_game = game;
@@ -32,15 +34,26 @@ namespace RomanReign
 
             string infoFile = Path.Combine(content.RootDirectory, mapPath) + ".csv";
             m_info = LoadInfoFile(infoFile);
+
+            foreach (var rect in m_info.CollisionList)
+            {
+                StaticBody body = new StaticBody {
+                    Position = rect.Location.ToVector2(),
+                    Size = rect.Size.ToVector2()
+                };
+
+                m_physicsBodies.Add(body);
+                m_game.Physics.AddStaticBody(body);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             m_sprite.Draw(spriteBatch);
 
-            foreach (var rect in m_info.CollisionList)
+            foreach (var body in m_physicsBodies)
             {
-                m_game.Debug.Draw(rect);
+                m_game.Debug.Draw(body.Bounds.ToRect());
             }
         }
 

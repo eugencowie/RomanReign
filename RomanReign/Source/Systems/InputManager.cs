@@ -42,6 +42,11 @@ namespace RomanReign
         public bool IsKeyDown(Keys keys) => Keyboard.IsKeyDown(keys);
         public bool IsKeyUp(Keys keys) => Keyboard.IsKeyUp(keys);
 
+        public bool IsKeyJustPressed(Keys keys)
+        {
+            return (Keyboard.IsKeyDown(keys) && PrevKeyboard.IsKeyUp(keys));
+        }
+
         public bool IsKeyJustReleased(Keys keys)
         {
             return (Keyboard.IsKeyUp(keys) && PrevKeyboard.IsKeyDown(keys));
