@@ -18,14 +18,10 @@ namespace RomanReign
         public Map    Map    => m_map;
         public Player Player => m_player;
 
-        // These are the same set of variables that are present in all of the screen
-        // classes. See Screens/Menu/SplashScreen.cs for more information about them.
+        // This variable allows us to access important functions and variables in the
+        // main game class. You will see this variable in *all* of the screen classes.
 
         RomanReignGame m_game;
-
-        InputManager  m_input    => m_game.Input;
-        ScreenManager m_screens  => m_game.Screens;
-        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // Game objects.
 
@@ -65,7 +61,7 @@ namespace RomanReign
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
-            m_screens.Push(new IntroScreen(m_game));
+            m_game.Screens.Push(new IntroScreen(m_game));
         }
 
         /// <summary>
@@ -92,9 +88,9 @@ namespace RomanReign
             {
                 m_game.Physics.Update(1 / 60f);
 
-                if (m_input.IsKeyJustReleased(Keys.Escape))
+                if (m_game.Input.IsKeyJustReleased(Keys.Escape))
                 {
-                    m_screens.Push(new PauseScreen(m_game));
+                    m_game.Screens.Push(new PauseScreen(m_game));
                 }
 
                 m_player.Update(gameTime);

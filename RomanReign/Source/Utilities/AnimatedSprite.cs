@@ -8,7 +8,7 @@ namespace RomanReign
         int m_columns;
         int m_rows;
         int m_fps;
-        
+
         int m_totalFrames;
         int m_currentFrame;
 
@@ -37,7 +37,7 @@ namespace RomanReign
 
                 if (m_currentFrame >= m_totalFrames)
                     m_currentFrame = 0;
-                
+
                 UpdateSourceRect();
 
                 m_timeSinceLastFrame = 0;

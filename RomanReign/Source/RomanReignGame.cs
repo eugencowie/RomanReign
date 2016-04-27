@@ -13,10 +13,12 @@ namespace RomanReign
         // this class such as the input manager and screen manager local variables which
         // are declared in the next section of the code.
 
-        public InputManager   Input   => m_inputManager;
-        public ScreenManager  Screens => m_screenManager;
-        public PhysicsManager Physics => m_physicsManager;
-        public DebugRenderer  Debug   => m_debugRenderer;
+        public InputManager   Input    => m_inputManager;
+        public ScreenManager  Screens  => m_screenManager;
+        public PhysicsManager Physics  => m_physicsManager;
+        public DebugRenderer  Debug    => m_debugRenderer;
+
+        public Rectangle Viewport => GraphicsDevice.Viewport.Bounds;
 
         // The initial Game1 class only had a sprite batch to start with. We've added
         // a screen manager which we will use to manage all of our active screens for
@@ -65,7 +67,7 @@ namespace RomanReign
 
             m_screenManager.SwitchTo(new SplashScreen(this));
         }
-        
+
         /// <summary>
         /// This function is run when the game is exiting.  It is possible that our screens
         /// might have code that needs to be run before the game exits, for example to save
@@ -76,7 +78,7 @@ namespace RomanReign
         {
             m_screenManager.UnloadContent();
         }
-        
+
         /// <summary>
         /// In addition to updating all of the active screens, this function also runs
         /// the Begin() and End() functions of the input manager which are required to

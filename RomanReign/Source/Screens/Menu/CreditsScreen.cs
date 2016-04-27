@@ -11,14 +11,10 @@ namespace RomanReign
     /// </summary>
     class CreditsScreen : IScreen
     {
-        // These are the same set of variables that are present in all of the screen
-        // classes. See Screens/Menu/SplashScreen.cs for more information about them.
+        // This variable allows us to access important functions and variables in the
+        // main game class. You will see this variable in *all* of the screen classes.
 
         RomanReignGame m_game;
-
-        InputManager  m_input    => m_game.Input;
-        ScreenManager m_screens  => m_game.Screens;
-        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // We need a sprite for the heading (or title) of the screen as well as a sprite
         // for the back button.
@@ -42,12 +38,12 @@ namespace RomanReign
             // See Screens/Menu/MenuSreen.cs for an explanation of how sprite origins work.
 
             m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_credits")) {
-                Position = new Vector2(m_viewport.Center.X, 100),
+                Position = new Vector2(m_game.Viewport.Center.X, 100),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_back")) {
-                Position = new Vector2(m_viewport.Center.X, 600),
+                Position = new Vector2(m_game.Viewport.Center.X, 600),
                 Origin = new Vector2(0.5f, 0.5f)
             };
         }
@@ -65,16 +61,16 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (m_input.IsKeyJustReleased(Keys.Escape))
+            if (m_game.Input.IsKeyJustReleased(Keys.Escape))
             {
-                m_screens.Pop();
+                m_game.Screens.Pop();
             }
 
-            if (m_input.IsMouseButtonJustReleased(MouseButtons.Left))
+            if (m_game.Input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
-                if (m_backButton.Bounds.Contains(m_input.Mouse.Position))
+                if (m_backButton.Bounds.Contains(m_game.Input.Mouse.Position))
                 {
-                    m_screens.Pop();
+                    m_game.Screens.Pop();
                 }
             }
         }

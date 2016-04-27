@@ -16,15 +16,6 @@ namespace RomanReign
 
         RomanReignGame m_game;
 
-        // These variables are basically "shortcuts" to certain variables within the main
-        // game class. They are only used so that we don't have to type out the whole bit
-        // of code (for example to get the viewport size we can simply use the m_viewport
-        // variable instead of m_game.GraphicsDevice.Viewport.Bounds).
-
-        InputManager  m_input    => m_game.Input;
-        ScreenManager m_screens  => m_game.Screens;
-        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
-
         // Our sprite class provides several useful functions for dealing with textures. In
         // the next bit of code, we declare a sprite variable for the background as well as
         // a floating point number to hold the number of seconds since the screen was shown.
@@ -49,7 +40,7 @@ namespace RomanReign
         {
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_splash"));
 
-            m_background.ScaleToSize(m_viewport.Size.ToVector2());
+            m_background.ScaleToSize(m_game.Viewport.Size.ToVector2());
         }
 
         /// <summary>
@@ -69,9 +60,9 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (m_elapsedTime > 3f || m_input.IsKeyJustReleased(Keys.Escape))
+            if (m_elapsedTime > 3f || m_game.Input.IsKeyJustReleased(Keys.Escape))
             {
-                m_screens.SwitchTo(new MenuScreen(m_game));
+                m_game.Screens.SwitchTo(new MenuScreen(m_game));
             }
 
             m_elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;

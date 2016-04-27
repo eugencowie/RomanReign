@@ -12,14 +12,10 @@ namespace RomanReign
     /// </summary>
     class MenuScreen : IScreen
     {
-        // These are the same set of variables that are present in all of the screen
-        // classes. See Screens/Menu/SplashScreen.cs for more information about them.
+        // This variable allows us to access important functions and variables in the
+        // main game class. You will see this variable in *all* of the screen classes.
 
         RomanReignGame m_game;
-
-        InputManager  m_input    => m_game.Input;
-        ScreenManager m_screens  => m_game.Screens;
-        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
 
         // We need a sprite to use as the menu background.  This sprite should always be
         // drawn when we have any of the menu screens activated. For a brief description
@@ -61,7 +57,7 @@ namespace RomanReign
         public void LoadContent(ContentManager content)
         {
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_menu"));
-            m_background.ScaleToSize(m_viewport.Size.ToVector2());
+            m_background.ScaleToSize(m_game.Viewport.Size.ToVector2());
 
             // These next sprites are all special because we want the origin of the sprite
             // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
@@ -69,27 +65,27 @@ namespace RomanReign
             // origin property is a Vector2 where 0,0 is top-left and 1,1 is bottom-right.
 
             m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_menu")) {
-                Position = new Vector2(m_viewport.Center.X, 100),
+                Position = new Vector2(m_game.Viewport.Center.X, 100),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start")) {
-                Position = new Vector2(m_viewport.Center.X, 300),
+                Position = new Vector2(m_game.Viewport.Center.X, 300),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_options")) {
-                Position = new Vector2(m_viewport.Center.X, 400),
+                Position = new Vector2(m_game.Viewport.Center.X, 400),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_credits")) {
-                Position = new Vector2(m_viewport.Center.X, 500),
+                Position = new Vector2(m_game.Viewport.Center.X, 500),
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_exit")) {
-                Position = new Vector2(m_viewport.Center.X, 600),
+                Position = new Vector2(m_game.Viewport.Center.X, 600),
                 Origin = new Vector2(0.5f, 0.5f)
             };
         }
@@ -117,7 +113,7 @@ namespace RomanReign
                 // hover over slightly transparent.
                 foreach (Sprite button in new [] { m_startButton, m_optionsButton, m_creditsButton, m_exitButton })
                 {
-                    bool mouseOver = button.Bounds.Contains(m_input.Mouse.Position);
+                    bool mouseOver = button.Bounds.Contains(m_game.Input.Mouse.Position);
                     float opacity = mouseOver ? 0.5f : 1;
                     button.SetOpacity(opacity);
                 }
@@ -125,18 +121,18 @@ namespace RomanReign
                 // Next, we check if the left mouse button has just been pressed and then
                 // released. If so, we check to see if the mouse is over any of the buttons
                 // and take any appropriate action.
-                if (m_input.IsMouseButtonJustReleased(MouseButtons.Left))
+                if (m_game.Input.IsMouseButtonJustReleased(MouseButtons.Left))
                 {
-                    if (m_startButton.Bounds.Contains(m_input.Mouse.Position))
-                        m_screens.SwitchTo(new GameScreen(m_game));
+                    if (m_startButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_game.Screens.SwitchTo(new GameScreen(m_game));
 
-                    if (m_optionsButton.Bounds.Contains(m_input.Mouse.Position))
-                        m_screens.Push(new OptionsScreen(m_game));
+                    if (m_optionsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_game.Screens.Push(new OptionsScreen(m_game));
 
-                    if (m_creditsButton.Bounds.Contains(m_input.Mouse.Position))
-                        m_screens.Push(new CreditsScreen(m_game));
+                    if (m_creditsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_game.Screens.Push(new CreditsScreen(m_game));
 
-                    if (m_exitButton.Bounds.Contains(m_input.Mouse.Position))
+                    if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))
                         m_game.Exit();
                 }
             }

@@ -12,12 +12,7 @@ namespace RomanReign
     {
         RomanReignGame m_game;
 
-        InputManager  m_input    => m_game.Input;
-        ScreenManager m_screens  => m_game.Screens;
-        Rectangle     m_viewport => m_game.GraphicsDevice.Viewport.Bounds;
-
         Sprite m_fadeBackground;
-
         Sprite m_exitButton;
 
         public PauseScreen(RomanReignGame game)
@@ -29,12 +24,12 @@ namespace RomanReign
         {
             // Load the background sprite and scale it to cover the entire screen.
             m_fadeBackground = new Sprite(content.Load<Texture2D>("Textures/Game/bg_pause"));
-            m_fadeBackground.ScaleToSize(m_viewport.Size.ToVector2());
+            m_fadeBackground.ScaleToSize(m_game.Viewport.Size.ToVector2());
 
             // Load the exit button sprite.
             m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_exit_white"));
             m_exitButton.Origin = new Vector2(0.5f, 0.5f);
-            m_exitButton.Position.X = m_viewport.Center.X;
+            m_exitButton.Position.X = m_game.Viewport.Center.X;
             m_exitButton.Position.Y = 400;
         }
 
@@ -45,18 +40,18 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the escape key is pressed and released then remove this screen to return to the game.
-            if (m_input.IsKeyJustReleased(Keys.Escape))
+            if (m_game.Input.IsKeyJustReleased(Keys.Escape))
             {
-                m_screens.Pop();
+                m_game.Screens.Pop();
             }
 
             // If the left mouse button has just been pressed and released...
-            if (m_input.IsMouseButtonJustReleased(MouseButtons.Left))
+            if (m_game.Input.IsMouseButtonJustReleased(MouseButtons.Left))
             {
                 // ...and the mouse is positioned over the exit button then switch to the main menu.
-                if (m_exitButton.Bounds.Contains(m_input.Mouse.Position))
+                if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))
                 {
-                    m_screens.SwitchTo(new MenuScreen(m_game));
+                    m_game.Screens.SwitchTo(new MenuScreen(m_game));
                 }
             }
         }
