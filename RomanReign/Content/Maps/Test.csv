@@ -1,4 +1,7 @@
-playerspawn,1000,928,,
-collision,0,958,5760,122
-collision,0,777,2577,20
-collision,3439,777,2321,20
+Type,X,Y,Width,Height,Comment
+,,,,,
+playerspawn,1000,928,,,player
+,,,,,
+collision,0,958,5760,122,ground
+collision,0,777,2577,20,wall
+collision,3439,777,2321,20,wall

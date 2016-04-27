@@ -7,11 +7,19 @@ using System.IO;
 
 namespace RomanReign
 {
+    public class Property<T>
+    {
+        public string Name;
+        public T Value;
+
+        public static implicit operator Property<T>(T value) => new Property<T> { Value = value };
+    }
+
     class MapInfo
     {
-        public Vector2 PlayerSpawn = Vector2.Zero;
+        public Property<Vector2> PlayerSpawn = Vector2.Zero;
 
-        public List<Rectangle> CollisionList = new List<Rectangle>();
+        public List<Property<Rectangle>> CollisionList = new List<Property<Rectangle>>();
     }
 
     class Map
@@ -35,11 +43,12 @@ namespace RomanReign
             string infoFile = Path.Combine(content.RootDirectory, mapPath) + ".csv";
             m_info = LoadInfoFile(infoFile);
 
-            foreach (var rect in m_info.CollisionList)
+            foreach (var coll in m_info.CollisionList)
             {
                 StaticBody body = new StaticBody {
-                    Position = rect.Location.ToVector2(),
-                    Size = rect.Size.ToVector2()
+                    Position = coll.Value.Location.ToVector2(),
+                    Size = coll.Value.Size.ToVector2(),
+                    Name = coll.Name
                 };
 
                 m_physicsBodies.Add(body);
@@ -68,7 +77,7 @@ namespace RomanReign
             {
                 string[] columns = row.Split(',');
 
-                if (columns.Length != 5)
+                if (columns.Length != 6)
                     throw new ArgumentException("invalid number of columns: " + columns.Length);
 
                 string id = columns[0].ToLower().Trim();
@@ -88,6 +97,7 @@ namespace RomanReign
                     }
 
                     mapInfo.PlayerSpawn = new Vector2(x, y);
+                    mapInfo.PlayerSpawn.Name = columns[5];
                 }
                 else if (id == "collision")
                 {
@@ -108,7 +118,10 @@ namespace RomanReign
                         height = 0;
                     }
 
-                    mapInfo.CollisionList.Add(new Rectangle(x, y, width, height));
+                    Property<Rectangle> rect = new Rectangle(x, y, width, height);
+                    rect.Name = columns[5];
+
+                    mapInfo.CollisionList.Add(rect);
                 }
             }
 

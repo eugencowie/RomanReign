@@ -10,11 +10,17 @@ namespace RomanReign
     {
         public Vector2 Position => m_physicsBody.Position;
 
+        public bool IsJumping  => m_isJumping;
+        public bool IsDropping => m_isDropping;
+
         RomanReignGame m_game;
         GameScreen m_screen;
 
         AnimatedSprite m_walkingAnimation;
         RigidBody m_physicsBody;
+
+        bool m_isJumping;
+        bool m_isDropping;
 
         public Player(GameScreen screen, RomanReignGame game, ContentManager content)
         {
@@ -22,15 +28,17 @@ namespace RomanReign
             m_screen = screen;
 
             m_walkingAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/player_walking")) {
-                Position = m_screen.Map.Info.PlayerSpawn,
+                Position = m_screen.Map.Info.PlayerSpawn.Value,
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
             m_physicsBody = new RigidBody {
-                Position = m_screen.Map.Info.PlayerSpawn,
+                Name = m_screen.Map.Info.PlayerSpawn.Name,
+                Position = m_screen.Map.Info.PlayerSpawn.Value,
                 Size = m_walkingAnimation.Bounds.Size.ToVector2(),
                 Origin = new Vector2(0.5f, 0.5f),
-                LinearDamping = new Vector2(0.2f, 0f)
+                LinearDamping = new Vector2(0.2f, 0f),
+                UserData = this
             };
 
             m_game.Physics.AddRigidBody(m_physicsBody);
@@ -38,9 +46,23 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            if (m_game.Input.IsKeyJustPressed(Keys.Z))
+            if (m_game.Input.IsKeyJustPressed(Keys.Z) && m_game.Input.IsKeyUp(Keys.Down))
             {
                 m_physicsBody.Velocity.Y -= 800f;
+                m_isJumping = true;
+            }
+            if (m_physicsBody.Velocity.Y > 0)
+            {
+                m_isJumping = false;
+            }
+
+            if (m_game.Input.IsKeyJustPressed(Keys.Z) && m_game.Input.IsKeyDown(Keys.Down))
+            {
+                m_isDropping = true;
+            }
+            if (m_physicsBody.Velocity.Y < 0)
+            {
+                m_isDropping = false;
             }
 
             if (m_game.Input.IsKeyDown(Keys.Left))

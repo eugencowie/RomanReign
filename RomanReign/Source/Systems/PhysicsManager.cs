@@ -6,6 +6,9 @@ namespace RomanReign
 {
     class StaticBody
     {
+        public string Name;
+        public object UserData;
+
         public Vector2 Position;
         public Vector2 Origin;
         public Vector2 Size;
@@ -88,6 +91,30 @@ namespace RomanReign
             }
             else
             {
+                StaticBody other = m_staticBodies.Where(r => r.Bounds.Intersects(newBounds)).First();
+
+                // Dirty hack to allow player to jump onto or fall through the wall.
+                if (body.Name == "player" && other.Name == "wall" && body.UserData is Player)
+                {
+                    Player player = body.UserData as Player;
+                    if (player.IsJumping || player.IsDropping)
+                    {
+                        body.Position.X += x;
+                        return true;
+                    }
+                }
+
+                if (x > 0)
+                {
+                    float diff = newBounds.Right - other.Bounds.Left;
+                    body.Position.X += x - diff;
+                }
+                else
+                {
+                    float diff = other.Bounds.Right - newBounds.Left;
+                    body.Position.X += x + diff;
+                }
+
                 return false;
             }
         }
@@ -110,6 +137,18 @@ namespace RomanReign
             else
             {
                 StaticBody other = m_staticBodies.Where(r => r.Bounds.Intersects(newBounds)).First();
+
+                // Dirty hack to allow player to jump onto or fall through the wall.
+                if (body.Name == "player" && other.Name == "wall" && body.UserData is Player)
+                {
+                    Player player = body.UserData as Player;
+                    if (player.IsJumping || player.IsDropping)
+                    {
+                        body.Position.Y += y;
+                        return true;
+                    }
+                }
+
                 if (y > 0)
                 {
                     float diff = newBounds.Bottom - other.Bounds.Top;
