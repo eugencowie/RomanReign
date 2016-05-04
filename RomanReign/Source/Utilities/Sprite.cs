@@ -7,32 +7,24 @@ namespace RomanReign
     {
         public Texture2D Texture = null;
         public Rectangle? SourceRect = null;
-        public Vector2 Origin = Vector2.Zero;
-        public Color Color = Color.White;
 
+        public Vector2 Origin = Vector2.Zero;
         public Vector2 Position = Vector2.Zero;
-        public Vector2 Scale = Vector2.One;
-        public float UniformScale = 1f;
+        public Vector2 Size = Vector2.Zero;
 
         public SpriteEffects Effects = SpriteEffects.None;
-
+        public Color Color = Color.White;
         public bool Visible = true;
-
-        protected         Vector2 AbsoluteScale   => Scale * UniformScale;
-        protected virtual Vector2 AbsoluteSrcSize => Texture.Bounds.Size.ToVector2();
-
-        protected Vector2 AbsoluteOrigin  => AbsoluteSrcSize * Origin;
-        protected Vector2 AbsoluteTopLeft => Position - (AbsoluteOrigin * AbsoluteScale);
-        protected Vector2 AbsoluteSize    => AbsoluteSrcSize * AbsoluteScale;
 
         public Rectangle Bounds
         {
-            get { return new Rectangle((int)AbsoluteTopLeft.X, (int)AbsoluteTopLeft.Y, (int)AbsoluteSize.X, (int)AbsoluteSize.Y); }
+            get { return new RectangleF(Position - Origin, Size).ToRect(); }
         }
 
         public Sprite(Texture2D texture)
         {
             Texture = texture;
+            Size = Texture.Bounds.Size.ToVector2();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -41,14 +33,10 @@ namespace RomanReign
             {
                 spriteBatch.Draw(
                     Texture,
-                    Position,
-                    SourceRect,
-                    Color,
-                    0f,
-                    AbsoluteOrigin,
-                    AbsoluteScale,
-                    Effects,
-                    0f);
+                    destinationRectangle: Bounds,
+                    sourceRectangle: SourceRect,
+                    color: Color,
+                    effects: Effects);
             }
         }
 
@@ -58,28 +46,24 @@ namespace RomanReign
             Color.A = alpha;
         }
 
-        public void ScaleToSize(float width, float height)
+        public virtual void SetRelativeScale(Vector2 size)
         {
-            Scale.X = width / Texture.Width;
-            Scale.Y = height / Texture.Height;
-
-            UniformScale = 1f;
+            Size = Texture.Bounds.Size.ToVector2() * size;
         }
 
-        public void ScaleToSize(Vector2 size)
+        public void SetRelativeScale(float width, float height)
         {
-            ScaleToSize(size.X, size.Y);
+            SetRelativeScale(new Vector2(width, height));
         }
 
-        public void SetAbsoluteOrigin(float absoluteX, float absoluteY)
+        public virtual void SetRelativeOrigin(Vector2 origin)
         {
-            Origin.X = absoluteX / Texture.Width;
-            Origin.Y = absoluteY / Texture.Height;
+            Origin = Texture.Bounds.Size.ToVector2() * origin;
         }
 
-        public void SetAbsoluteOrigin(Vector2 absoluteOrigin)
+        public void SetRelativeOrigin(float originX, float originY)
         {
-            SetAbsoluteOrigin(absoluteOrigin.X, absoluteOrigin.Y);
+            SetRelativeOrigin(new Vector2(originX, originY));
         }
     }
 }

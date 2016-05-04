@@ -38,9 +38,9 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_splash"));
-
-            m_background.ScaleToSize(m_game.Viewport.Size.ToVector2());
+            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_splash")) {
+                Size = m_game.Viewport.Size.ToVector2()
+            };
         }
 
         /// <summary>

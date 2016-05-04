@@ -35,9 +35,9 @@ namespace RomanReign
             m_screen = screen;
 
             m_walkingAnimation = new AnimatedSprite(4, 1, 8, content.Load<Texture2D>("Textures/Game/player_walking")) {
-                Position = m_screen.Map.Info.PlayerSpawn.Value,
-                Origin = new Vector2(0.5f, 0.5f)
+                Position = m_screen.Map.Info.PlayerSpawn.Value
             };
+            m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
             m_physicsBody = new DynamicBody {
                 Name = m_screen.Map.Info.PlayerSpawn.Name,

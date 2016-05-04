@@ -39,14 +39,14 @@ namespace RomanReign
             // See Screens/Menu/MenuSreen.cs for an explanation of how sprite origins work.
 
             m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_options")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 100),
-                Origin = new Vector2(0.5f, 0.5f)
+                Position = new Vector2(m_game.Viewport.Center.X, 100)
             };
+            m_heading.SetRelativeOrigin(0.5f, 0.5f);
 
             m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_back")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 600),
-                Origin = new Vector2(0.5f, 0.5f)
+                Position = new Vector2(m_game.Viewport.Center.X, 600)
             };
+            m_backButton.SetRelativeOrigin(0.5f, 0.5f);
         }
 
         /// <summary>

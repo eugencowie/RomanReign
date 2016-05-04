@@ -14,9 +14,6 @@ namespace RomanReign
 
         float m_timeSinceLastFrame;
 
-        protected override Vector2 AbsoluteSrcSize
-            => new Vector2((float)Texture.Width / m_columns, (float)Texture.Height / m_rows);
-
         public AnimatedSprite(int columns, int rows, int fps, Texture2D spritesheet)
             : base(spritesheet)
         {
@@ -25,6 +22,9 @@ namespace RomanReign
             m_fps = fps;
 
             m_totalFrames = m_columns * m_rows;
+
+            Size.X = Texture.Width / m_columns;
+            Size.Y = Texture.Height / m_rows;
 
             UpdateSourceRect();
         }
@@ -55,6 +55,11 @@ namespace RomanReign
             int column = m_currentFrame % m_columns;
 
             SourceRect = new Rectangle(width * column, height * row, width, height);
+        }
+
+        public override void SetRelativeOrigin(Vector2 origin)
+        {
+            Origin = new Vector2(Texture.Width / m_columns, Texture.Height / m_rows) * origin;
         }
     }
 }
