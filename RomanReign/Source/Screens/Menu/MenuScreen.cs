@@ -180,7 +180,7 @@ namespace RomanReign
         /// This function is called when the screen is covered up by another screen. All
         /// we do here is set the m_isCovered variable to true.
         /// </summary>
-        public void Covered()
+        public void Covered(IScreen other)
         {
             m_isCovered = true;
         }
@@ -189,7 +189,7 @@ namespace RomanReign
         /// This function is called when the screen on top of this one is removed, making
         /// this the top-most screen. All we do here is set m_isCovered to false.
         /// </summary>
-        public void Uncovered()
+        public void Uncovered(IScreen other)
         {
             m_isCovered = false;
         }

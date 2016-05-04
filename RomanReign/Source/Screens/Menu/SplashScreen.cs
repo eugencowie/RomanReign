@@ -89,7 +89,7 @@ namespace RomanReign
         /// are not 'pushing' any other screens on top of this one, so we don't need to
         /// do anything in this function.
         /// </summary>
-        public void Covered()
+        public void Covered(IScreen other)
         {
         }
 
@@ -98,7 +98,7 @@ namespace RomanReign
         /// this the top-most screen. This screen should never have any screens on top of
         /// it so we do not need to do anything in this function.
         /// </summary>
-        public void Uncovered()
+        public void Uncovered(IScreen other)
         {
         }
     }

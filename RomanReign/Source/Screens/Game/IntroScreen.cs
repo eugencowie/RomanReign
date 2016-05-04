@@ -87,11 +87,11 @@ namespace RomanReign
             spriteBatch.End();
         }
 
-        public void Covered()
+        public void Covered(IScreen other)
         {
         }
 
-        public void Uncovered()
+        public void Uncovered(IScreen other)
         {
         }
     }

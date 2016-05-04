@@ -127,7 +127,7 @@ namespace RomanReign
         /// <summary>
         /// This function is called when the screen is covered up by another screen.
         /// </summary>
-        public void Covered()
+        public void Covered(IScreen other)
         {
             m_isCovered = true;
         }
@@ -135,7 +135,7 @@ namespace RomanReign
         /// <summary>
         /// This function is called when the screen on top of this one is removed.
         /// </summary>
-        public void Uncovered()
+        public void Uncovered(IScreen other)
         {
             m_isCovered = false;
         }

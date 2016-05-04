@@ -8,22 +8,49 @@ namespace RomanReign
 {
     interface IScreen
     {
+        /// <summary>
+        /// Called when the screen is loaded.
+        /// </summary>
         void LoadContent(ContentManager content);
+
+        /// <summary>
+        /// Called when the screen is removed or the game is exiting.
+        /// </summary>
         void UnloadContent();
 
+        /// <summary>
+        /// Called every frame when the screen should update.
+        /// </summary>
         void Update(GameTime gameTime);
+
+        /// <summary>
+        /// Called every frame when the screen should draw.
+        /// </summary>
         void Draw(GameTime gameTime, SpriteBatch spriteBatch);
 
-        void Covered();
-        void Uncovered();
+        /// <summary>
+        /// Called when this screen is covered by another screen.
+        /// </summary>
+        void Covered(IScreen other);
+
+        /// <summary>
+        /// Called when the screen covering this one is removed.
+        /// </summary>
+        void Uncovered(IScreen other);
     }
 
+    /// <summary>
+    /// Maintains a list of currently active screens.
+    /// </summary>
     class ScreenManager
     {
         ContentManager m_content;
         SpriteBatch m_spriteBatch;
 
         List<IScreen> m_screens = new List<IScreen>();
+
+        List<IScreen> m_copy = new List<IScreen>();
+        bool m_invalidateCopy = true;
 
         public ScreenManager(ContentManager content, SpriteBatch spriteBatch)
         {
@@ -41,9 +68,13 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            List<IScreen> copy = m_screens.ToList();
+            if (m_invalidateCopy)
+            {
+                m_copy = m_screens.ToList();
+                m_invalidateCopy = false;
+            }
 
-            foreach (var screen in copy)
+            foreach (var screen in m_copy)
             {
                 screen.Update(gameTime);
             }
@@ -54,7 +85,13 @@ namespace RomanReign
         /// </summary>
         public void Draw(GameTime gameTime)
         {
-            foreach (var screen in m_screens)
+            if (m_invalidateCopy)
+            {
+                m_copy = m_screens.ToList();
+                m_invalidateCopy = false;
+            }
+
+            foreach (var screen in m_copy)
             {
                 screen.Draw(gameTime, m_spriteBatch);
             }
@@ -96,10 +133,12 @@ namespace RomanReign
         {
             if (m_screens.Any())
             {
-                Top.Covered();
+                Top.Covered(screen);
             }
 
             m_screens.Add(screen);
+            m_invalidateCopy = true;
+
             screen.LoadContent(m_content);
         }
 
@@ -110,12 +149,16 @@ namespace RomanReign
         {
             if (m_screens.Any())
             {
-                Top.UnloadContent();
-                m_screens.RemoveAt(m_screens.IndexOf(Top));
+                IScreen old = Top;
+
+                old.UnloadContent();
+
+                m_screens.Remove(old);
+                m_invalidateCopy = true;
 
                 if (m_screens.Any())
                 {
-                    Top.Uncovered();
+                    Top.Uncovered(old);
                 }
             }
         }
