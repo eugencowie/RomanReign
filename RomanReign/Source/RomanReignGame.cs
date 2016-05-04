@@ -9,28 +9,20 @@ namespace RomanReign
     /// </summary>
     class RomanReignGame : Game
     {
-        // These public fields allow other classes to access certain local variables in
-        // this class such as the input manager and screen manager local variables which
-        // are declared in the next section of the code.
-
-        public InputManager   Input    => m_inputManager;
-        public ScreenManager  Screens  => m_screenManager;
-        public PhysicsManager Physics  => m_physicsManager;
-        public DebugRenderer  Debug    => m_debugRenderer;
-
-        public Rectangle Viewport => GraphicsDevice.Viewport.Bounds;
-
         // The initial Game1 class only had a sprite batch to start with. We've added
         // a screen manager which we will use to manage all of our active screens for
         // us, an input manager which will allow us to check for certain input events
         // such as a key being pressed and then released,  and a debug renderer which
         // we can use to draw collision rectangles.
 
-        SpriteBatch    m_spriteBatch;
-        InputManager   m_inputManager;
-        ScreenManager  m_screenManager;
-        PhysicsManager m_physicsManager;
-        DebugRenderer  m_debugRenderer;
+        public Rectangle Viewport => GraphicsDevice.Viewport.Bounds;
+
+        public InputManager Input { get; private set; }
+        public ScreenManager Screens { get; private set; }
+        public PhysicsManager Physics { get; private set; }
+        public DebugRenderer Debug { get; private set; }
+
+        private SpriteBatch m_spriteBatch;
 
         /// <summary>
         /// The constructor is run when the program is launched. The only changes we have
@@ -60,12 +52,13 @@ namespace RomanReign
             ContentPreloader.PreloadAllContent(Content);
 
             m_spriteBatch    = new SpriteBatch(GraphicsDevice);
-            m_inputManager   = new InputManager();
-            m_screenManager  = new ScreenManager(Content, m_spriteBatch);
-            m_physicsManager = new PhysicsManager();
-            m_debugRenderer  = new DebugRenderer(GraphicsDevice, m_spriteBatch);
 
-            m_screenManager.SwitchTo(new SplashScreen(this));
+            Input = new InputManager();
+            Screens = new ScreenManager(Content, m_spriteBatch);
+            Physics = new PhysicsManager();
+            Debug  = new DebugRenderer(GraphicsDevice, m_spriteBatch);
+
+            Screens.SwitchTo(new SplashScreen(this));
         }
 
         /// <summary>
@@ -76,7 +69,7 @@ namespace RomanReign
         /// </summary>
         protected override void UnloadContent()
         {
-            m_screenManager.UnloadContent();
+            Screens.UnloadContent();
         }
 
         /// <summary>
@@ -86,11 +79,9 @@ namespace RomanReign
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
-            m_inputManager.Begin();
+            Input.Update();
 
-            m_screenManager.Update(gameTime);
-
-            m_inputManager.End();
+            Screens.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -103,7 +94,7 @@ namespace RomanReign
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            m_screenManager.Draw(gameTime);
+            Screens.Draw(gameTime);
 
             base.Draw(gameTime);
         }

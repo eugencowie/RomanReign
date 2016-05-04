@@ -78,7 +78,7 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
 #if DEBUG
-            if (m_game.Input.IsKeyJustReleased(Keys.F5))
+            if (m_game.Input.IsJustReleased(Keys.F5))
             {
                 m_game.Debug.Enabled = !m_game.Debug.Enabled;
             }
@@ -88,7 +88,7 @@ namespace RomanReign
             {
                 m_game.Physics.Update(1 / 60f);
 
-                if (m_game.Input.IsKeyJustReleased(Keys.Escape) || m_game.Input.IsButtonJustReleased(Buttons.Start))
+                if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.Start))
                 {
                     m_game.Screens.Push(new PauseScreen(m_game));
                 }

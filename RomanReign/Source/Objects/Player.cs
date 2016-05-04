@@ -55,36 +55,36 @@ namespace RomanReign
             InputManager i = m_game.Input;
 
             m_jumpActions.Add(() =>
-                i.IsKeyJustPressed(Keys.Z) &&
-                i.IsKeyUp(Keys.Down));
+                i.IsJustPressed(Keys.Z) &&
+                i.IsUp(Keys.Down));
 
             m_jumpActions.Add(() =>
-                i.IsButtonJustPressed(Buttons.A) &&
-                (i.IsButtonUp(Buttons.DPadDown) && !i.IsLeftStickDown(0.5f)));
+                i.IsJustPressed(Buttons.A) &&
+                (i.IsUp(Buttons.DPadDown) && !i.IsStickDown(Thumbsticks.Left, 0.5f)));
 
             m_dropActions.Add(() =>
-                i.IsKeyJustPressed(Keys.Z) &&
-                i.IsKeyDown(Keys.Down));
+                i.IsJustPressed(Keys.Z) &&
+                i.IsDown(Keys.Down));
 
             m_dropActions.Add(() =>
-                i.IsButtonJustPressed(Buttons.A) &&
-                (i.IsButtonDown(Buttons.DPadDown) || i.IsLeftStickDown(0.5f)));
+                i.IsJustPressed(Buttons.A) &&
+                (i.IsDown(Buttons.DPadDown) || i.IsStickDown(Thumbsticks.Left, 0.5f)));
 
             m_moveLeftActions.Add(() =>
-                i.IsKeyDown(Keys.Left) &&
-                i.IsKeyUp(Keys.Right));
+                i.IsDown(Keys.Left) &&
+                i.IsUp(Keys.Right));
 
             m_moveLeftActions.Add(() =>
-                (i.IsButtonDown(Buttons.DPadLeft) || i.IsLeftStickLeft()) &&
-                (i.IsButtonUp(Buttons.DPadRight) && !i.IsLeftStickRight()));
+                (i.IsDown(Buttons.DPadLeft) || i.IsStickLeft(Thumbsticks.Left)) &&
+                (i.IsUp(Buttons.DPadRight) && !i.IsStickRight(Thumbsticks.Left)));
 
             m_moveRightActions.Add(() =>
-                i.IsKeyDown(Keys.Right) &&
-                i.IsKeyUp(Keys.Left));
+                i.IsDown(Keys.Right) &&
+                i.IsUp(Keys.Left));
 
             m_moveRightActions.Add(() =>
-                (i.IsButtonDown(Buttons.DPadRight) || i.IsLeftStickRight()) &&
-                (i.IsButtonUp(Buttons.DPadLeft) && !i.IsLeftStickLeft()));
+                (i.IsDown(Buttons.DPadRight) || i.IsStickRight(Thumbsticks.Left)) &&
+                (i.IsUp(Buttons.DPadLeft) && !i.IsStickLeft(Thumbsticks.Left)));
         }
 
         public void Update(GameTime gameTime)

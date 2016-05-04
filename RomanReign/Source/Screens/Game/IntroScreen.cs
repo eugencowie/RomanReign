@@ -51,9 +51,9 @@ namespace RomanReign
         {
             // If the elapsed time reaches 7.5 seconds or the escape key is pressed, remove this screen.
             if (m_elapsedTime > 7.5f ||
-                m_game.Input.IsKeyJustReleased(Keys.Escape) ||
-                m_game.Input.IsButtonJustReleased(Buttons.Start) ||
-                m_game.Input.IsButtonJustReleased(Buttons.A))
+                m_game.Input.IsJustReleased(Keys.Escape) ||
+                m_game.Input.IsJustReleased(Buttons.Start) ||
+                m_game.Input.IsJustReleased(Buttons.A))
             {
                 m_game.Screens.Pop();
             }

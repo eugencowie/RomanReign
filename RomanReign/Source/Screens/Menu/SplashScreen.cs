@@ -61,9 +61,9 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             if (m_elapsedTime > 3f ||
-                m_game.Input.IsKeyJustReleased(Keys.Escape) ||
-                m_game.Input.IsButtonJustReleased(Buttons.Start) ||
-                m_game.Input.IsButtonJustReleased(Buttons.A))
+                m_game.Input.IsJustReleased(Keys.Escape) ||
+                m_game.Input.IsJustReleased(Buttons.Start) ||
+                m_game.Input.IsJustReleased(Buttons.A))
             {
                 m_game.Screens.SwitchTo(new MenuScreen(m_game));
             }

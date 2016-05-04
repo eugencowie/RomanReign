@@ -40,15 +40,15 @@ namespace RomanReign
         public void Update(GameTime gameTime)
         {
             // If the escape key is pressed and released then remove this screen to return to the game.
-            if (m_game.Input.IsKeyJustReleased(Keys.Escape) ||
-                m_game.Input.IsButtonJustReleased(Buttons.Start) ||
-                m_game.Input.IsButtonJustReleased(Buttons.B))
+            if (m_game.Input.IsJustReleased(Keys.Escape) ||
+                m_game.Input.IsJustReleased(Buttons.Start) ||
+                m_game.Input.IsJustReleased(Buttons.B))
             {
                 m_game.Screens.Pop();
             }
 
             // If the left mouse button has just been pressed and released...
-            if (m_game.Input.IsMouseButtonJustReleased(MouseButtons.Left))
+            if (m_game.Input.IsJustReleased(MouseButtons.Left))
             {
                 // ...and the mouse is positioned over the exit button then switch to the main menu.
                 if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))

@@ -122,7 +122,7 @@ namespace RomanReign
                 // Next, we check if the left mouse button has just been pressed and then
                 // released. If so, we check to see if the mouse is over any of the buttons
                 // and take any appropriate action.
-                if (m_game.Input.IsMouseButtonJustReleased(MouseButtons.Left))
+                if (m_game.Input.IsJustReleased(MouseButtons.Left))
                 {
                     if (m_startButton.Bounds.Contains(m_game.Input.Mouse.Position))
                         m_game.Screens.SwitchTo(new GameScreen(m_game));
@@ -137,13 +137,13 @@ namespace RomanReign
                         m_game.Exit();
                 }
 
-                if (m_game.Input.IsButtonJustReleased(Buttons.B))
+                if (m_game.Input.IsJustReleased(Buttons.B))
                 {
                     m_game.Exit();
                 }
 
                 // TODO: make menu usable with gamepad
-                if (m_game.Input.IsButtonJustReleased(Buttons.A))
+                if (m_game.Input.IsJustReleased(Buttons.A))
                 {
                     m_game.Screens.SwitchTo(new GameScreen(m_game));
                 }
