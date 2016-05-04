@@ -88,7 +88,7 @@ namespace RomanReign
             {
                 m_game.Physics.Update(1 / 60f);
 
-                if (m_game.Input.IsKeyJustReleased(Keys.Escape))
+                if (m_game.Input.IsKeyJustReleased(Keys.Escape) || m_game.Input.IsButtonJustReleased(Buttons.Start))
                 {
                     m_game.Screens.Push(new PauseScreen(m_game));
                 }

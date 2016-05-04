@@ -61,7 +61,7 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (m_game.Input.IsKeyJustReleased(Keys.Escape))
+            if (m_game.Input.IsKeyJustReleased(Keys.Escape) || m_game.Input.IsButtonJustReleased(Buttons.B))
             {
                 m_game.Screens.Pop();
             }

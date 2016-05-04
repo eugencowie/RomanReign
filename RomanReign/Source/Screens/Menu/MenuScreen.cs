@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace RomanReign
 {
@@ -134,6 +135,17 @@ namespace RomanReign
 
                     if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))
                         m_game.Exit();
+                }
+
+                if (m_game.Input.IsButtonJustReleased(Buttons.B))
+                {
+                    m_game.Exit();
+                }
+
+                // TODO: make menu usable with gamepad
+                if (m_game.Input.IsButtonJustReleased(Buttons.A))
+                {
+                    m_game.Screens.SwitchTo(new GameScreen(m_game));
                 }
             }
         }

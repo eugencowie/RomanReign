@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanReign
 {
@@ -18,6 +20,11 @@ namespace RomanReign
 
         AnimatedSprite m_walkingAnimation;
         RigidBody m_physicsBody;
+
+        List<InputAction> m_jumpActions = new List<InputAction>();
+        List<InputAction> m_dropActions = new List<InputAction>();
+        List<InputAction> m_moveLeftActions = new List<InputAction>();
+        List<InputAction> m_moveRightActions = new List<InputAction>();
 
         bool m_isJumping;
         bool m_isDropping;
@@ -42,11 +49,47 @@ namespace RomanReign
             };
 
             m_game.Physics.AddRigidBody(m_physicsBody);
+
+            // Set up input events.
+
+            InputManager i = m_game.Input;
+
+            m_jumpActions.Add(() =>
+                i.IsKeyJustPressed(Keys.Z) &&
+                i.IsKeyUp(Keys.Down));
+
+            m_jumpActions.Add(() =>
+                i.IsButtonJustPressed(Buttons.A) &&
+                (i.IsButtonUp(Buttons.DPadDown) && !i.IsLeftStickDown(0.5f)));
+
+            m_dropActions.Add(() =>
+                i.IsKeyJustPressed(Keys.Z) &&
+                i.IsKeyDown(Keys.Down));
+
+            m_dropActions.Add(() =>
+                i.IsButtonJustPressed(Buttons.A) &&
+                (i.IsButtonDown(Buttons.DPadDown) || i.IsLeftStickDown(0.5f)));
+
+            m_moveLeftActions.Add(() =>
+                i.IsKeyDown(Keys.Left) &&
+                i.IsKeyUp(Keys.Right));
+
+            m_moveLeftActions.Add(() =>
+                (i.IsButtonDown(Buttons.DPadLeft) || i.IsLeftStickLeft()) &&
+                (i.IsButtonUp(Buttons.DPadRight) && !i.IsLeftStickRight()));
+
+            m_moveRightActions.Add(() =>
+                i.IsKeyDown(Keys.Right) &&
+                i.IsKeyUp(Keys.Left));
+
+            m_moveRightActions.Add(() =>
+                (i.IsButtonDown(Buttons.DPadRight) || i.IsLeftStickRight()) &&
+                (i.IsButtonUp(Buttons.DPadLeft) && !i.IsLeftStickLeft()));
         }
 
         public void Update(GameTime gameTime)
         {
-            if (m_game.Input.IsKeyJustPressed(Keys.Z) && m_game.Input.IsKeyUp(Keys.Down))
+            if (m_jumpActions.Any(a => a()))
             {
                 m_physicsBody.Velocity.Y -= 800f;
                 m_isJumping = true;
@@ -56,7 +99,7 @@ namespace RomanReign
                 m_isJumping = false;
             }
 
-            if (m_game.Input.IsKeyJustPressed(Keys.Z) && m_game.Input.IsKeyDown(Keys.Down))
+            if (m_dropActions.Any(a => a()))
             {
                 m_isDropping = true;
             }
@@ -65,14 +108,14 @@ namespace RomanReign
                 m_isDropping = false;
             }
 
-            if (m_game.Input.IsKeyDown(Keys.Left))
+            if (m_moveLeftActions.Any(a => a()))
             {
                 m_physicsBody.Velocity.X -= 175f;
                 m_walkingAnimation.Effects = SpriteEffects.FlipHorizontally;
                 m_walkingAnimation.Update(gameTime);
             }
 
-            if (m_game.Input.IsKeyDown(Keys.Right))
+            if (m_moveRightActions.Any(a => a()))
             {
                 m_physicsBody.Velocity.X += 175f;
                 m_walkingAnimation.Effects = SpriteEffects.None;

@@ -1,10 +1,15 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 namespace RomanReign
 {
+    enum InputType { KBM, Gamepad }
+
     enum MouseButtons { Left, Middle, Right, XButton1, XButton2 }
+
+    delegate bool InputAction();
 
     class InputManager
     {
@@ -16,6 +21,16 @@ namespace RomanReign
 
         public MouseState PrevMouse;
         public MouseState Mouse;
+
+        public InputType MostRecentInputType;
+
+        public InputManager()
+        {
+            Begin();
+            End();
+
+            MostRecentInputType = Gamepad.Any(gp => gp.IsConnected) ? InputType.Gamepad : InputType.KBM;
+        }
 
         public void Begin()
         {
@@ -30,13 +45,34 @@ namespace RomanReign
 
         public void End()
         {
+            if (!CompareMouseState(Mouse, PrevMouse) || !Keyboard.Equals(PrevKeyboard))
+            {
+                MostRecentInputType = InputType.KBM;
+            }
+
             for (int i=0; i<4; i++)
             {
+                if (!Gamepad[i].Equals(PrevGamepad[i]))
+                    MostRecentInputType = InputType.Gamepad;
+
                 PrevGamepad[i] = Gamepad[i];
             }
 
             PrevKeyboard = Keyboard;
             PrevMouse = Mouse;
+        }
+
+        private bool CompareMouseState(MouseState ms1, MouseState ms2)
+        {
+            if (ms1.X == 0 || ms2.X == 0 || ms1.Y == 0 || ms2.Y == 0)
+                return true;
+
+            return
+                ms1.LeftButton == ms2.LeftButton &&
+                ms1.MiddleButton == ms2.MiddleButton &&
+                ms1.RightButton == ms2.RightButton &&
+                ms1.ScrollWheelValue == ms2.ScrollWheelValue &&
+                (ms1.Position - ms2.Position).ToVector2().Length() < 10;
         }
 
         public bool IsKeyDown(Keys keys) => Keyboard.IsKeyDown(keys);
@@ -50,6 +86,39 @@ namespace RomanReign
         public bool IsKeyJustReleased(Keys keys)
         {
             return (Keyboard.IsKeyUp(keys) && PrevKeyboard.IsKeyDown(keys));
+        }
+
+        public bool IsButtonDown(Buttons buttons, int i=0) => Gamepad[i].IsButtonDown(buttons);
+        public bool IsButtonUp(Buttons buttons, int i=0)   => Gamepad[i].IsButtonUp(buttons);
+
+        public bool IsButtonJustPressed(Buttons buttons, int i=0)
+        {
+            return (Gamepad[i].IsButtonDown(buttons) && PrevGamepad[i].IsButtonUp(buttons));
+        }
+
+        public bool IsButtonJustReleased(Buttons buttons, int i=0)
+        {
+            return (Gamepad[i].IsButtonUp(buttons) && PrevGamepad[i].IsButtonDown(buttons));
+        }
+
+        public bool IsLeftStickDown(float tolerance = 0, int i=0)
+        {
+            return Gamepad[i].ThumbSticks.Left.Y < -tolerance;
+        }
+
+        public bool IsLeftStickUp(float tolerance = 0, int i=0)
+        {
+            return Gamepad[i].ThumbSticks.Left.Y > tolerance;
+        }
+
+        public bool IsLeftStickLeft(float tolerance = 0, int i=0)
+        {
+            return Gamepad[i].ThumbSticks.Left.X < -tolerance;
+        }
+
+        public bool IsLeftStickRight(float tolerance = 0, int i=0)
+        {
+            return Gamepad[i].ThumbSticks.Left.X > tolerance;
         }
 
         public ButtonState GetMouseButtonState(MouseButtons buttons)
