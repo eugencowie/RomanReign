@@ -105,7 +105,7 @@ namespace RomanReign
                 return true;
             }
 
-            Vector2 newPosition = body.Bounds.Position + new Vector2(x, 0f);
+            Vector2 newPosition = body.Bounds.Location + new Vector2(x, 0f);
 
             RectangleF newBounds = new RectangleF(newPosition.X, newPosition.Y, body.Size.X, body.Size.Y);
             bool intersects = m_staticBodies.Any(b => b.Bounds.Intersects(newBounds));
@@ -156,7 +156,7 @@ namespace RomanReign
                 return true;
             }
 
-            Vector2 newPosition = body.Bounds.Position + new Vector2(0f, y);
+            Vector2 newPosition = body.Bounds.Location + new Vector2(0f, y);
 
             RectangleF newBounds = new RectangleF(newPosition.X, newPosition.Y, body.Size.X, body.Size.Y);
             bool intersects = m_staticBodies.Any(b => b.Bounds.Intersects(newBounds));
