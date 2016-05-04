@@ -28,17 +28,17 @@ namespace RomanReign
             Position = m_screen.Player.Position;
 
             // Constrain the camera to the bounds of the map sprite.
-            if (Bounds.Left < 0)
+            if (Bounds.Left < m_screen.Map.Bounds.Left)
             {
-                Position.X = Bounds.Width / 2f;
+                Position.X = m_screen.Map.Bounds.Left + (Bounds.Width / 2f);
             }
             if (Bounds.Right > m_screen.Map.Bounds.Right)
             {
                 Position.X = m_screen.Map.Bounds.Right - (Bounds.Width / 2f);
             }
-            if (Bounds.Top < 0)
+            if (Bounds.Top < m_screen.Map.Bounds.Top)
             {
-                Position.Y = Bounds.Height / 2f;
+                Position.Y = m_screen.Map.Bounds.Top + (Bounds.Height / 2f);
             }
             if (Bounds.Bottom > m_screen.Map.Bounds.Bottom)
             {
