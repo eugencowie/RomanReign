@@ -19,7 +19,7 @@ namespace RomanReign
         GameScreen m_screen;
 
         AnimatedSprite m_walkingAnimation;
-        RigidBody m_physicsBody;
+        DynamicBody m_physicsBody;
 
         List<InputAction> m_jumpActions = new List<InputAction>();
         List<InputAction> m_dropActions = new List<InputAction>();
@@ -39,14 +39,14 @@ namespace RomanReign
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            m_physicsBody = new RigidBody {
+            m_physicsBody = new DynamicBody {
                 Name = m_screen.Map.Info.PlayerSpawn.Name,
                 Position = m_screen.Map.Info.PlayerSpawn.Value,
                 Size = m_walkingAnimation.Bounds.Size.ToVector2(),
-                Origin = new Vector2(0.5f, 0.5f),
                 LinearDamping = new Vector2(0.2f, 0f),
                 UserData = this
             };
+            m_physicsBody.SetRelativeOrigin(0.5f, 0.5f);
 
             m_game.Physics.AddRigidBody(m_physicsBody);
 

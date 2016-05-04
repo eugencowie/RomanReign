@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace RomanReign
 {
+    /// <summary>
+    /// Represents a static immovable body.
+    /// </summary>
     class StaticBody
     {
         public string Name;
@@ -13,60 +16,77 @@ namespace RomanReign
         public Vector2 Origin;
         public Vector2 Size;
 
-        Vector2 m_topLeft => Position - (Size * Origin);
-        public RectangleF Bounds => new RectangleF(m_topLeft.X, m_topLeft.Y, Size.X, Size.Y);
-    }
+        public RectangleF Bounds => new RectangleF(Position - Origin, Size);
 
-    class RigidBody : StaticBody
+        public void SetRelativeOrigin(Vector2 origin)
+        {
+            Origin = Size * origin;
+        }
+
+        public void SetRelativeOrigin(float originX, float originY)
+        {
+            SetRelativeOrigin(new Vector2(originX, originY));
+        }
+    }
+    /// <summary>
+    /// Represents a dynamic moving body.
+    /// </summary>
+    class DynamicBody : StaticBody
     {
         public Vector2 Velocity;
         public Vector2 Acceleration;
         public Vector2 LinearDamping;
     }
 
+    /// <summary>
+    /// Manages a list a physics bodies and applies physics to them.
+    /// </summary>
     class PhysicsManager
     {
         List<StaticBody> m_staticBodies;
-        List<RigidBody> m_rigidBodies;
+        List<DynamicBody> m_dynamicBodies;
 
         Vector2 m_gravity;
 
         public PhysicsManager()
         {
             m_staticBodies = new List<StaticBody>();
-            m_rigidBodies = new List<RigidBody>();
+            m_dynamicBodies = new List<DynamicBody>();
 
             m_gravity = new Vector2(0f, 1500f);
         }
 
+        /// <summary>
+        /// Updates all dynamic bodies.
+        /// </summary>
         public void Update(float timestep)
         {
-            for (int i = m_rigidBodies.Count - 1; i >= 0; i--)
+            for (int i = m_dynamicBodies.Count - 1; i >= 0; i--)
             {
-                m_rigidBodies[i].Velocity -= m_rigidBodies[i].Velocity * m_rigidBodies[i].LinearDamping;
+                m_dynamicBodies[i].Velocity -= m_dynamicBodies[i].Velocity * m_dynamicBodies[i].LinearDamping;
 
-                m_rigidBodies[i].Velocity += m_gravity * timestep;
-                m_rigidBodies[i].Velocity += m_rigidBodies[i].Acceleration * timestep;
+                m_dynamicBodies[i].Velocity += m_gravity * timestep;
+                m_dynamicBodies[i].Velocity += m_dynamicBodies[i].Acceleration * timestep;
 
-                Vector2 movement = m_rigidBodies[i].Velocity * timestep;
+                Vector2 movement = m_dynamicBodies[i].Velocity * timestep;
 
-                if (!AttemptMoveY(m_rigidBodies[i], movement.Y))
+                if (!AttemptMoveY(m_dynamicBodies[i], movement.Y))
                 {
-                    m_rigidBodies[i].Velocity.Y = 0;
-                    m_rigidBodies[i].Acceleration.Y = 0;
+                    m_dynamicBodies[i].Velocity.Y = 0;
+                    m_dynamicBodies[i].Acceleration.Y = 0;
                 }
 
-                if (!AttemptMoveX(m_rigidBodies[i], movement.X))
+                if (!AttemptMoveX(m_dynamicBodies[i], movement.X))
                 {
-                    m_rigidBodies[i].Velocity.X = 0;
-                    m_rigidBodies[i].Acceleration.X = 0;
+                    m_dynamicBodies[i].Velocity.X = 0;
+                    m_dynamicBodies[i].Acceleration.X = 0;
                 }
             }
         }
 
-        public void AddRigidBody(RigidBody body)
+        public void AddRigidBody(DynamicBody body)
         {
-            m_rigidBodies.Add(body);
+            m_dynamicBodies.Add(body);
         }
 
         public void AddStaticBody(StaticBody body)
@@ -74,10 +94,16 @@ namespace RomanReign
             m_staticBodies.Add(body);
         }
 
-        private bool AttemptMoveX(RigidBody body, float x)
+        /// <summary>
+        /// Attempts to move a dynamic body on the x axis. Returns true if successful. If unsuccessful,
+        /// moves the body as far as it can and then returns false.
+        /// </summary>
+        private bool AttemptMoveX(DynamicBody body, float x)
         {
             if (x == 0)
+            {
                 return true;
+            }
 
             Vector2 newPosition = body.Bounds.Position + new Vector2(x, 0f);
 
@@ -119,10 +145,16 @@ namespace RomanReign
             }
         }
 
-        private bool AttemptMoveY(RigidBody body, float y)
+        /// <summary>
+        /// Attempts to move a dynamic body on the y axis. Returns true if successful. If unsuccessful,
+        /// moves the body as far as it can and then returns false.
+        /// </summary>
+        private bool AttemptMoveY(DynamicBody body, float y)
         {
             if (y == 0)
+            {
                 return true;
+            }
 
             Vector2 newPosition = body.Bounds.Position + new Vector2(0f, y);
 
