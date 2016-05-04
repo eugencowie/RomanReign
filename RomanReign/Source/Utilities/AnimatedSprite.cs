@@ -12,14 +12,19 @@ namespace RomanReign
         int m_totalFrames;
         int m_currentFrame;
 
+        bool m_looping;
+        bool m_finished;
+
         float m_timeSinceLastFrame;
 
-        public AnimatedSprite(int columns, int rows, int fps, Texture2D spritesheet)
+        public AnimatedSprite(int columns, int rows, int fps, bool looping, Texture2D spritesheet)
             : base(spritesheet)
         {
             m_columns = columns;
             m_rows = rows;
             m_fps = fps;
+
+            m_looping = looping;
 
             m_totalFrames = m_columns * m_rows;
 
@@ -36,7 +41,17 @@ namespace RomanReign
                 m_currentFrame++;
 
                 if (m_currentFrame >= m_totalFrames)
-                    m_currentFrame = 0;
+                {
+                    if (m_looping)
+                    {
+                        m_currentFrame = 0;
+                    }
+                    else
+                    {
+                        m_currentFrame = m_totalFrames - 1;
+                        m_finished = true;
+                    }
+                }
 
                 UpdateSourceRect();
 
@@ -60,6 +75,19 @@ namespace RomanReign
         public override void SetRelativeOrigin(Vector2 origin)
         {
             Origin = new Vector2(Texture.Width / m_columns, Texture.Height / m_rows) * origin;
+        }
+
+        public bool IsFinished()
+        {
+            return m_finished;
+        }
+
+        public void Reset()
+        {
+            m_currentFrame = 0;
+            m_finished = false;
+
+            UpdateSourceRect();
         }
     }
 }
