@@ -19,12 +19,17 @@ namespace RomanReign
         GameScreen m_screen;
 
         AnimatedSprite m_walkingAnimation;
+        AnimatedSprite m_attackAnimation;
+
         DynamicBody m_physicsBody;
 
         List<InputAction> m_jumpActions = new List<InputAction>();
         List<InputAction> m_dropActions = new List<InputAction>();
         List<InputAction> m_moveLeftActions = new List<InputAction>();
         List<InputAction> m_moveRightActions = new List<InputAction>();
+        List<InputAction> m_attackActions = new List<InputAction>();
+
+        bool m_isAttacking;
 
         bool m_isJumping;
         bool m_isDropping;
@@ -38,6 +43,11 @@ namespace RomanReign
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
+
+            m_attackAnimation = new AnimatedSprite(5, 1, 16, false, content.Load<Texture2D>("Textures/Game/player_attack")) {
+                Position = m_screen.Map.Info.PlayerSpawn.Value
+            };
+            m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
             m_physicsBody = new DynamicBody {
                 Name = m_screen.Map.Info.PlayerSpawn.Name,
@@ -85,6 +95,10 @@ namespace RomanReign
             m_moveRightActions.Add(() =>
                 (i.IsDown(Buttons.DPadRight) || i.IsStickRight(Thumbsticks.Left)) &&
                 (i.IsUp(Buttons.DPadLeft) && !i.IsStickLeft(Thumbsticks.Left)));
+
+            m_attackActions.Add(() => i.IsDown(Keys.X));
+
+            m_attackActions.Add(() => i.IsDown(Buttons.X));
         }
 
         public void Update(GameTime gameTime)
@@ -112,6 +126,7 @@ namespace RomanReign
             {
                 m_physicsBody.Velocity.X -= 175f;
                 m_walkingAnimation.Effects = SpriteEffects.FlipHorizontally;
+                m_attackAnimation.Effects = SpriteEffects.FlipHorizontally;
                 m_walkingAnimation.Update(gameTime);
             }
 
@@ -119,15 +134,37 @@ namespace RomanReign
             {
                 m_physicsBody.Velocity.X += 175f;
                 m_walkingAnimation.Effects = SpriteEffects.None;
+                m_attackAnimation.Effects = SpriteEffects.None;
                 m_walkingAnimation.Update(gameTime);
             }
 
+            if (m_attackActions.Any(a => a()))
+            {
+                m_isAttacking = true;
+            }
+
             m_walkingAnimation.Position = m_physicsBody.Position;
+            m_attackAnimation.Position = m_physicsBody.Position;
+
+            m_walkingAnimation.Visible = !m_isAttacking;
+            m_attackAnimation.Visible = m_isAttacking;
+
+            if (m_isAttacking)
+            {
+                m_attackAnimation.Update(gameTime);
+
+                if (m_attackAnimation.IsFinished())
+                {
+                    m_attackAnimation.Reset();
+                    m_isAttacking = false;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             m_walkingAnimation.Draw(spriteBatch);
+            m_attackAnimation.Draw(spriteBatch);
 
             m_game.Debug.Draw(m_physicsBody.Bounds.ToRect(), Color.Blue);
         }

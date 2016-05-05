@@ -27,6 +27,7 @@ namespace RomanReign
             content.Load<Texture2D>("Textures/Game/bg_intro_4");
             content.Load<Texture2D>("Textures/Game/bg_pause");
             content.Load<Texture2D>("Textures/Game/player_walking");
+            content.Load<Texture2D>("Textures/Game/player_attack");
 
             content.Load<Texture2D>("Textures/HUD/test");
         }
