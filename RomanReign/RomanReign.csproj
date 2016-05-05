@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Source\Objects\Camera.cs" />
+    <Compile Include="Source\Objects\Enemy.cs" />
     <Compile Include="Source\Objects\Hud.cs" />
     <Compile Include="Source\Objects\Map.cs" />
     <Compile Include="Source\Objects\Player.cs" />

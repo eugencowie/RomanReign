@@ -18,6 +18,7 @@ namespace RomanReign
     class MapInfo
     {
         public Property<Vector2> PlayerSpawn = Vector2.Zero;
+        public List<Property<Vector2>> EnemySpawns = new List<Property<Vector2>>();
 
         public List<Property<Rectangle>> CollisionList = new List<Property<Rectangle>>();
     }
@@ -98,6 +99,26 @@ namespace RomanReign
 
                     mapInfo.PlayerSpawn = new Vector2(x, y);
                     mapInfo.PlayerSpawn.Name = columns[5];
+                }
+                else if (id == "enemyspawn")
+                {
+                    int x, y;
+
+                    try
+                    {
+                        int.TryParse(columns[1], out x);
+                        int.TryParse(columns[2], out y);
+                    }
+                    catch
+                    {
+                        x = 0;
+                        y = 0;
+                    }
+
+                    Property<Vector2> enemySpawn = new Vector2(x, y);
+                    enemySpawn.Name = columns[5];
+
+                    mapInfo.EnemySpawns.Add(enemySpawn);
                 }
                 else if (id == "collision")
                 {

@@ -130,6 +130,17 @@ namespace RomanReign
                     }
                 }
 
+                // Dirty hack to allow enemies to jump onto or fall through the wall.
+                if (body.Name == "enemy" && other.Name == "wall" && body.UserData is Enemy)
+                {
+                    Enemy enemy = body.UserData as Enemy;
+                    if (enemy.IsJumping || enemy.IsDropping)
+                    {
+                        body.Position.X += x;
+                        return true;
+                    }
+                }
+
                 if (x > 0)
                 {
                     float diff = newBounds.Right - other.Bounds.Left;
@@ -175,6 +186,17 @@ namespace RomanReign
                 {
                     Player player = body.UserData as Player;
                     if (player.IsJumping || player.IsDropping)
+                    {
+                        body.Position.Y += y;
+                        return true;
+                    }
+                }
+
+                // Dirty hack to allow enemies to jump onto or fall through the wall.
+                if (body.Name == "enemy" && other.Name == "wall" && body.UserData is Enemy)
+                {
+                    Enemy enemy = body.UserData as Enemy;
+                    if (enemy.IsJumping || enemy.IsDropping)
                     {
                         body.Position.Y += y;
                         return true;

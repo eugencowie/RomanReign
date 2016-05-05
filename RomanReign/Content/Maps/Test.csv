@@ -1,6 +1,8 @@
 Type,X,Y,Width,Height,Comment
 ,,,,,
-playerspawn,1000,928,,,player
+playerspawn,1000,918,,,player
+,,,,,
+enemyspawn,1200,918,,,enemy
 ,,,,,
 collision,0,958,5760,122,ground
 collision,0,777,2577,20,wall

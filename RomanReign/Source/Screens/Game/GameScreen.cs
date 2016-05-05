@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace RomanReign
 {
@@ -10,6 +12,8 @@ namespace RomanReign
     /// </summary>
     class GameScreen : IScreen
     {
+        static Random Random = new Random();
+
         // These public fields allow certain game objects to be accessed from outside
         // of this class.
 
@@ -17,6 +21,8 @@ namespace RomanReign
         public Camera Camera => m_camera;
         public Map    Map    => m_map;
         public Player Player => m_player;
+
+        public List<Enemy> Enemies => m_enemies;
 
         // This variable allows us to access important functions and variables in the
         // main game class. You will see this variable in *all* of the screen classes.
@@ -30,11 +36,17 @@ namespace RomanReign
         Map    m_map;
         Player m_player;
 
+        List<Enemy> m_enemies = new List<Enemy>();
+
         // This screen is designed to be covered up by other screens (such as the pause
         // screen).  We need a variable to keep track of when the screen is covered and
         // when it is not, which is what we use this boolean variable for.
 
         bool m_isCovered;
+
+        // This boolean is used to toggle the 'roman rain' mode.
+
+        bool m_romanRain;
 
         /// <summary>
         /// This constructor is run when the game screen object is created.
@@ -59,6 +71,9 @@ namespace RomanReign
 
             m_player = new Player(this, m_game, content);
 
+            Property<Vector2> spawnPoint = m_map.Info.EnemySpawns[Random.Next(m_map.Info.EnemySpawns.Count)];
+            m_enemies.Add(new Enemy(this, m_game, content, spawnPoint));
+
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
             m_game.Screens.Push(new IntroScreen(m_game));
@@ -82,7 +97,22 @@ namespace RomanReign
             {
                 m_game.Debug.Enabled = !m_game.Debug.Enabled;
             }
+
+            if (m_game.Input.IsJustReleased(Keys.F8))
+            {
+                m_romanRain = !m_romanRain;
+            }
 #endif
+
+            if (m_romanRain && m_enemies.Count < 5000)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Property<Vector2> spawnPoint = new Vector2(Random.Next(m_map.Bounds.Right), 0);
+                    spawnPoint.Name = "enemy";
+                    m_enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
+                }
+            }
 
             if (!m_isCovered)
             {
@@ -96,6 +126,9 @@ namespace RomanReign
                 m_player.Update(gameTime);
 
                 m_camera.Update();
+
+                foreach (var enemy in m_enemies)
+                    enemy.Update(gameTime);
             }
         }
 
@@ -110,6 +143,9 @@ namespace RomanReign
 
             m_map.Draw(spriteBatch);
             m_player.Draw(spriteBatch);
+
+            foreach (var enemy in m_enemies)
+                enemy.Draw(spriteBatch);
 
             spriteBatch.End();
 
