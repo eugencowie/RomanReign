@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanReign
 {
+    enum CollisionResponse { Block, NoBlock }
+
     /// <summary>
     /// Represents a static immovable body.
     /// </summary>
@@ -37,6 +40,14 @@ namespace RomanReign
         public Vector2 Velocity;
         public Vector2 Acceleration;
         public Vector2 LinearDamping;
+
+        public delegate CollisionResponse OnCollisionDelegate(StaticBody other);
+        public event OnCollisionDelegate OnCollision;
+
+        public CollisionResponse HandleCollision(StaticBody other)
+        {
+            return OnCollision?.Invoke(other) ?? CollisionResponse.Block;
+        }
     }
 
     /// <summary>
@@ -119,41 +130,28 @@ namespace RomanReign
             else
             {
                 StaticBody other = m_staticBodies.First(r => r.Bounds.Intersects(newBounds));
-
-                // Dirty hack to allow player to jump onto or fall through the wall.
-                var player = body.UserData as Player;
-                if (player != null && other.Name == "wall")
+                switch (body.HandleCollision(other))
                 {
-                    if (player.IsJumping || player.IsDropping)
-                    {
+                    case CollisionResponse.Block:
+                        if (x > 0)
+                        {
+                            float diff = newBounds.Right - other.Bounds.Left;
+                            body.Position.X += x - diff;
+                        }
+                        else
+                        {
+                            float diff = other.Bounds.Right - newBounds.Left;
+                            body.Position.X += x + diff;
+                        }
+                        return false;
+
+                    case CollisionResponse.NoBlock:
                         body.Position.X += x;
                         return true;
-                    }
-                }
 
-                // Dirty hack to allow enemies to jump onto or fall through the wall.
-                var enemy = body.UserData as Enemy;
-                if (enemy != null && other.Name == "wall")
-                {
-                    if (enemy.IsJumping || enemy.IsDropping)
-                    {
-                        body.Position.X += x;
-                        return true;
-                    }
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-                if (x > 0)
-                {
-                    float diff = newBounds.Right - other.Bounds.Left;
-                    body.Position.X += x - diff;
-                }
-                else
-                {
-                    float diff = other.Bounds.Right - newBounds.Left;
-                    body.Position.X += x + diff;
-                }
-
-                return false;
             }
         }
 
@@ -175,47 +173,45 @@ namespace RomanReign
 
             if (!intersects)
             {
+                // Dirty hack to reset player.OnGround because I'm too lazy to implement
+                // a "no collision" event.
+                var player = body.UserData as Player;
+                if (player != null)
+                    player.OnGround = false;
+
+                // Same for enemies.
+                var enemy = body.UserData as Enemy;
+                if (enemy != null)
+                    enemy.OnGround = false;
+
                 body.Position.Y += y;
                 return true;
             }
             else
             {
                 StaticBody other = m_staticBodies.First(r => r.Bounds.Intersects(newBounds));
-
-                // Dirty hack to allow player to jump onto or fall through the wall.
-                var player = body.UserData as Player;
-                if (player != null && other.Name == "wall")
+                switch (body.HandleCollision(other))
                 {
-                    if (player.IsJumping || player.IsDropping)
-                    {
+                    case CollisionResponse.Block:
+                        if (y > 0)
+                        {
+                            float diff = newBounds.Bottom - other.Bounds.Top;
+                            body.Position.Y += y - diff;
+                        }
+                        else
+                        {
+                            float diff = other.Bounds.Bottom - newBounds.Top;
+                            body.Position.Y += y + diff;
+                        }
+                        return false;
+
+                    case CollisionResponse.NoBlock:
                         body.Position.Y += y;
                         return true;
-                    }
-                }
 
-                // Dirty hack to allow enemies to jump onto or fall through the wall.
-                var enemy = body.UserData as Enemy;
-                if (enemy != null && other.Name == "wall")
-                {
-                    if (enemy.IsJumping || enemy.IsDropping)
-                    {
-                        body.Position.Y += y;
-                        return true;
-                    }
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
-
-                if (y > 0)
-                {
-                    float diff = newBounds.Bottom - other.Bounds.Top;
-                    body.Position.Y += y - diff;
-                }
-                else
-                {
-                    float diff = other.Bounds.Bottom - newBounds.Top;
-                    body.Position.Y += y + diff;
-                }
-
-                return false;
             }
         }
     }

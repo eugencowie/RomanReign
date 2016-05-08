@@ -10,9 +10,16 @@ namespace RomanReign
     class Player
     {
         public Vector2 Position => m_physicsBody.Position;
+        public Vector2 Velocity => m_physicsBody.Velocity;
 
         public bool IsJumping  => m_isJumping;
         public bool IsDropping => m_isDropping;
+
+        public bool OnGround
+        {
+            get { return m_onGround; }
+            set { m_onGround = value; }
+        }
 
         RomanReignGame m_game;
         GameScreen m_screen;
@@ -28,10 +35,14 @@ namespace RomanReign
         List<InputAction> m_moveRightActions = new List<InputAction>();
         List<InputAction> m_attackActions = new List<InputAction>();
 
-        bool m_isAttacking;
+        bool m_triggerJump;
+        bool m_triggerDrop;
 
         bool m_isJumping;
         bool m_isDropping;
+        bool m_isAttacking;
+
+        bool m_onGround;
 
         public Player(GameScreen screen, RomanReignGame game, ContentManager content)
         {
@@ -56,6 +67,13 @@ namespace RomanReign
                 UserData = this
             };
             m_physicsBody.SetRelativeOrigin(0.5f, 0.5f);
+            m_physicsBody.OnCollision += other => {
+                if ((other.Name == "wall" || other.Name == "ground") && !IsJumping && !IsDropping)
+                    m_onGround = true;
+                if (other.Name == "wall" && (IsJumping || IsDropping))
+                    return CollisionResponse.NoBlock;
+                return CollisionResponse.Block;
+            };
 
             m_game.Physics.AddRigidBody(m_physicsBody);
 
@@ -102,23 +120,23 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            if (m_jumpActions.Any(a => a()))
+            if (m_physicsBody.Velocity.Y >= 0)
+            {
+                m_isJumping = false;
+            }
+            if (m_jumpActions.Any(a => a()) && m_onGround)
             {
                 m_physicsBody.Velocity.Y -= 800f;
                 m_isJumping = true;
             }
-            if (m_physicsBody.Velocity.Y > 0)
-            {
-                m_isJumping = false;
-            }
 
+            if (m_physicsBody.Velocity.Y <= 0)
+            {
+                m_isDropping = false;
+            }
             if (m_dropActions.Any(a => a()))
             {
                 m_isDropping = true;
-            }
-            if (m_physicsBody.Velocity.Y < 0)
-            {
-                m_isDropping = false;
             }
 
             if (m_moveLeftActions.Any(a => a()))

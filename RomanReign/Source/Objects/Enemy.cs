@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,12 @@ namespace RomanReign
 
         public bool IsJumping => m_isJumping;
         public bool IsDropping => m_isDropping;
+
+        public bool OnGround
+        {
+            get { return m_onGround; }
+            set { m_onGround = value; }
+        }
 
         RomanReignGame m_game;
         GameScreen m_screen;
@@ -32,6 +39,8 @@ namespace RomanReign
         bool m_isJumping;
         bool m_isDropping;
 
+        bool m_onGround;
+
         public Enemy(GameScreen screen, RomanReignGame game, ContentManager content, Property<Vector2> spawnPoint)
         {
             m_game = game;
@@ -50,16 +59,27 @@ namespace RomanReign
                 UserData = this
             };
             m_physicsBody.SetRelativeOrigin(0.5f, 0.5f);
+            m_physicsBody.OnCollision += other => {
+                if (other.Name == "wall" && (IsJumping || IsDropping))
+                    return CollisionResponse.NoBlock;
+                if (other.Name == "ground" && !IsJumping && !IsDropping)
+                    m_onGround = true;
+                return CollisionResponse.Block;
+            };
 
             m_game.Physics.AddRigidBody(m_physicsBody);
 
             // AI
 
             m_jumpActions.Add(() =>
-                m_screen.Player.Position.Y < m_physicsBody.Position.Y - 20);
+                m_screen.Player.Position.Y < m_physicsBody.Position.Y - 50 &&
+                m_screen.Player.OnGround &&
+                Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_dropActions.Add(() =>
-                m_screen.Player.Position.Y > m_physicsBody.Position.Y + 20);
+                m_screen.Player.Position.Y > m_physicsBody.Position.Y + 50 &&
+                m_screen.Player.OnGround &&
+                Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_moveRightActions.Add(() =>
                 m_screen.Player.Position.X > m_physicsBody.Position.X + 80);
