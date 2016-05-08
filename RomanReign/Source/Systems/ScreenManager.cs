@@ -52,6 +52,11 @@ namespace RomanReign
         List<IScreen> m_copy = new List<IScreen>();
         bool m_invalidateCopy = true;
 
+        /// <summary>
+        /// Get the top-most screen.
+        /// </summary>
+        public IScreen Top => m_screens[m_screens.Count - 1];
+
         public ScreenManager(ContentManager content, SpriteBatch spriteBatch)
         {
             m_content = content;
@@ -95,14 +100,6 @@ namespace RomanReign
             {
                 screen.Draw(gameTime, m_spriteBatch);
             }
-        }
-
-        /// <summary>
-        /// Get the top-most screen.
-        /// </summary>
-        public IScreen Top
-        {
-            get { return m_screens[m_screens.Count - 1]; }
         }
 
         /// <summary>

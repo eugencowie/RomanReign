@@ -28,8 +28,8 @@ namespace RomanReign
 
             m_totalFrames = m_columns * m_rows;
 
-            Size.X = Texture.Width / m_columns;
-            Size.Y = Texture.Height / m_rows;
+            Size.X = (float)Texture.Width / m_columns;
+            Size.Y = (float)Texture.Height / m_rows;
 
             UpdateSourceRect();
         }
@@ -74,7 +74,7 @@ namespace RomanReign
 
         public override void SetRelativeOrigin(Vector2 origin)
         {
-            Origin = new Vector2(Texture.Width / m_columns, Texture.Height / m_rows) * origin;
+            Origin = new Vector2((float)Texture.Width / m_columns, (float)Texture.Height / m_rows) * origin;
         }
 
         public bool IsFinished()

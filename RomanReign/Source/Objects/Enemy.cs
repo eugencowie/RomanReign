@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,8 +8,6 @@ namespace RomanReign
 {
     class Enemy
     {
-        static Random Random = new Random();
-
         public Vector2 Position => m_physicsBody.Position;
 
         public bool IsJumping => m_isJumping;

@@ -5,21 +5,18 @@ namespace RomanReign
 {
     class Sprite
     {
-        public Texture2D Texture = null;
+        public Texture2D Texture;
         public Rectangle? SourceRect = null;
 
         public Vector2 Origin = Vector2.Zero;
         public Vector2 Position = Vector2.Zero;
-        public Vector2 Size = Vector2.Zero;
+        public Vector2 Size;
 
         public SpriteEffects Effects = SpriteEffects.None;
         public Color Color = Color.White;
         public bool Visible = true;
 
-        public Rectangle Bounds
-        {
-            get { return new RectangleF(Position - Origin, Size).ToRect(); }
-        }
+        public Rectangle Bounds => new RectangleF(Position - Origin, Size).ToRect();
 
         public Sprite(Texture2D texture)
         {

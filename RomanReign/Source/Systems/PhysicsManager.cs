@@ -28,6 +28,7 @@ namespace RomanReign
             SetRelativeOrigin(new Vector2(originX, originY));
         }
     }
+
     /// <summary>
     /// Represents a dynamic moving body.
     /// </summary>
@@ -117,12 +118,12 @@ namespace RomanReign
             }
             else
             {
-                StaticBody other = m_staticBodies.Where(r => r.Bounds.Intersects(newBounds)).First();
+                StaticBody other = m_staticBodies.First(r => r.Bounds.Intersects(newBounds));
 
                 // Dirty hack to allow player to jump onto or fall through the wall.
-                if (body.Name == "player" && other.Name == "wall" && body.UserData is Player)
+                var player = body.UserData as Player;
+                if (player != null && other.Name == "wall")
                 {
-                    Player player = body.UserData as Player;
                     if (player.IsJumping || player.IsDropping)
                     {
                         body.Position.X += x;
@@ -131,9 +132,9 @@ namespace RomanReign
                 }
 
                 // Dirty hack to allow enemies to jump onto or fall through the wall.
-                if (body.Name == "enemy" && other.Name == "wall" && body.UserData is Enemy)
+                var enemy = body.UserData as Enemy;
+                if (enemy != null && other.Name == "wall")
                 {
-                    Enemy enemy = body.UserData as Enemy;
                     if (enemy.IsJumping || enemy.IsDropping)
                     {
                         body.Position.X += x;
@@ -179,12 +180,12 @@ namespace RomanReign
             }
             else
             {
-                StaticBody other = m_staticBodies.Where(r => r.Bounds.Intersects(newBounds)).First();
+                StaticBody other = m_staticBodies.First(r => r.Bounds.Intersects(newBounds));
 
                 // Dirty hack to allow player to jump onto or fall through the wall.
-                if (body.Name == "player" && other.Name == "wall" && body.UserData is Player)
+                var player = body.UserData as Player;
+                if (player != null && other.Name == "wall")
                 {
-                    Player player = body.UserData as Player;
                     if (player.IsJumping || player.IsDropping)
                     {
                         body.Position.Y += y;
@@ -193,9 +194,9 @@ namespace RomanReign
                 }
 
                 // Dirty hack to allow enemies to jump onto or fall through the wall.
-                if (body.Name == "enemy" && other.Name == "wall" && body.UserData is Enemy)
+                var enemy = body.UserData as Enemy;
+                if (enemy != null && other.Name == "wall")
                 {
-                    Enemy enemy = body.UserData as Enemy;
                     if (enemy.IsJumping || enemy.IsDropping)
                     {
                         body.Position.Y += y;
