@@ -104,18 +104,21 @@ namespace RomanReign
             }
 #endif
 
-            if (m_romanRain && m_enemies.Count < 5000)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Property<Vector2> spawnPoint = new Vector2(Random.Next(m_map.Bounds.Right), 0);
-                    spawnPoint.Name = "enemy";
-                    m_enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
-                }
-            }
-
             if (!m_isCovered)
             {
+                if (m_romanRain)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (m_enemies.Count > 500)
+                            m_enemies.RemoveAt(0);
+
+                        Property<Vector2> spawnPoint = new Vector2(Random.Next(m_map.Bounds.Right), 0);
+                        spawnPoint.Name = "enemy";
+                        m_enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
+                    }
+                }
+
                 m_game.Physics.Update(1 / 60f);
 
                 if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.Start))
