@@ -17,10 +17,10 @@ namespace RomanReign
 
         public Rectangle Viewport => GraphicsDevice.Viewport.Bounds;
 
-        public InputManager Input { get; private set; }
-        public ScreenManager Screens { get; private set; }
-        public PhysicsManager Physics { get; private set; }
-        public DebugRenderer Debug { get; private set; }
+        public InputManager Input;
+        public ScreenManager Screens;
+        public PhysicsManager Physics;
+        public DebugRenderer Debug;
 
         private SpriteBatch m_spriteBatch;
 

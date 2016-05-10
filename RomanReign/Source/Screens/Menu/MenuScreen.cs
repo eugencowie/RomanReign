@@ -117,6 +117,7 @@ namespace RomanReign
             // The options and credits screens will be overlaid on top of this screen, so
             // we must check to see whether this screen is currently being covered by any
             // other any screens before we run our update code.
+
             if (!m_isCovered)
             {
                 // If the most recent input was using the keyboard/mouse, then check if the
@@ -202,10 +203,12 @@ namespace RomanReign
 
             // We always want to draw the background, regardless of whether or not there
             // are any other screens covering this one.
+
             m_background.Draw(spriteBatch);
 
             // We only want to draw the heading/buttons/etc if there are no other screens
             // covering this one.
+
             if (!m_isCovered)
             {
                 m_heading.Draw(spriteBatch);
