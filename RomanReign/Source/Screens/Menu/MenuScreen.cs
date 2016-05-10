@@ -34,6 +34,10 @@ namespace RomanReign
         Sprite m_creditsButton;
         Sprite m_exitButton;
 
+        // This is used to identify the selected button.
+        enum SelectedButton { None=0, Start=1, Options=2, Credits=3, Exit=4, Final=5 }
+        SelectedButton m_selectedButton;
+
         // Unlike the splash screen, this screen is designed to be covered up by other menu
         // screens (such as the options screen or credits screen).  This means that we need
         // to know when the screen is covered and when it is not, which is what we use this
@@ -90,6 +94,10 @@ namespace RomanReign
                 Position = new Vector2(m_game.Viewport.Center.X, 600)
             };
             m_exitButton.SetRelativeOrigin(0.5f, 0.5f);
+
+            // Set the initial selected button to none.
+
+            m_selectedButton = SelectedButton.None;
         }
 
         /// <summary>
@@ -111,42 +119,75 @@ namespace RomanReign
             // other any screens before we run our update code.
             if (!m_isCovered)
             {
-                // This is temporary and will be removed - it just makes any button that we
-                // hover over slightly transparent.
-                foreach (Sprite button in new [] { m_startButton, m_optionsButton, m_creditsButton, m_exitButton })
+                // If the most recent input was using the keyboard/mouse, then check if the
+                // mouse is over any of the buttons. If not then set the currently selected
+                // button to none.
+
+                if (m_game.Input.MostRecentInputType == InputType.KBM)
                 {
-                    bool mouseOver = button.Bounds.Contains(m_game.Input.Mouse.Position);
-                    float opacity = mouseOver ? 0.5f : 1;
-                    button.SetOpacity(opacity);
+                    m_selectedButton = SelectedButton.None;
+
+                    if (m_startButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_selectedButton = SelectedButton.Start;
+
+                    if (m_optionsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_selectedButton = SelectedButton.Options;
+
+                    if (m_creditsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_selectedButton = SelectedButton.Credits;
+
+                    if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                        m_selectedButton = SelectedButton.Exit;
                 }
+
+                // If the most recent input was using a gamepad then make sure that the
+                // currently selected button is not none. If for some reason it is then
+                // default to the start button.
+
+                if (m_game.Input.MostRecentInputType == InputType.Gamepad)
+                {
+                    if (m_game.Input.IsJustPressed(Buttons.DPadUp) || m_game.Input.IsJustPressed(Buttons.LeftThumbstickUp))
+                    {
+                        m_selectedButton--;
+                    }
+
+                    if (m_game.Input.IsJustPressed(Buttons.DPadDown) || m_game.Input.IsJustPressed(Buttons.LeftThumbstickDown))
+                    {
+                        m_selectedButton++;
+                    }
+
+                    if (m_selectedButton == SelectedButton.None)
+                        m_selectedButton = SelectedButton.None + 1;
+
+                    if (m_selectedButton == SelectedButton.Final)
+                        m_selectedButton = SelectedButton.Final - 1;
+                }
+
+                // Set the opacity of each button to 0.5 (semi-transparent) if the button
+                // is selected, otherwise 1 (fully opaque).
+
+                m_startButton.SetOpacity(m_selectedButton == SelectedButton.Start ? 0.5f : 1f);
+                m_optionsButton.SetOpacity(m_selectedButton == SelectedButton.Options ? 0.5f : 1f);
+                m_creditsButton.SetOpacity(m_selectedButton == SelectedButton.Credits ? 0.5f : 1f);
+                m_exitButton.SetOpacity(m_selectedButton == SelectedButton.Exit ? 0.5f : 1f);
 
                 // Next, we check if the left mouse button has just been pressed and then
                 // released. If so, we check to see if the mouse is over any of the buttons
                 // and take any appropriate action.
-                if (m_game.Input.IsJustReleased(MouseButtons.Left))
+
+                if (m_game.Input.IsJustReleased(MouseButtons.Left) || m_game.Input.IsJustReleased(Buttons.A))
                 {
-                    if (m_startButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                    if (m_selectedButton == SelectedButton.Start)
                         m_game.Screens.SwitchTo(new GameScreen(m_game));
 
-                    if (m_optionsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                    if (m_selectedButton == SelectedButton.Options)
                         m_game.Screens.Push(new OptionsScreen(m_game));
 
-                    if (m_creditsButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                    if (m_selectedButton == SelectedButton.Credits)
                         m_game.Screens.Push(new CreditsScreen(m_game));
 
-                    if (m_exitButton.Bounds.Contains(m_game.Input.Mouse.Position))
+                    if (m_selectedButton == SelectedButton.Exit)
                         m_game.Exit();
-                }
-
-                if (m_game.Input.IsJustReleased(Buttons.B))
-                {
-                    m_game.Exit();
-                }
-
-                // TODO: make menu usable with gamepad
-                if (m_game.Input.IsJustReleased(Buttons.A))
-                {
-                    m_game.Screens.SwitchTo(new GameScreen(m_game));
                 }
             }
         }

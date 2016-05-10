@@ -48,6 +48,12 @@ namespace RomanReign
                 m_game.Screens.Pop();
             }
 
+            // If the A button is pressed then switch to the main menu...
+            if (m_game.Input.IsJustReleased(Buttons.A))
+            {
+                m_game.Screens.SwitchTo(new MenuScreen(m_game));
+            }
+
             // If the left mouse button has just been pressed and released...
             if (m_game.Input.IsJustReleased(MouseButtons.Left))
             {

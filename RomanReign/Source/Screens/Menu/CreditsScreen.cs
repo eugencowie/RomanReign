@@ -61,7 +61,18 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.B))
+            if (m_game.Input.MostRecentInputType == InputType.Gamepad)
+                m_backButton.SetOpacity(0.5f);
+
+            if (m_game.Input.MostRecentInputType == InputType.KBM)
+            {
+                bool mouseOver = m_backButton.Bounds.Contains(m_game.Input.Mouse.Position);
+                m_backButton.SetOpacity(mouseOver ? 0.5f : 1f);
+            }
+
+            if (m_game.Input.IsJustReleased(Keys.Escape) ||
+                m_game.Input.IsJustReleased(Buttons.B) ||
+                m_game.Input.IsJustReleased(Buttons.A))
             {
                 m_game.Screens.Pop();
             }
