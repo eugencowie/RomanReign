@@ -10,6 +10,8 @@ namespace RomanReign
     /// </summary>
     class IntroScreen : IScreen
     {
+        static bool m_shown;
+
         RomanReignGame m_game;
 
         Sprite m_background1;
@@ -26,6 +28,15 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
+            // Make sure that this screen is only ever shown once per session.
+
+            if (m_shown)
+            {
+                m_game.Screens.Pop();
+            }
+
+            m_shown = true;
+
             // Load the background sprite and scale it to cover the entire screen.
             m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_1")) {
                 Size = m_game.Viewport.Size.ToVector2()

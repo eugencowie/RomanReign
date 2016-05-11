@@ -21,14 +21,16 @@ namespace RomanReign
         {
             content.Load<Texture2D>("Maps/Test");
 
+            content.Load<Texture2D>("Textures/Game/bg_gameover");
             content.Load<Texture2D>("Textures/Game/bg_intro_1");
             content.Load<Texture2D>("Textures/Game/bg_intro_2");
             content.Load<Texture2D>("Textures/Game/bg_intro_3");
             content.Load<Texture2D>("Textures/Game/bg_intro_4");
             content.Load<Texture2D>("Textures/Game/bg_pause");
-            content.Load<Texture2D>("Textures/Game/player_walking");
-            content.Load<Texture2D>("Textures/Game/player_attack");
+            content.Load<Texture2D>("Textures/Game/enemy_attack");
             content.Load<Texture2D>("Textures/Game/enemy_walking");
+            content.Load<Texture2D>("Textures/Game/player_attack");
+            content.Load<Texture2D>("Textures/Game/player_walking");
 
             content.Load<Texture2D>("Textures/HUD/test");
         }

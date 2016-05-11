@@ -30,9 +30,10 @@ namespace RomanReign
 
         // This screen is designed to be covered up by other screens (such as the pause
         // screen).  We need a variable to keep track of when the screen is covered and
-        // when it is not, which is what we use this boolean variable for.
+        // when it is not, which is what we use these boolean variables for.
 
-        bool m_isCovered;
+        bool m_paused;
+        bool m_gameOver;
 
         // This boolean is used to toggle the 'roman rain' mode.
 
@@ -94,7 +95,7 @@ namespace RomanReign
             }
 #endif
 
-            if (!m_isCovered)
+            if (!m_paused && !m_gameOver)
             {
                 if (m_romanRain)
                 {
@@ -124,7 +125,7 @@ namespace RomanReign
 
                 if (Player.Lives <= 0)
                 {
-                    m_game.Screens.SwitchTo(new MenuScreen(m_game));
+                    m_game.Screens.Push(new EndScreen(m_game));
                 }
             }
         }
@@ -146,15 +147,18 @@ namespace RomanReign
 
             spriteBatch.End();
 
-            // Now we want to draw the HUD without our coordinates being transformed using the
-            // camera, so we need to call spriteBatch.Begin() again, this time without using
-            // the camera transformation matrix.
+            if (!m_paused && !m_gameOver)
+            {
+                // Now we want to draw the HUD without our coordinates being transformed using the
+                // camera, so we need to call spriteBatch.Begin() again, this time without using
+                // the camera transformation matrix.
 
-            spriteBatch.Begin();
+                spriteBatch.Begin();
 
-            Hud.Draw(spriteBatch);
+                Hud.Draw(spriteBatch);
 
-            spriteBatch.End();
+                spriteBatch.End();
+            }
         }
 
         /// <summary>
@@ -162,7 +166,11 @@ namespace RomanReign
         /// </summary>
         public void Covered(IScreen other)
         {
-            m_isCovered = true;
+            if (other is PauseScreen || other is IntroScreen)
+                m_paused = true;
+
+            if (other is EndScreen)
+                m_gameOver = true;
         }
 
         /// <summary>
@@ -170,7 +178,11 @@ namespace RomanReign
         /// </summary>
         public void Uncovered(IScreen other)
         {
-            m_isCovered = false;
+            if (other is PauseScreen || other is IntroScreen)
+                m_paused = false;
+
+            if (other is EndScreen)
+                m_gameOver = false;
         }
     }
 }
