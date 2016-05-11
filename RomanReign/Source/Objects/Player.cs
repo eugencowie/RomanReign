@@ -11,6 +11,7 @@ namespace RomanReign
     {
         public Vector2 Position => m_physicsBody.Position;
         public Vector2 Velocity => m_physicsBody.Velocity;
+        public RectangleF Bounds => m_physicsBody.Bounds;
 
         public bool IsJumping  => m_isJumping;
         public bool IsDropping => m_isDropping;
@@ -21,6 +22,8 @@ namespace RomanReign
             set { m_onGround = value; }
         }
 
+        public int Lives = 3;
+
         RomanReignGame m_game;
         GameScreen m_screen;
 
@@ -29,18 +32,22 @@ namespace RomanReign
 
         DynamicBody m_physicsBody;
 
+        RectangleF m_attackRect;
+
         List<InputAction> m_jumpActions = new List<InputAction>();
         List<InputAction> m_dropActions = new List<InputAction>();
         List<InputAction> m_moveLeftActions = new List<InputAction>();
         List<InputAction> m_moveRightActions = new List<InputAction>();
         List<InputAction> m_attackActions = new List<InputAction>();
 
-        bool m_triggerJump;
-        bool m_triggerDrop;
+        const float m_damageCooldown = 0.5f;
+        float m_timeSinceDamage = m_damageCooldown;
 
         bool m_isJumping;
         bool m_isDropping;
         bool m_isAttacking;
+
+        bool m_loseLife;
 
         bool m_onGround;
 
@@ -172,9 +179,28 @@ namespace RomanReign
             m_walkingAnimation.Visible = !m_isAttacking;
             m_attackAnimation.Visible = m_isAttacking;
 
+            m_attackRect = m_physicsBody.Bounds;
+            m_attackRect.Size.X += 20;
+            if (m_walkingAnimation.Effects == SpriteEffects.FlipHorizontally)
+                m_attackRect.Location.X -= 20;
+
             if (m_isAttacking)
             {
                 m_attackAnimation.Update(gameTime);
+
+                if (m_screen.Enemies.Any(e => e.Bounds.Intersects(m_attackRect)))
+                {
+                    var enemy = m_screen.Enemies.First(e => e.Bounds.Intersects(m_attackRect));
+                    if (enemy.TakeDamage())
+                    {
+                        Vector2 impluse = new Vector2(500, 0);
+                        if (m_walkingAnimation.Effects == SpriteEffects.None)
+                            impluse.X *= -1;
+
+                        m_physicsBody.Velocity += impluse;
+                    }
+                    m_isAttacking = false;
+                }
 
                 if (m_attackAnimation.IsFinished())
                 {
@@ -182,6 +208,25 @@ namespace RomanReign
                     m_isAttacking = false;
                 }
             }
+
+            if (m_timeSinceDamage < 0.2f)
+            {
+                m_walkingAnimation.Color = Color.Red;
+                m_attackAnimation.Color = Color.Red;
+            }
+            else
+            {
+                m_walkingAnimation.Color = Color.White;
+                m_attackAnimation.Color = Color.White;
+
+                if (m_loseLife)
+                {
+                    Lives--;
+                    m_loseLife = false;
+                }
+            }
+
+            m_timeSinceDamage += (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -190,6 +235,27 @@ namespace RomanReign
             m_attackAnimation.Draw(spriteBatch);
 
             m_game.Debug.Draw(m_physicsBody.Bounds.ToRect(), Color.Blue);
+            m_game.Debug.Draw(m_attackRect.ToRect(), Color.Green);
+        }
+
+        public bool TakeDamage()
+        {
+            if (m_timeSinceDamage > m_damageCooldown && !m_loseLife)
+            {
+                m_loseLife = true;
+
+                Vector2 impluse = new Vector2(2000, -200);
+                if (m_walkingAnimation.Effects == SpriteEffects.None)
+                    impluse.X *= -1;
+
+                m_physicsBody.Velocity += impluse;
+
+                m_timeSinceDamage = 0;
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

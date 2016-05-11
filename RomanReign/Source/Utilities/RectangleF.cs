@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace RomanReign
 {
-    class RectangleF
+    struct RectangleF
     {
         public Vector2 Location;
         public Vector2 Size;
@@ -38,16 +38,14 @@ namespace RomanReign
             set { Size.Y = value; }
         }
 
-        public RectangleF(float x, float y, float width, float height)
+        public RectangleF(Vector2 position, Vector2 size)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            Location = position;
+            Size = size;
         }
 
-        public RectangleF(Vector2 position, Vector2 size)
-            : this(position.X, position.Y, size.X, size.Y)
+        public RectangleF(float x, float y, float width, float height)
+            : this(new Vector2(x, y), new Vector2(width, height))
         {
         }
 

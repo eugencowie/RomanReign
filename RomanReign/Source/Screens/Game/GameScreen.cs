@@ -98,15 +98,12 @@ namespace RomanReign
             {
                 if (m_romanRain)
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (Enemies.Count > 500)
-                            Enemies.RemoveAt(0);
+                    if (Enemies.Count > 300)
+                        Enemies.RemoveAt(0);
 
-                        Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
-                        spawnPoint.Name = "enemy";
-                        Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
-                    }
+                    Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
+                    spawnPoint.Name = "enemy";
+                    Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                 }
 
                 m_game.Physics.Update(1 / 60f);
@@ -122,6 +119,13 @@ namespace RomanReign
 
                 foreach (var enemy in Enemies)
                     enemy.Update(gameTime);
+
+                Enemies.RemoveAll(e => e.Lives <= 0);
+
+                if (Player.Lives <= 0)
+                {
+                    m_game.Screens.SwitchTo(new MenuScreen(m_game));
+                }
             }
         }
 
