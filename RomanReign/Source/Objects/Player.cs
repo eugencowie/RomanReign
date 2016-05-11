@@ -49,15 +49,21 @@ namespace RomanReign
             m_game = game;
             m_screen = screen;
 
+            // Load walking animation.
+
             m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/player_walking")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
+            // Load attack animation.
+
             m_attackAnimation = new AnimatedSprite(5, 1, 16, false, content.Load<Texture2D>("Textures/Game/player_attack")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
+
+            // Create physics body.
 
             m_physicsBody = new DynamicBody {
                 Name = m_screen.Map.Info.PlayerSpawn.Name,
