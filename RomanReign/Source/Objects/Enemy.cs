@@ -47,6 +47,8 @@ namespace RomanReign
         const float m_damageCooldown = 0.5f;
         float m_timeSinceDamage = m_damageCooldown;
 
+        int m_walkingSpeed;
+
         bool m_triggerJump;
         bool m_triggerDrop;
 
@@ -65,7 +67,9 @@ namespace RomanReign
 
             // Load walking animation.
 
-            m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/enemy_walking")) {
+            m_walkingSpeed = Random.Next(3, 9);
+
+            m_walkingAnimation = new AnimatedSprite(4, 1, m_walkingSpeed, true, content.Load<Texture2D>("Textures/Game/enemy_walking")) {
                 Position = spawnPoint.Value
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
@@ -99,12 +103,20 @@ namespace RomanReign
 
             // AI
 
+            float jumpDistance = 80 * m_walkingSpeed;
+
+            // walking speed can be 3-8
+            if (m_walkingSpeed <= 4) jumpDistance = 80 * 4;
+            if (m_walkingSpeed >= 7) jumpDistance = 80 * 7;
+
             m_jumpActions.Add(() =>
+                Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
                 m_screen.Player.Position.Y < m_physicsBody.Position.Y - 50 &&
                 m_screen.Player.OnGround &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_dropActions.Add(() =>
+                Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
                 m_screen.Player.Position.Y > m_physicsBody.Position.Y + 50 &&
                 m_screen.Player.OnGround &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
@@ -158,7 +170,7 @@ namespace RomanReign
 
             if (m_moveLeftActions.Any(a => a()))
             {
-                m_physicsBody.Velocity.X -= 75f;
+                m_physicsBody.Velocity.X -= m_walkingSpeed * 10;
                 m_walkingAnimation.Effects = SpriteEffects.FlipHorizontally;
                 m_attackAnimation.Effects = SpriteEffects.FlipHorizontally;
                 m_walkingAnimation.Update(gameTime);
@@ -166,7 +178,7 @@ namespace RomanReign
 
             if (m_moveRightActions.Any(a => a()))
             {
-                m_physicsBody.Velocity.X += 75f;
+                m_physicsBody.Velocity.X += m_walkingSpeed * 10;
                 m_walkingAnimation.Effects = SpriteEffects.None;
                 m_attackAnimation.Effects = SpriteEffects.None;
                 m_walkingAnimation.Update(gameTime);
