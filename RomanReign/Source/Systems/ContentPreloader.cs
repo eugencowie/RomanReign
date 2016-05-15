@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,6 +20,8 @@ namespace RomanReign
         /// </summary>
         public static void PreloadGameContent(ContentManager content)
         {
+            content.Load<SoundEffect>("Audio/background_music");
+
             content.Load<SpriteFont>("Fonts/game");
 
             content.Load<Texture2D>("Maps/test");

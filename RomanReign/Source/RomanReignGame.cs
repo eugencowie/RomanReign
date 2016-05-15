@@ -21,6 +21,7 @@ namespace RomanReign
         public ScreenManager Screens;
         public PhysicsManager Physics;
         public DebugRenderer Debug;
+        public AudioManager Audio;
 
         private SpriteBatch m_spriteBatch;
 
@@ -56,7 +57,8 @@ namespace RomanReign
             Input = new InputManager();
             Screens = new ScreenManager(Content, m_spriteBatch);
             Physics = new PhysicsManager();
-            Debug  = new DebugRenderer(GraphicsDevice, m_spriteBatch);
+            Debug = new DebugRenderer(GraphicsDevice, m_spriteBatch);
+            Audio = new AudioManager();
 
             Screens.SwitchTo(new SplashScreen(this));
         }
@@ -80,6 +82,7 @@ namespace RomanReign
         protected override void Update(GameTime gameTime)
         {
             Input.Update();
+            Audio.Update(gameTime);
 
             Screens.Update(gameTime);
 

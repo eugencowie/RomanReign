@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -35,6 +36,7 @@ namespace RomanReign
         Sprite m_exitButton;
 
         // This is used to identify the selected button.
+
         enum SelectedButton { None=0, Start=1, Options=2, Credits=3, Exit=4, Final=5 }
         SelectedButton m_selectedButton;
 
@@ -95,6 +97,15 @@ namespace RomanReign
             };
             m_exitButton.SetRelativeOrigin(0.5f, 0.5f);
 
+            // Load the background music.
+
+            m_game.Audio.BackgroundMusic = new LoopingMusic(content.Load<SoundEffect>("Audio/background_music")) {
+                FadeIn = 5f,
+                FadeOut = 5f,
+                Volume = 0
+            };
+            m_game.Audio.BackgroundMusic.Play();
+
             // Set the initial selected button to none.
 
             m_selectedButton = SelectedButton.None;
@@ -107,6 +118,7 @@ namespace RomanReign
         /// </summary>
         public void UnloadContent()
         {
+            m_game.Audio.BackgroundMusic.Stop();
         }
 
         /// <summary>
