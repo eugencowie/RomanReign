@@ -133,7 +133,13 @@ namespace RomanReign
                     {
                         // 50% chance of spawning on the left
                         bool spawnOnLeft = (Random.NextDouble() >= 0.5);
-                        float posX = spawnOnLeft ? Camera.Bounds.Left - 50 : Camera.Bounds.Right + 50;
+                        float posX = spawnOnLeft ? Camera.Bounds.Left - 20 : Camera.Bounds.Right + 20;
+
+                        if (posX < Map.Bounds.Left)
+                            posX = Map.Bounds.Left + 20;
+
+                        if (posX > Map.Bounds.Right)
+                            posX = Map.Bounds.Right - 20;
 
                         // 50% change of spawning on the wall
                         bool spawnOnWall = (Random.NextDouble() >= 0.5);
@@ -159,7 +165,7 @@ namespace RomanReign
 
                 Player.Update(gameTime);
 
-                Camera.Update();
+                Camera.Update(gameTime);
 
                 foreach (var enemy in Enemies)
                 {

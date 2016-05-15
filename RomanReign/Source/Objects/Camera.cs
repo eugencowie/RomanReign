@@ -23,9 +23,10 @@ namespace RomanReign
             m_game = game;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            Position = m_screen.Player.Position;
+            var targetPosition = m_screen.Player.Position;
+            Position = Vector2.Lerp(Position, targetPosition, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
 
             // Constrain the camera to the bounds of the map sprite.
             if (Bounds.Left < m_screen.Map.Bounds.Left)
