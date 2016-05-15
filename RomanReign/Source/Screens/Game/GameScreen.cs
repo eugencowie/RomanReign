@@ -63,7 +63,7 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            Hud = new Hud(content);
+            Hud = new Hud(this, m_game, content);
 
             Camera = new Camera(this, m_game) {
                 Origin = new Vector2(0.5f, 0.5f)

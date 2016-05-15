@@ -269,3 +269,9 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Game/bg_gameover.png
 
+#begin Fonts/Game.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Game.spritefont
+

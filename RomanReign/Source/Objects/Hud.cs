@@ -6,18 +6,30 @@ namespace RomanReign
 {
     class Hud
     {
-        Sprite m_testSprite;
+        RomanReignGame m_game;
+        GameScreen m_screen;
 
-        public Hud(ContentManager content)
+        SpriteFont m_gameFont;
+
+        public Hud(GameScreen screen, RomanReignGame game, ContentManager content)
         {
-            m_testSprite = new Sprite(content.Load<Texture2D>("Textures/HUD/Test")) {
-                Position = new Vector2(20, 20)
-            };
+            m_game = game;
+            m_screen = screen;
+
+            m_gameFont = content.Load<SpriteFont>("Fonts/Game");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            m_testSprite.Draw(spriteBatch);
+            spriteBatch.DrawString(m_gameFont, "Lives: " + m_screen.Player.Lives, new Vector2(300, 60), Color.White);
+
+            spriteBatch.DrawString(m_gameFont, "Wave: " + m_screen.Wave, new Vector2(300, 100), Color.White);
+            spriteBatch.DrawString(m_gameFont, "Enemies: " + m_screen.WaveEnemiesKilled + " / " + m_screen.WaveEnemies, new Vector2(300, 120), Color.White);
+
+            if (m_screen.TimeSinceWaveStarted < GameScreen.WAVE_COOLDOWN)
+            {
+                spriteBatch.DrawString(m_gameFont, "NEW WAVE IN  " + (int)(GameScreen.WAVE_COOLDOWN - m_screen.TimeSinceWaveStarted + 1), new Vector2(300, 160), Color.White);
+            }
         }
     }
 }
