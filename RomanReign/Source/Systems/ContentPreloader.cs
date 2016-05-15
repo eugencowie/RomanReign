@@ -20,8 +20,6 @@ namespace RomanReign
         /// </summary>
         public static void PreloadGameContent(ContentManager content)
         {
-            content.Load<SoundEffect>("Audio/background_music");
-
             content.Load<SpriteFont>("Fonts/game");
 
             content.Load<Texture2D>("Maps/test");
@@ -45,6 +43,8 @@ namespace RomanReign
         /// </summary>
         public static void PreloadMenuContent(ContentManager content)
         {
+            content.Load<SoundEffect>("Audio/background_music");
+
             content.Load<Texture2D>("Textures/Menu/bg_menu");
             content.Load<Texture2D>("Textures/Menu/bg_splash");
             content.Load<Texture2D>("Textures/Menu/btn_back");

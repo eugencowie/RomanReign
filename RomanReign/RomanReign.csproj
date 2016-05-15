@@ -12,60 +12,55 @@
     <AssemblyName>RomanReign</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
-    <MonoGameContentBuilderExe>
-    </MonoGameContentBuilderExe>
-    <BaseIntermediateOutputPath>Build\obj\</BaseIntermediateOutputPath>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
+    <BaseIntermediateOutputPath>Build\obj\$(MonoGamePlatform)\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Build\bin\Windows\Debug\</OutputPath>
+    <OutputPath>Build\bin\$(MonoGamePlatform)-$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Build\bin\Windows\Release\</OutputPath>
+    <OutputPath>Build\bin\$(MonoGamePlatform)-$(Platform)\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Content\Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Program.cs" />
+    <Compile Include="Source\RomanReignGame.cs" />
     <Compile Include="Source\Objects\Camera.cs" />
     <Compile Include="Source\Objects\Enemy.cs" />
     <Compile Include="Source\Objects\Hud.cs" />
     <Compile Include="Source\Objects\Map.cs" />
     <Compile Include="Source\Objects\Player.cs" />
-    <Compile Include="Source\RomanReignGame.cs" />
-    <Compile Include="Source\Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Screens\Game\EndScreen.cs" />
-    <Compile Include="Source\Screens\Game\PauseScreen.cs" />
-    <Compile Include="Source\Screens\Menu\CreditsScreen.cs" />
     <Compile Include="Source\Screens\Game\GameScreen.cs" />
     <Compile Include="Source\Screens\Game\IntroScreen.cs" />
+    <Compile Include="Source\Screens\Game\PauseScreen.cs" />
+    <Compile Include="Source\Screens\Menu\CreditsScreen.cs" />
     <Compile Include="Source\Screens\Menu\MenuScreen.cs" />
     <Compile Include="Source\Screens\Menu\OptionsScreen.cs" />
     <Compile Include="Source\Screens\Menu\SplashScreen.cs" />
     <Compile Include="Source\Systems\AudioManager.cs" />
     <Compile Include="Source\Systems\ContentPreloader.cs" />
     <Compile Include="Source\Systems\DebugRenderer.cs" />
-    <Compile Include="Source\Systems\PhysicsManager.cs" />
-    <Compile Include="Source\Utilities\AnimatedSprite.cs" />
     <Compile Include="Source\Systems\InputManager.cs" />
+    <Compile Include="Source\Systems\PhysicsManager.cs" />
     <Compile Include="Source\Systems\ScreenManager.cs" />
+    <Compile Include="Source\Utilities\AnimatedSprite.cs" />
     <Compile Include="Source\Utilities\RectangleF.cs" />
     <Compile Include="Source\Utilities\Sprite.cs" />
   </ItemGroup>
