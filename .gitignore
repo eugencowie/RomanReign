@@ -5,4 +5,5 @@
 *.DotSettings
 
 # Build directory
-Build/
+bin/
+obj/

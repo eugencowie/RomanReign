@@ -19,7 +19,9 @@ namespace RomanReign
         /// </summary>
         public static void PreloadGameContent(ContentManager content)
         {
-            content.Load<Texture2D>("Maps/Test");
+            content.Load<SpriteFont>("Fonts/game");
+
+            content.Load<Texture2D>("Maps/test");
 
             content.Load<Texture2D>("Textures/Game/bg_gameover");
             content.Load<Texture2D>("Textures/Game/bg_intro_1");

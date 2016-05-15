@@ -15,6 +15,8 @@
     <MonoGameContentBuilderExe>
     </MonoGameContentBuilderExe>
     <BaseIntermediateOutputPath>Build\obj\</BaseIntermediateOutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -25,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -34,6 +37,7 @@
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Content\Icon.ico</ApplicationIcon>
@@ -55,6 +59,7 @@
     <Compile Include="Source\Screens\Menu\MenuScreen.cs" />
     <Compile Include="Source\Screens\Menu\OptionsScreen.cs" />
     <Compile Include="Source\Screens\Menu\SplashScreen.cs" />
+    <Compile Include="Source\Systems\AudioManager.cs" />
     <Compile Include="Source\Systems\ContentPreloader.cs" />
     <Compile Include="Source\Systems\DebugRenderer.cs" />
     <Compile Include="Source\Systems\PhysicsManager.cs" />
@@ -77,20 +82,9 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
-  <!-- Tell the MonoGame Content Builder to put the output files in a single build direcrory. -->
-  <Target Name="Prepare">
-    <PropertyGroup>
-      <ContentRootDirectory>Content</ContentRootDirectory>
-      <ParentOutputDir>$(ProjectDir)$(ContentRootDirectory)\Build\bin\$(MonoGamePlatform)</ParentOutputDir>
-      <ParentIntermediateDir>$(ProjectDir)$(ContentRootDirectory)\Build\obj\$(MonoGamePlatform)</ParentIntermediateDir>
-      <MonoGameContentBuilderExe Condition="'$(MonoGameContentBuilderExe)' == ''">$(MSBuildExtensionsPath)\MonoGame\v3.0\Tools\MGCB.exe</MonoGameContentBuilderExe>
-      <Header>/platform:$(MonoGamePlatform) /outputDir:"$(ParentOutputDir)" /intermediateDir:"$(ParentIntermediateDir)" /quiet</Header>
-    </PropertyGroup>
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
