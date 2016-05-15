@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -40,6 +41,12 @@ namespace RomanReign
         {
             m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_splash")) {
                 Size = m_game.Viewport.Size.ToVector2()
+            };
+
+            m_game.Audio.BackgroundMusic = new LoopingMusic(content.Load<SoundEffect>("Audio/background_music")) {
+                Volume = 0f,
+                TargetVolume = 0.05f,
+                Pitch = 0f
             };
         }
 

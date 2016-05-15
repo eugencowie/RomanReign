@@ -26,6 +26,8 @@ namespace RomanReign
         Video m_backgroundVideo;
         static VideoPlayer m_videoPlayer;
 
+        bool m_backgroundMusicFlipFlop;
+
         // We have a sprite for the heading (or title) of the screen and then a whole
         // bunch of sprites for all of the various buttons.
 
@@ -70,6 +72,8 @@ namespace RomanReign
 
             m_backgroundVideo = content.Load<Video>("Video/main_menu");
 
+            m_game.Audio.BackgroundMusic.TargetVolume = 0.5f;
+
             // These next sprites are all special because we want the origin of the sprite
             // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
             // makes positioning them easier). To do this, we set the origin property. The
@@ -100,15 +104,6 @@ namespace RomanReign
             };
             m_exitButton.SetRelativeOrigin(0.5f, 0.5f);
 
-            // Load the background music.
-
-            m_game.Audio.BackgroundMusic = new LoopingMusic(content.Load<SoundEffect>("Audio/background_music")) {
-                FadeIn = 5f,
-                FadeOut = 5f,
-                Volume = 0
-            };
-            m_game.Audio.BackgroundMusic.Play();
-
             // Set the initial selected button to none.
 
             m_selectedButton = SelectedButton.None;
@@ -121,7 +116,7 @@ namespace RomanReign
         /// </summary>
         public void UnloadContent()
         {
-            m_game.Audio.BackgroundMusic.Stop();
+            m_game.Audio.BackgroundMusic.TargetVolume = 0.2f;
         }
 
         /// <summary>

@@ -10,75 +10,46 @@ namespace RomanReign
         public float Volume
         {
             get { return m_instance.Volume; }
-            set { m_instance.Volume = value; }
+            set { m_instance.Volume = value; TargetVolume = value; }
         }
 
-        public float FadeIn;
-        public float FadeOut;
+        public float Pitch
+        {
+            get { return m_instance.Pitch; }
+            set { m_instance.Pitch = value; TargetPitch = value; }
+        }
 
-        float m_timeSinceStarted;
-        float m_timeSinceStopped;
+        public float TargetVolume;
+        public float TargetPitch;
 
-        float m_startVolume;
-        float m_stopVolume;
-
-        bool m_starting;
-        bool m_stopping;
+        public delegate void OnLoopDelegate();
+        public event OnLoopDelegate OnLoop;
 
         public LoopingMusic(SoundEffect soundEffect)
         {
             m_instance = soundEffect.CreateInstance();
-            m_instance.IsLooped = true;
+
+            TargetVolume = 1f;
         }
 
         public void Update(GameTime gameTime)
         {
-            m_timeSinceStarted += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            m_timeSinceStopped += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if (m_starting)
+            if (m_instance.State == SoundState.Stopped)
             {
-                if (m_instance.State != SoundState.Playing)
-                    m_instance.Play();
+                m_instance.Play();
 
-                if (m_timeSinceStarted < FadeIn)
-                {
-                    float vol = MathHelper.Lerp(m_startVolume, 1, m_timeSinceStarted / FadeIn);
-                    m_instance.Volume = vol;
-                }
-                else
-                {
-                    m_starting = false;
-                }
+                OnLoop?.Invoke();
             }
 
-            if (m_stopping)
+            if (m_instance.Volume != TargetVolume)
             {
-                if (m_timeSinceStopped < FadeOut)
-                {
-                    float vol = MathHelper.Lerp(m_stopVolume, 0, m_timeSinceStopped / FadeOut);
-                    m_instance.Volume = vol;
-                }
-                else
-                {
-                    m_instance.Stop();
-                    m_stopping = false;
-                }
+                m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
             }
-        }
 
-        public void Play()
-        {
-            m_starting = true;
-            m_timeSinceStarted = 0;
-            m_startVolume = Volume;
-        }
-
-        public void Stop()
-        {
-            m_stopping = true;
-            m_timeSinceStopped = 0;
-            m_stopVolume = Volume;
+            if (m_instance.Pitch != TargetPitch)
+            {
+                m_instance.Pitch = MathHelper.Lerp(m_instance.Pitch, TargetPitch, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
+            }
         }
     }
 

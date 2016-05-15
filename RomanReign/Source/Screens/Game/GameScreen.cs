@@ -76,6 +76,14 @@ namespace RomanReign
             WaveEnemies = 1;
             WaveEnemiesKilled = 1;
 
+            m_game.Audio.BackgroundMusic.OnLoop += () => {
+                float pitch = 0;
+                if (Wave < 3) pitch = 0;
+                else if (Wave < 5) pitch = 0.1f;
+                else if (Wave < 10) pitch = 0.2f;
+                m_game.Audio.BackgroundMusic.Pitch = pitch;
+            };
+
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
             m_game.Screens.Push(new IntroScreen(m_game));
