@@ -31,10 +31,12 @@ namespace RomanReign
         /// </summary>
         public RomanReignGame()
         {
+            Config.ReadConfig("config.xml");
+
             var graphics = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 1280,
-                PreferredBackBufferHeight = 720,
+                PreferredBackBufferWidth = Config.Data.Resolution.Width,
+                PreferredBackBufferHeight = Config.Data.Resolution.Height,
                 IsFullScreen = false
             };
 
@@ -52,7 +54,7 @@ namespace RomanReign
         {
             ContentPreloader.PreloadAllContent(Content);
 
-            m_spriteBatch    = new SpriteBatch(GraphicsDevice);
+            m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Input = new InputManager();
             Screens = new ScreenManager(Content, m_spriteBatch);

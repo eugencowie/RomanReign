@@ -45,6 +45,7 @@ namespace RomanReign
 
         bool m_paused;
         bool m_gameOver;
+        bool m_hideHud;
 
         // This boolean is used to toggle the 'roman rain' mode.
 
@@ -104,14 +105,13 @@ namespace RomanReign
         {
 #if DEBUG
             if (m_game.Input.IsJustReleased(Keys.F5))
-            {
                 m_game.Debug.Enabled = !m_game.Debug.Enabled;
-            }
+
+            if (m_game.Input.IsJustReleased(Keys.F7))
+                m_hideHud = !m_hideHud;
 
             if (m_game.Input.IsJustReleased(Keys.F8))
-            {
                 m_romanRain = !m_romanRain;
-            }
 #endif
 
             if (!m_paused && !m_gameOver)
@@ -211,7 +211,7 @@ namespace RomanReign
 
             spriteBatch.End();
 
-            if (!m_paused && !m_gameOver)
+            if (!m_paused && !m_gameOver && !m_hideHud)
             {
                 // Now we want to draw the HUD without our coordinates being transformed using the
                 // camera, so we need to call spriteBatch.Begin() again, this time without using
