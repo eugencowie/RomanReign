@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanReign
 {
@@ -22,6 +23,16 @@ namespace RomanReign
         public Map Map;
         public Player Player;
         public List<Enemy> Enemies = new List<Enemy>();
+
+        // These variables are used for spawning enemies.
+
+        public int Wave;
+        public int WaveEnemies;
+        public int WaveEnemiesSpawned;
+        public int WaveEnemiesKilled;
+
+        public const float WAVE_COOLDOWN = 3f;
+        public float TimeSinceWaveStarted;
 
         // This variable allows us to access important functions and variables in the
         // main game class. You will see this variable in *all* of the screen classes.
@@ -62,8 +73,8 @@ namespace RomanReign
 
             Player = new Player(this, m_game, content);
 
-            Property<Vector2> spawnPoint = Map.Info.EnemySpawns[Random.Next(Map.Info.EnemySpawns.Count)];
-            Enemies.Add(new Enemy(this, m_game, content, spawnPoint));
+            WaveEnemies = 1;
+            WaveEnemiesKilled = 1;
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
@@ -106,6 +117,38 @@ namespace RomanReign
                     spawnPoint.Name = "enemy";
                     Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                 }
+                else
+                {
+                    if (WaveEnemiesKilled >= WaveEnemies)
+                    {
+                        Wave++;
+                        WaveEnemies = (int)Math.Ceiling(WaveEnemies * 1.5f);
+                        WaveEnemiesSpawned = 0;
+                        WaveEnemiesKilled = 0;
+
+                        TimeSinceWaveStarted = 0;
+                    }
+
+                    if (WaveEnemiesSpawned < WaveEnemies && TimeSinceWaveStarted > WAVE_COOLDOWN && Random.Next(100) < 2)
+                    {
+                        // 50% chance of spawning on the left
+                        bool spawnOnLeft = (Random.NextDouble() >= 0.5);
+                        float posX = spawnOnLeft ? Camera.Bounds.Left - 50 : Camera.Bounds.Right + 50;
+
+                        // 50% change of spawning on the wall
+                        bool spawnOnWall = (Random.NextDouble() >= 0.5);
+                        float posY = spawnOnWall ? 737 : 918;
+
+                        // TODO: fix spawn points
+                        Property<Vector2> spawnPoint = Map.Info.EnemySpawns[Random.Next(Map.Info.EnemySpawns.Count)];
+                        spawnPoint.Value.X = posX;
+                        spawnPoint.Value.Y = posY;
+                        Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
+                        WaveEnemiesSpawned++;
+                    }
+                }
+
+                TimeSinceWaveStarted += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 m_game.Physics.Update(1 / 60f);
 
@@ -119,7 +162,14 @@ namespace RomanReign
                 Camera.Update();
 
                 foreach (var enemy in Enemies)
+                {
                     enemy.Update(gameTime);
+
+                    if (enemy.Lives <= 0)
+                    {
+                        WaveEnemiesKilled++;
+                    }
+                }
 
                 Enemies.RemoveAll(e => e.Lives <= 0);
 
