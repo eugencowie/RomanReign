@@ -64,8 +64,8 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            // If the elapsed time reaches 7.5 seconds or the escape key is pressed, remove this screen.
-            if (m_elapsedTime > 7.5f ||
+            // If the elapsed time reaches 6 seconds or the escape key is pressed, remove this screen.
+            if (m_elapsedTime > 6f ||
                 m_game.Input.IsJustReleased(Keys.Escape) ||
                 m_game.Input.IsJustReleased(Buttons.Start) ||
                 m_game.Input.IsJustReleased(Buttons.A))
