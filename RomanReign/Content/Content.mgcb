@@ -97,18 +97,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Menu/title_options.png
 
-#begin Textures/Menu/bg_menu.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Menu/bg_menu.png
-
 #begin Textures/Menu/bg_splash.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -303,4 +291,9 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/background_music.ogg
+
+#begin Video\main_menu.wmv
+/importer:WmvImporter
+/processor:VideoProcessor
+/build:Video\main_menu.wmv
 

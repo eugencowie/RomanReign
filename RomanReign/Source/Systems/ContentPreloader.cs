@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace RomanReign
 {
@@ -45,7 +46,6 @@ namespace RomanReign
         {
             content.Load<SoundEffect>("Audio/background_music");
 
-            content.Load<Texture2D>("Textures/Menu/bg_menu");
             content.Load<Texture2D>("Textures/Menu/bg_splash");
             content.Load<Texture2D>("Textures/Menu/btn_back");
             content.Load<Texture2D>("Textures/Menu/btn_credits");
@@ -56,6 +56,8 @@ namespace RomanReign
             content.Load<Texture2D>("Textures/Menu/title_credits");
             content.Load<Texture2D>("Textures/Menu/title_menu");
             content.Load<Texture2D>("Textures/Menu/title_options");
+
+            content.Load<Video>("Video/main_menu");
         }
     }
 }

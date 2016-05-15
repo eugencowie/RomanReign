@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace RomanReign
 {
@@ -19,12 +20,11 @@ namespace RomanReign
 
         RomanReignGame m_game;
 
-        // We need a sprite to use as the menu background.  This sprite should always be
-        // drawn when we have any of the menu screens activated. For a brief description
-        // of our sprite class, see Screens/Menu/SplashScreen.cs - or Utilties/Sprite.cs
-        // if you want to see the actual code for the sprite class.
+        // We need a video to use as the menu background. This video should always be
+        // drawn when we have any of the menu screens activated.
 
-        Sprite m_background;
+        Video m_backgroundVideo;
+        static VideoPlayer m_videoPlayer;
 
         // We have a sprite for the heading (or title) of the screen and then a whole
         // bunch of sprites for all of the various buttons.
@@ -63,9 +63,12 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_menu")) {
-                Size = m_game.Viewport.Size.ToVector2()
-            };
+            // Load background video.
+
+            if (m_videoPlayer == null)
+                m_videoPlayer = new VideoPlayer();
+
+            m_backgroundVideo = content.Load<Video>("Video/main_menu");
 
             // These next sprites are all special because we want the origin of the sprite
             // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
@@ -126,6 +129,12 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
+            if (m_videoPlayer.State != MediaState.Playing)
+            {
+                m_videoPlayer.Play(m_backgroundVideo);
+                m_videoPlayer.Volume = 0f;
+            }
+
             // The options and credits screens will be overlaid on top of this screen, so
             // we must check to see whether this screen is currently being covered by any
             // other any screens before we run our update code.
@@ -216,7 +225,18 @@ namespace RomanReign
             // We always want to draw the background, regardless of whether or not there
             // are any other screens covering this one.
 
-            m_background.Draw(spriteBatch);
+            Texture2D videoTexture = null;
+
+            if (m_videoPlayer.State != MediaState.Stopped)
+            {
+                try { videoTexture = m_videoPlayer.GetTexture(); }
+                catch { videoTexture = null; }
+            }
+
+            if (videoTexture != null)
+            {
+                spriteBatch.Draw(videoTexture, m_game.Viewport, Color.White);
+            }
 
             // We only want to draw the heading/buttons/etc if there are no other screens
             // covering this one.
