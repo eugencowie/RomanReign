@@ -298,3 +298,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/game.spritefont
 
+#begin Audio/background_music.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/background_music.ogg
+
