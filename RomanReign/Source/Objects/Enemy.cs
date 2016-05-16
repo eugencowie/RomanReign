@@ -35,6 +35,8 @@ namespace RomanReign
 
         RectangleF m_attackRect;
 
+        Color m_color;
+
         List<InputAction> m_jumpActions = new List<InputAction>();
         List<InputAction> m_dropActions = new List<InputAction>();
         List<InputAction> m_moveLeftActions = new List<InputAction>();
@@ -80,6 +82,14 @@ namespace RomanReign
                 Position = spawnPoint.Value
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
+
+            // Set random color.
+
+            var options = new [] { Color.White, Color.Gold, Color.LightBlue };
+            int option = Random.Next(options.Length);
+            m_color = options[option];
+            m_walkingAnimation.Color = m_color;
+            m_attackAnimation.Color = m_color;
 
             // Create physics body.
 
@@ -226,13 +236,13 @@ namespace RomanReign
 
             if (m_timeSinceDamage < 0.2f)
             {
-                m_walkingAnimation.Color = Color.Red;
-                m_attackAnimation.Color = Color.Red;
+                m_walkingAnimation.Color = new Color(Color.White, 5);
+                m_attackAnimation.Color = new Color(Color.White, 5);
             }
             else
             {
-                m_walkingAnimation.Color = Color.White;
-                m_attackAnimation.Color = Color.White;
+                m_walkingAnimation.Color = m_color;
+                m_attackAnimation.Color = m_color;
 
                 if (m_loseLife)
                 {
