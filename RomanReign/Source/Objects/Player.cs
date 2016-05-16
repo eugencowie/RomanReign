@@ -23,6 +23,7 @@ namespace RomanReign
         }
 
         public int Lives = 3;
+        public bool Invincible;
 
         RomanReignGame m_game;
         GameScreen m_screen;
@@ -65,7 +66,7 @@ namespace RomanReign
 
             // Load attack animation.
 
-            m_attackAnimation = new AnimatedSprite(5, 1, 16, false, content.Load<Texture2D>("Textures/Game/player_attack")) {
+            m_attackAnimation = new AnimatedSprite(5, 1, 20, false, content.Load<Texture2D>("Textures/Game/player_attack")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
@@ -126,9 +127,9 @@ namespace RomanReign
                 (i.IsDown(Buttons.DPadRight) || i.IsStickRight(Thumbsticks.Left)) &&
                 (i.IsUp(Buttons.DPadLeft) && !i.IsStickLeft(Thumbsticks.Left)));
 
-            m_attackActions.Add(() => i.IsDown(Keys.X));
+            m_attackActions.Add(() => i.IsJustPressed(Keys.X) && !m_isAttacking);
 
-            m_attackActions.Add(() => i.IsDown(Buttons.X));
+            m_attackActions.Add(() => i.IsJustPressed(Buttons.X) && !m_isAttacking);
         }
 
         public void Update(GameTime gameTime)
@@ -188,18 +189,10 @@ namespace RomanReign
             {
                 m_attackAnimation.Update(gameTime);
 
-                if (m_screen.Enemies.Any(e => e.Bounds.Intersects(m_attackRect)))
+                foreach (Enemy enemy in m_screen.Enemies.Where(e => e.Bounds.Intersects(m_attackRect)))
                 {
-                    var enemy = m_screen.Enemies.First(e => e.Bounds.Intersects(m_attackRect));
                     if (enemy.TakeDamage())
-                    {
-                        Vector2 impluse = new Vector2(500, 0);
-                        if (m_walkingAnimation.Effects == SpriteEffects.None)
-                            impluse.X *= -1;
-
-                        m_physicsBody.Velocity += impluse;
-                    }
-                    m_isAttacking = false;
+                        m_physicsBody.Velocity.X *= -0.5f;
                 }
 
                 if (m_attackAnimation.IsFinished())
@@ -240,6 +233,9 @@ namespace RomanReign
 
         public bool TakeDamage()
         {
+            if (Invincible)
+                return false;
+
             if (m_timeSinceDamage > DAMAGE_COOLDOWN && !m_loseLife)
             {
                 m_loseLife = true;

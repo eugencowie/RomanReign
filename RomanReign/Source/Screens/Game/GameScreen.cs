@@ -83,8 +83,8 @@ namespace RomanReign
 
             m_game.Audio.BackgroundMusic.OnLoop += () => {
                 float pitch = 0;
-                if (Wave < 3) pitch = 0;
-                else if (Wave < 5) pitch = 0.1f;
+                if      (Wave < 3)  pitch = 0;
+                else if (Wave < 5)  pitch = 0.1f;
                 else if (Wave < 10) pitch = 0.2f;
                 m_game.Audio.BackgroundMusic.Pitch = pitch;
             };
@@ -115,7 +115,10 @@ namespace RomanReign
                 m_hideHud = !m_hideHud;
 
             if (m_game.Input.IsJustReleased(Keys.F8))
+            {
                 m_romanRain = !m_romanRain;
+                Player.Invincible = true;
+            }
 #endif
 
             if (!m_paused && !m_gameOver)
@@ -141,7 +144,8 @@ namespace RomanReign
                         TimeSinceWaveStarted = 0;
                     }
 
-                    if (WaveEnemiesSpawned < WaveEnemies && TimeSinceWaveStarted > WAVE_COOLDOWN && Random.Next(100) < 2)
+                    bool spawnEnemy = (Random.Next(100) < 2 || Enemies.Count == 0);
+                    if (WaveEnemiesSpawned < WaveEnemies && TimeSinceWaveStarted > WAVE_COOLDOWN && spawnEnemy)
                     {
                         // 50% chance of spawning on the left
                         bool spawnOnLeft = (Random.NextDouble() >= 0.5);

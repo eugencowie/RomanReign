@@ -218,13 +218,7 @@ namespace RomanReign
                 if (m_screen.Player.Bounds.Intersects(m_attackRect))
                 {
                     if (m_screen.Player.TakeDamage())
-                    {
-                        Vector2 impluse = new Vector2(500, 0);
-                        if (m_walkingAnimation.Effects == SpriteEffects.None)
-                            impluse.X *= -1;
-
-                        m_physicsBody.Velocity += impluse;
-                    }
+                        m_physicsBody.Velocity.X *= -0.5f;
                 }
 
                 if (m_attackAnimation.IsFinished())
