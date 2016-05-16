@@ -99,7 +99,7 @@ namespace RomanReign
                 return CollisionResponse.Block;
             };
 
-            m_game.Physics.AddRigidBody(m_physicsBody);
+            m_screen.Physics.AddRigidBody(m_physicsBody);
 
             // AI
 

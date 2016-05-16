@@ -18,6 +18,8 @@ namespace RomanReign
         // These public fields allow certain game objects to be accessed from outside
         // of this class.
 
+        public PhysicsManager Physics;
+
         public Hud Hud;
         public Camera Camera;
         public Map Map;
@@ -64,13 +66,15 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
+            Physics = new PhysicsManager();
+
             Hud = new Hud(this, m_game, content);
 
             Camera = new Camera(this, m_game) {
                 Origin = new Vector2(0.5f, 0.5f)
             };
 
-            Map = new Map(m_game, content, "Maps/Test");
+            Map = new Map(this, m_game, content, "Maps/Test");
 
             Player = new Player(this, m_game, content);
 
@@ -164,7 +168,7 @@ namespace RomanReign
 
                 TimeSinceWaveStarted += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                m_game.Physics.Update(1 / 60f);
+                Physics.Update(1 / 60f);
 
                 if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.Start))
                 {

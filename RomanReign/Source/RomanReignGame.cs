@@ -19,7 +19,6 @@ namespace RomanReign
 
         public InputManager Input;
         public ScreenManager Screens;
-        public PhysicsManager Physics;
         public DebugRenderer Debug;
         public AudioManager Audio;
 
@@ -58,7 +57,6 @@ namespace RomanReign
 
             Input = new InputManager();
             Screens = new ScreenManager(Content, m_spriteBatch);
-            Physics = new PhysicsManager();
             Debug = new DebugRenderer(GraphicsDevice, m_spriteBatch);
             Audio = new AudioManager();
 

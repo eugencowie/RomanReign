@@ -29,15 +29,17 @@ namespace RomanReign
         public Rectangle Bounds => m_sprite.Bounds;
 
         RomanReignGame m_game;
+        GameScreen m_screen;
 
         Sprite m_sprite;
         MapInfo m_info;
 
         List<StaticBody> m_physicsBodies = new List<StaticBody>();
 
-        public Map(RomanReignGame game, ContentManager content, string mapPath)
+        public Map(GameScreen screen, RomanReignGame game, ContentManager content, string mapPath)
         {
             m_game = game;
+            m_screen = screen;
 
             m_sprite = new Sprite(content.Load<Texture2D>(mapPath));
 
@@ -53,7 +55,7 @@ namespace RomanReign
                 };
 
                 m_physicsBodies.Add(body);
-                m_game.Physics.AddStaticBody(body);
+                m_screen.Physics.AddStaticBody(body);
             }
         }
 
