@@ -25,16 +25,15 @@ namespace RomanReign
 
             content.Load<Texture2D>("Maps/test");
 
-            content.Load<Texture2D>("Textures/Game/bg_gameover");
-            content.Load<Texture2D>("Textures/Game/bg_intro_1");
-            content.Load<Texture2D>("Textures/Game/bg_intro_2");
-            content.Load<Texture2D>("Textures/Game/bg_intro_3");
-            content.Load<Texture2D>("Textures/Game/bg_intro_4");
-            content.Load<Texture2D>("Textures/Game/bg_pause");
-            content.Load<Texture2D>("Textures/Game/enemy_attack");
-            content.Load<Texture2D>("Textures/Game/enemy_walking");
-            content.Load<Texture2D>("Textures/Game/player_attack");
-            content.Load<Texture2D>("Textures/Game/player_walking");
+            foreach (string texture in new[] {
+                "bg_gameover",
+                "bg_intro_1", "bg_intro_2", "bg_intro_3", "bg_intro_4",
+                "bg_pause",
+                "enemy_attack", "enemy_walking",
+                "player_attack", "player_walking" })
+            {
+                content.Load<Texture2D>("Textures/Game/" + texture);
+            }
 
             content.Load<Texture2D>("Textures/HUD/test");
         }
@@ -46,16 +45,13 @@ namespace RomanReign
         {
             content.Load<SoundEffect>("Audio/background_music");
 
-            content.Load<Texture2D>("Textures/Menu/bg_splash");
-            content.Load<Texture2D>("Textures/Menu/btn_back");
-            content.Load<Texture2D>("Textures/Menu/btn_credits");
-            content.Load<Texture2D>("Textures/Menu/btn_exit");
-            content.Load<Texture2D>("Textures/Menu/btn_exit_white");
-            content.Load<Texture2D>("Textures/Menu/btn_options");
-            content.Load<Texture2D>("Textures/Menu/btn_start");
-            content.Load<Texture2D>("Textures/Menu/title_credits");
-            content.Load<Texture2D>("Textures/Menu/title_menu");
-            content.Load<Texture2D>("Textures/Menu/title_options");
+            foreach (string texture in new[] {
+                "bg_splash",
+                "btn_back", "btn_credits", "btn_exit", "btn_exit_white", "btn_options", "btn_start",
+                "title_credits", "title_menu", "title_options" })
+            {
+                content.Load<Texture2D>("Textures/Menu/" + texture);
+            }
 
             content.Load<Video>("Video/main_menu");
         }

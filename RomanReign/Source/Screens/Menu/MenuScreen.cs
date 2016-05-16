@@ -26,8 +26,6 @@ namespace RomanReign
         Video m_backgroundVideo;
         static VideoPlayer m_videoPlayer;
 
-        bool m_backgroundMusicFlipFlop;
-
         // We have a sprite for the heading (or title) of the screen and then a whole
         // bunch of sprites for all of the various buttons.
 
