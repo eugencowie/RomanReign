@@ -40,8 +40,8 @@ namespace RomanReign
         List<InputAction> m_moveRightActions = new List<InputAction>();
         List<InputAction> m_attackActions = new List<InputAction>();
 
-        const float m_damageCooldown = 0.5f;
-        float m_timeSinceDamage = m_damageCooldown;
+        const float DAMAGE_COOLDOWN = 1f;
+        float m_timeSinceDamage = DAMAGE_COOLDOWN;
 
         bool m_isJumping;
         bool m_isDropping;
@@ -209,7 +209,7 @@ namespace RomanReign
                 }
             }
 
-            if (m_timeSinceDamage < 0.2f)
+            if (m_timeSinceDamage < DAMAGE_COOLDOWN)
             {
                 m_walkingAnimation.Color = Color.Red;
                 m_attackAnimation.Color = Color.Red;
@@ -240,7 +240,7 @@ namespace RomanReign
 
         public bool TakeDamage()
         {
-            if (m_timeSinceDamage > m_damageCooldown && !m_loseLife)
+            if (m_timeSinceDamage > DAMAGE_COOLDOWN && !m_loseLife)
             {
                 m_loseLife = true;
 

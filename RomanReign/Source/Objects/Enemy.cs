@@ -138,6 +138,7 @@ namespace RomanReign
                 m_screen.Player.Position.X < m_physicsBody.Position.X - 60);
 
             m_attackActions.Add(() =>
+                !m_loseLife &&
                 Random.Next(100) < 2 &&
                 m_timeSinceAttack > m_attackCooldown &&
                 Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < 60);
