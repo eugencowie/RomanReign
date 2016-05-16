@@ -1,6 +1,6 @@
 **Download**
 
-You can download a copy of the latest source code by [clicking here](https://github.com/eugencowie/RomanReign/archive/master.zip). Alternatively, you can use the `Download ZIP` button in the top-right corner.
+You can download a copy of the latest source code by [clicking here](https://github.com/eugencowie/RomanReign/archive/master.zip).
 
 **Requirements**
 
