@@ -144,7 +144,13 @@ namespace RomanReign
                         TimeSinceWaveStarted = 0;
                     }
 
-                    bool spawnEnemy = (Random.Next(100) < 2 || Enemies.Count == 0);
+                    int spawnChance = 2; // out of 100
+                    if      (Wave < 3)  spawnChance = 2;
+                    else if (Wave < 5)  spawnChance = 3;
+                    else if (Wave < 10) spawnChance = 4;
+                    else                spawnChance = 6;
+
+                    bool spawnEnemy = (Random.Next(100) < spawnChance || Enemies.Count == 0);
                     if (WaveEnemiesSpawned < WaveEnemies && TimeSinceWaveStarted > WAVE_COOLDOWN && spawnEnemy)
                     {
                         // 50% chance of spawning on the left
