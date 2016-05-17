@@ -22,8 +22,6 @@ namespace RomanReign
 
         public static void ReadConfig(string path)
         {
-            Data = new Config();
-
             if (File.Exists(path))
             {
                 XmlSerializer xml = new XmlSerializer(Data.GetType());

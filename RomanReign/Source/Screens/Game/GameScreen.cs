@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RomanReign
 {
@@ -86,6 +85,7 @@ namespace RomanReign
                 if      (Wave < 3)  pitch = 0;
                 else if (Wave < 5)  pitch = 0.1f;
                 else if (Wave < 10) pitch = 0.2f;
+                else                pitch = 0.3f;
                 m_game.Audio.BackgroundMusic.Pitch = pitch;
             };
 
@@ -198,6 +198,11 @@ namespace RomanReign
                 if (Player.Lives <= 0)
                 {
                     m_game.Screens.Push(new EndScreen(m_game));
+                }
+
+                if (Wave > 10)
+                {
+                    // TODO: 'you won' screen
                 }
             }
         }

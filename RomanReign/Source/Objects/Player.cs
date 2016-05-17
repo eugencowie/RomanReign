@@ -22,6 +22,8 @@ namespace RomanReign
             set { m_onGround = value; }
         }
 
+        public int DisplayLives => Lives + (m_loseLife ? -1 : 0);
+
         public int Lives = 3;
         public bool Invincible;
 

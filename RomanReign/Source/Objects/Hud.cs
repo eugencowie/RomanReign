@@ -21,10 +21,10 @@ namespace RomanReign
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(m_gameFont, "Lives: " + m_screen.Player.Lives, new Vector2(200, 60), Color.White);
+            spriteBatch.DrawString(m_gameFont, "Lives: " + m_screen.Player.DisplayLives, new Vector2(200, 60), Color.White);
 
             spriteBatch.DrawString(m_gameFont, "Wave: " + m_screen.Wave, new Vector2(200, 100), Color.White);
-            spriteBatch.DrawString(m_gameFont, "Enemies: " + m_screen.WaveEnemiesKilled + " / " + m_screen.WaveEnemies, new Vector2(200, 120), Color.White);
+            spriteBatch.DrawString(m_gameFont, "Enemies: " + m_screen.WaveEnemiesKilled + " / " + m_screen.WaveEnemies, new Vector2(200, 130), Color.White);
 
             if (m_screen.TimeSinceWaveStarted < GameScreen.WAVE_COOLDOWN)
             {
