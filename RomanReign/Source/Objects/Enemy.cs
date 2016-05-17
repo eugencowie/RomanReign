@@ -91,6 +91,8 @@ namespace RomanReign
             m_walkingAnimation.Color = m_color;
             m_attackAnimation.Color = m_color;
 
+            //Lives = (option==0 ? 1 : (option==1 ? 3 : 2));
+
             // Create physics body.
 
             m_physicsBody = new DynamicBody {
@@ -231,8 +233,8 @@ namespace RomanReign
 
             if (m_timeSinceDamage < 0.2f)
             {
-                m_walkingAnimation.Color = new Color(Color.White, 5);
-                m_attackAnimation.Color = new Color(Color.White, 5);
+                m_walkingAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color.White);
+                m_attackAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color.White);
             }
             else
             {
