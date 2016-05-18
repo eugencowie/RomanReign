@@ -162,6 +162,8 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // Jumping
+
             if (m_jumpActions.Any(a => a()))
             {
                 if (!m_isJumping)
@@ -197,6 +199,8 @@ namespace RomanReign
                 m_isDropping = true;
             }
 
+            // Movement
+
             if (m_moveLeftActions.Any(a => a()))
             {
                 m_physicsBody.Velocity.X -= m_walkingSpeed * 10;
@@ -213,16 +217,22 @@ namespace RomanReign
                 m_walkingAnimation.Update(gameTime);
             }
 
+            // Attacking
+
             if (m_attackActions.Any(a => a()))
             {
                 m_isAttacking = true;
             }
+
+            // Animation
 
             m_walkingAnimation.Position = m_physicsBody.Position;
             m_attackAnimation.Position = m_physicsBody.Position;
 
             m_walkingAnimation.Visible = !m_isAttacking;
             m_attackAnimation.Visible = m_isAttacking;
+
+            // Attacking
 
             m_attackRect = m_physicsBody.Bounds;
             m_attackRect.Size.X += 20;
@@ -246,6 +256,8 @@ namespace RomanReign
                     m_timeSinceAttack = 0;
                 }
             }
+
+            // Damage
 
             if (m_timeSinceDamage < 0.2f)
             {
@@ -279,6 +291,8 @@ namespace RomanReign
 
         public bool TakeDamage()
         {
+            // Taking damage
+
             if (m_timeSinceDamage > m_damageCooldown && !m_loseLife)
             {
                 m_loseLife = true;
