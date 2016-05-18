@@ -297,3 +297,63 @@
 /processor:VideoProcessor
 /build:Video\main_menu.wmv
 
+#begin Audio/sfx_enemy_grunt1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_enemy_grunt1.wav
+
+#begin Audio/sfx_enemy_grunt2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_enemy_grunt2.wav
+
+#begin Audio/sfx_enemy_grunt3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_enemy_grunt3.wav
+
+#begin Audio/sfx_menu_select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_menu_select.wav
+
+#begin Audio/sfx_player_attack1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_attack1.wav
+
+#begin Audio/sfx_player_attack2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_attack2.wav
+
+#begin Audio/sfx_player_hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_hurt.wav
+
+#begin Audio/sfx_player_jump1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_jump1.wav
+
+#begin Audio/sfx_player_jump2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_jump2.wav
+
+#begin Audio/sfx_player_walking_long.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/sfx_player_walking_long.wav
+
