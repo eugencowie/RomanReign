@@ -11,14 +11,10 @@ namespace RomanReign
     /// </summary>
     class IntroScreen : IScreen
     {
-        //static bool m_shown;
-
         RomanReignGame m_game;
 
-        Sprite m_background1;
-        Sprite m_background2;
-        Sprite m_background3;
-        Sprite m_background4;
+        Sprite m_background;
+        Sprite m_player;
 
         SoundEffectInstance WalkingSound;
 
@@ -31,37 +27,17 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            //m_shown = true;
-
-            // Load the background sprite and scale it to cover the entire screen.
-            m_background1 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_1")) {
-                Size = m_game.Viewport.Size.ToVector2()
+            m_background = new Sprite(content.Load<Texture2D>("Maps/test")) {
+                Position = m_game.Viewport.Center.ToVector2()
             };
+            m_background.SetRelativeOrigin(0.5f, 0.5f);
 
-            // Load the second background sprite.
-            m_background2 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_2")) {
-                Size = m_game.Viewport.Size.ToVector2()
-            };
-
-            // Load the second background sprite.
-            m_background3 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_3")) {
-                Size = m_game.Viewport.Size.ToVector2()
-            };
-
-            // Load the second background sprite.
-            m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_4")) {
-                Size = m_game.Viewport.Size.ToVector2()
-            };
+            m_player = new Sprite(content.Load<Texture2D>("Textures/Game/player_walking"));
+            m_player.SourceRect = new Rectangle(0, 0, (int)(m_player.Texture.Width / 4f), m_player.Texture.Height);
+            m_player.SetRelativeOrigin(0.5f, 0.5f);
 
             WalkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
             WalkingSound.Play();
-
-            // Make sure that this screen is only ever shown once per session.
-
-            //if (m_shown)
-            //{
-            //    m_game.Screens.Pop();
-            //}
         }
 
         public void UnloadContent()
@@ -74,6 +50,48 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
+            // Display the each image sequentially with a delay of 0.75 seconds between each one.
+            if (m_elapsedTime < 0.75f)
+            {
+                m_player.Position = new Vector2(695, 505);
+                m_player.SetRelativeScale(0.3f);
+            }
+            else if (m_elapsedTime < 1.5f)
+            {
+                m_player.Position = new Vector2(700, 520);
+                m_player.SetRelativeScale(0.4f);
+            }
+            else if (m_elapsedTime < 2.25f)
+            {
+                m_player.Position = new Vector2(705, 535);
+                m_player.SetRelativeScale(0.5f);
+            }
+            else if (m_elapsedTime < 3f)
+            {
+                m_player.Position = new Vector2(710, 550);
+                m_player.SetRelativeScale(0.6f);
+            }
+            else if (m_elapsedTime < 3.75f)
+            {
+                m_player.Position = new Vector2(715, 565);
+                m_player.SetRelativeScale(0.7f);
+            }
+            else if (m_elapsedTime < 4.5f)
+            {
+                m_player.Position = new Vector2(720, 580);
+                m_player.SetRelativeScale(0.8f);
+            }
+            else if (m_elapsedTime < 5.25f)
+            {
+                m_player.Position = new Vector2(725, 595);
+                m_player.SetRelativeScale(0.9f);
+            }
+            else if (m_elapsedTime < 6f)
+            {
+                m_player.Position = new Vector2(730, 610);
+                m_player.SetRelativeScale(1f);
+            }
+
             // If the elapsed time reaches 6 seconds or the escape key is pressed, remove this screen.
             if (m_elapsedTime > 6f ||
                 m_game.Input.IsJustReleased(Keys.Escape) ||
@@ -91,23 +109,9 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
-            // Display the each image sequentially with a delay of 1.5 seconds between each one.
-            if (m_elapsedTime < 1.5f)
-            {
-                m_background1.Draw(spriteBatch);
-            }
-            else if (m_elapsedTime < 3f)
-            {
-                m_background2.Draw(spriteBatch);
-            }
-            else if (m_elapsedTime < 4.5f)
-            {
-                m_background3.Draw(spriteBatch);
-            }
-            else if (m_elapsedTime < 6f)
-            {
-                m_background4.Draw(spriteBatch);
-            }
+            m_background.Draw(spriteBatch);
+
+            m_player.Draw(spriteBatch);
 
             spriteBatch.End();
         }

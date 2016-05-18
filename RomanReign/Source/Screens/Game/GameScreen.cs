@@ -121,6 +121,8 @@ namespace RomanReign
             }
 #endif
 
+            Camera.Update(gameTime);
+
             if (!m_paused && !m_gameOver)
             {
                 if (m_romanRain)
@@ -188,8 +190,6 @@ namespace RomanReign
 
                 if (Player.Position.Y > Map.Bounds.Bottom)
                     Player.Position += new Vector2(0, 610);
-
-                Camera.Update(gameTime);
 
                 foreach (var enemy in Enemies)
                 {

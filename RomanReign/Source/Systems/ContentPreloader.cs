@@ -35,10 +35,6 @@ namespace RomanReign
 
             foreach (string texture in new[] {
                 "bg_gameover",
-                "bg_intro_1",
-                "bg_intro_2",
-                "bg_intro_3",
-                "bg_intro_4",
                 "bg_pause",
                 "enemy_attack",
                 "enemy_walking",

@@ -45,12 +45,20 @@ namespace RomanReign
 
         public virtual void SetRelativeScale(Vector2 size)
         {
-            Size = Texture.Bounds.Size.ToVector2() * size;
+            if (SourceRect != null)
+                Size = SourceRect.Value.Size.ToVector2() * size;
+            else
+                Size = Texture.Bounds.Size.ToVector2() * size;
         }
 
         public void SetRelativeScale(float width, float height)
         {
             SetRelativeScale(new Vector2(width, height));
+        }
+
+        public void SetRelativeScale(float scale)
+        {
+            SetRelativeScale(new Vector2(scale, scale));
         }
 
         public virtual void SetRelativeOrigin(Vector2 origin)
