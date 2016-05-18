@@ -158,7 +158,7 @@ namespace RomanReign
             }
             if (m_jumpActions.Any(a => a()) && m_onGround)
             {
-                m_physicsBody.Velocity.Y -= 800f;
+                m_physicsBody.Velocity.Y -= 870f;
                 m_isJumping = true;
                 int Sound = Random.Next(2);
                 new[] { Jump1, Jump2 }[Sound].Play();

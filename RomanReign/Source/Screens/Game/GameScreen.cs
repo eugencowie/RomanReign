@@ -155,22 +155,21 @@ namespace RomanReign
                     {
                         // 50% chance of spawning on the left
                         bool spawnOnLeft = (Random.NextDouble() >= 0.5);
-                        float posX = spawnOnLeft ? Camera.Bounds.Left - 20 : Camera.Bounds.Right + 20;
+                        float posX = spawnOnLeft ? Map.Bounds.Left + 30 : Map.Bounds.Right - 30;
 
                         if (posX < Map.Bounds.Left)
-                            posX = Map.Bounds.Left + 20;
+                            posX = Map.Bounds.Left + 30;
 
                         if (posX > Map.Bounds.Right)
-                            posX = Map.Bounds.Right - 20;
+                            posX = Map.Bounds.Right - 30;
 
                         // 50% change of spawning on the wall
                         bool spawnOnWall = (Random.NextDouble() >= 0.5);
-                        float posY = spawnOnWall ? 737 : 918;
+                        float posY = spawnOnWall ? 373 : 610;
 
                         // TODO: fix spawn points
-                        Property<Vector2> spawnPoint = Map.Info.EnemySpawns[Random.Next(Map.Info.EnemySpawns.Count)];
-                        spawnPoint.Value.X = posX;
-                        spawnPoint.Value.Y = posY;
+                        Property<Vector2> spawnPoint = new Vector2(posX, posY);
+                        spawnPoint.Name = "enemy";
                         Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                         WaveEnemiesSpawned++;
                     }

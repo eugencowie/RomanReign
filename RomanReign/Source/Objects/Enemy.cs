@@ -167,6 +167,15 @@ namespace RomanReign
                 m_isJumping = false;
             }
 
+            if (m_triggerJump)
+            {
+                m_physicsBody.Velocity.Y -= 870f;
+                m_triggerJump = false;
+                m_isJumping = true;
+            }
+
+            // Dropping
+
             if (m_dropActions.Any(a => a()))
             {
                 if (!m_isDropping)
@@ -175,13 +184,6 @@ namespace RomanReign
             if (m_physicsBody.Velocity.Y < 0)
             {
                 m_isDropping = false;
-            }
-
-            if (m_triggerJump)
-            {
-                m_physicsBody.Velocity.Y -= 800f;
-                m_triggerJump = false;
-                m_isJumping = true;
             }
 
             if (m_triggerDrop)
