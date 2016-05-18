@@ -51,8 +51,6 @@ namespace RomanReign
         /// </summary>
         protected override void LoadContent()
         {
-            ContentPreloader.PreloadAllContent(Content);
-
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Input = new InputManager();

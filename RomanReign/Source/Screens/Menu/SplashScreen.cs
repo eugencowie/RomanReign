@@ -24,6 +24,12 @@ namespace RomanReign
         Sprite m_background;
         float  m_elapsedTime;
 
+        // We want to pre-load all of our media assets but only after the splash screen
+        // texture has been drawn to the screen at least once.  We use this variable to
+        // keep track of whether the content has been loaded yet.
+
+        bool m_contentLoaded;
+
         /// <summary>
         /// This constructor is run when the splash screen object is created. The only
         /// thing it does is set up the m_game variable so that we can access it later.
@@ -89,6 +95,16 @@ namespace RomanReign
             m_background.Draw(spriteBatch);
 
             spriteBatch.End();
+
+            // This next bit of code will only execute once - it pre-loads all of the media
+            // assets that we will need later on. This only happens *after* we first render
+            // the splash screen texture.
+
+            if (!m_contentLoaded)
+            {
+                ContentPreloader.PreloadAllContent(m_game.Content);
+                m_contentLoaded = true;
+            }
         }
 
         /// <summary>
