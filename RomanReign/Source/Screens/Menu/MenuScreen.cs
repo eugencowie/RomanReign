@@ -40,6 +40,10 @@ namespace RomanReign
         enum SelectedButton { None=0, Start=1, Options=2, Credits=3, Exit=4, Final=5 }
         SelectedButton m_selectedButton;
 
+        // Sound effect used when a button is pressed.
+
+        SoundEffect SelectedSound;
+
         // Unlike the splash screen, this screen is designed to be covered up by other menu
         // screens (such as the options screen or credits screen).  This means that we need
         // to know when the screen is covered and when it is not, which is what we use this
@@ -105,6 +109,8 @@ namespace RomanReign
             // Set the initial selected button to none.
 
             m_selectedButton = SelectedButton.None;
+
+            SelectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
         }
 
         /// <summary>
@@ -193,16 +199,28 @@ namespace RomanReign
                 if (m_game.Input.IsJustReleased(MouseButtons.Left) || m_game.Input.IsJustReleased(Buttons.A))
                 {
                     if (m_selectedButton == SelectedButton.Start)
+                    {
                         m_game.Screens.SwitchTo(new GameScreen(m_game));
+                        SelectedSound.Play();
+                    }
 
                     if (m_selectedButton == SelectedButton.Options)
+                    {
                         m_game.Screens.Push(new OptionsScreen(m_game));
+                        SelectedSound.Play();
+                    }
 
                     if (m_selectedButton == SelectedButton.Credits)
+                    {
                         m_game.Screens.Push(new CreditsScreen(m_game));
+                        SelectedSound.Play();
+                    }
 
                     if (m_selectedButton == SelectedButton.Exit)
+                    {
                         m_game.Exit();
+                        SelectedSound.Play();
+                    }
                 }
             }
         }

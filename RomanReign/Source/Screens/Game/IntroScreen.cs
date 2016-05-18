@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,8 @@ namespace RomanReign
         Sprite m_background2;
         Sprite m_background3;
         Sprite m_background4;
+
+        SoundEffectInstance WalkingSound;
 
         float m_elapsedTime;
 
@@ -56,10 +59,14 @@ namespace RomanReign
             m_background4 = new Sprite(content.Load<Texture2D>("Textures/Game/bg_intro_4")) {
                 Size = m_game.Viewport.Size.ToVector2()
             };
+
+            WalkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
+            WalkingSound.Play();
         }
 
         public void UnloadContent()
         {
+                WalkingSound.Stop();
         }
 
         public void Update(GameTime gameTime)

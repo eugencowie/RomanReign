@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -61,6 +62,10 @@ namespace RomanReign
         bool m_loseLife;
 
         bool m_onGround;
+
+        SoundEffect EnemyHit1;
+        SoundEffect EnemyHit2;
+        SoundEffect EnemyHit3;
 
         public Enemy(GameScreen screen, RomanReignGame game, ContentManager content, Property<Vector2> spawnPoint)
         {
@@ -144,6 +149,10 @@ namespace RomanReign
                 Random.Next(100) < 2 &&
                 m_timeSinceAttack > m_attackCooldown &&
                 Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < 60);
+
+            EnemyHit1 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt1");
+            EnemyHit2 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt2");
+            EnemyHit3 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt3");
         }
 
         public void Update(GameTime gameTime)
@@ -274,6 +283,9 @@ namespace RomanReign
                 m_physicsBody.Velocity += impluse;
 
                 m_timeSinceDamage = 0;
+
+                int Sound = Random.Next(3);
+                new[] { EnemyHit1, EnemyHit2, EnemyHit3 }[Sound].Play();
 
                 return true;
             }

@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +11,8 @@ namespace RomanReign
 {
     class Player
     {
+        static Random Random = new Random();
+
         public Vector2 Position => m_physicsBody.Position;
         public Vector2 Velocity => m_physicsBody.Velocity;
         public RectangleF Bounds => m_physicsBody.Bounds;
@@ -53,6 +57,12 @@ namespace RomanReign
         bool m_loseLife;
 
         bool m_onGround;
+
+        SoundEffect Attack1;
+        SoundEffect Attack2;
+        SoundEffect Hurt;
+        SoundEffect Jump1;
+        SoundEffect Jump2;
 
         public Player(GameScreen screen, RomanReignGame game, ContentManager content)
         {
@@ -132,6 +142,12 @@ namespace RomanReign
             m_attackActions.Add(() => i.IsJustPressed(Keys.X) && !m_isAttacking);
 
             m_attackActions.Add(() => i.IsJustPressed(Buttons.X) && !m_isAttacking);
+
+            Attack1 = content.Load<SoundEffect>("Audio/sfx_player_attack1");
+            Attack2 = content.Load<SoundEffect>("Audio/sfx_player_attack2");
+            Hurt = content.Load<SoundEffect>("Audio/sfx_player_hurt");
+            Jump1 = content.Load<SoundEffect>("Audio/sfx_player_jump1");
+            Jump2 = content.Load<SoundEffect>("Audio/sfx_player_jump2");
         }
 
         public void Update(GameTime gameTime)
@@ -144,6 +160,8 @@ namespace RomanReign
             {
                 m_physicsBody.Velocity.Y -= 800f;
                 m_isJumping = true;
+                int Sound = Random.Next(2);
+                new[] { Jump1, Jump2 }[Sound].Play();
             }
 
             if (m_physicsBody.Velocity.Y <= 0)
@@ -174,6 +192,8 @@ namespace RomanReign
             if (m_attackActions.Any(a => a()))
             {
                 m_isAttacking = true;
+                int Sound = Random.Next(2);
+                new[] { Attack1, Attack2 }[Sound].Play();
             }
 
             m_walkingAnimation.Position = m_physicsBody.Position;
@@ -250,6 +270,7 @@ namespace RomanReign
 
                 m_timeSinceDamage = 0;
 
+                Hurt.Play();
                 return true;
             }
 
