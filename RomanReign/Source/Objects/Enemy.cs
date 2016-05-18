@@ -95,13 +95,13 @@ namespace RomanReign
 
             // Set random color.
 
-            var options = new [] { Color.White, Color.Gold, Color.LightBlue };
+            var options = new [] { Color.White, Color.LightBlue, Color.Gold };
             int option = Random.Next(options.Length);
             m_color = options[option];
             m_walkingAnimation.Color = m_color;
             m_attackAnimation.Color = m_color;
 
-            //Lives = (option==0 ? 1 : (option==1 ? 3 : 2));
+            Lives = option + 1;
 
             // Create physics body.
 
