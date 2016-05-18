@@ -261,8 +261,8 @@ namespace RomanReign
 
             if (m_timeSinceDamage < 0.2f)
             {
-                m_walkingAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color.White);
-                m_attackAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color.White);
+                m_walkingAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : m_color);
+                m_attackAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : m_color);
             }
             else
             {
