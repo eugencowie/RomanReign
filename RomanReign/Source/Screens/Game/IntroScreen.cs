@@ -31,13 +31,6 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            // Make sure that this screen is only ever shown once per session.
-
-            if (m_shown)
-            {
-                m_game.Screens.Pop();
-            }
-
             m_shown = true;
 
             // Load the background sprite and scale it to cover the entire screen.
@@ -62,11 +55,21 @@ namespace RomanReign
 
             WalkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
             WalkingSound.Play();
+
+            // Make sure that this screen is only ever shown once per session.
+
+            if (m_shown)
+            {
+                m_game.Screens.Pop();
+            }
         }
 
         public void UnloadContent()
         {
+            if (WalkingSound != null)
+            {
                 WalkingSound.Stop();
+            }
         }
 
         public void Update(GameTime gameTime)
