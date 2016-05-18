@@ -13,7 +13,12 @@ namespace RomanReign
     {
         static Random Random = new Random();
 
-        public Vector2 Position => m_physicsBody.Position;
+        public Vector2 Position
+        {
+            get { return m_physicsBody.Position; }
+            set { m_physicsBody.Position = value; }
+        }
+
         public Vector2 Velocity => m_physicsBody.Velocity;
         public RectangleF Bounds => m_physicsBody.Bounds;
 

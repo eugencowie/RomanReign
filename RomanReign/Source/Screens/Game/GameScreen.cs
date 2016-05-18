@@ -186,11 +186,34 @@ namespace RomanReign
 
                 Player.Update(gameTime);
 
+                if (Player.Position.Y > Map.Bounds.Bottom)
+                    Player.Position += new Vector2(0, 610);
+
                 Camera.Update(gameTime);
 
                 foreach (var enemy in Enemies)
                 {
                     enemy.Update(gameTime);
+
+                    if (!Map.Bounds.Contains(enemy.Position))
+                    {
+                        // 50% chance of spawning on the left
+                        bool spawnOnLeft = (Random.NextDouble() >= 0.5);
+                        float posX = spawnOnLeft ? Camera.Bounds.Left + 30 : Camera.Bounds.Right - 30;
+
+                        if (posX < Map.Bounds.Left)
+                            posX = Map.Bounds.Left + 30;
+
+                        if (posX > Map.Bounds.Right)
+                            posX = Map.Bounds.Right - 30;
+
+                        // 50% change of spawning on the wall
+                        bool spawnOnWall = (Random.NextDouble() >= 0.5);
+                        float posY = spawnOnWall ? 373 : 610;
+
+                        // TODO: fix spawn points
+                        enemy.Position = new Vector2(posX, posY);
+                    }
 
                     if (enemy.Lives <= 0)
                     {
