@@ -29,7 +29,6 @@ namespace RomanReign
         public Rectangle Bounds => m_sprite.Bounds;
 
         RomanReignGame m_game;
-        GameScreen m_screen;
 
         Sprite m_sprite;
         MapInfo m_info;
@@ -39,7 +38,6 @@ namespace RomanReign
         public Map(GameScreen screen, RomanReignGame game, ContentManager content, string mapPath)
         {
             m_game = game;
-            m_screen = screen;
 
             m_sprite = new Sprite(content.Load<Texture2D>(mapPath));
 
@@ -55,7 +53,7 @@ namespace RomanReign
                 };
 
                 m_physicsBodies.Add(body);
-                m_screen.Physics.AddStaticBody(body);
+                screen.Physics.AddStaticBody(body);
             }
         }
 

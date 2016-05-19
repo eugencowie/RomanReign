@@ -22,14 +22,10 @@ namespace RomanReign
         public Vector2 Velocity => m_physicsBody.Velocity;
         public RectangleF Bounds => m_physicsBody.Bounds;
 
-        public bool IsJumping  => m_isJumping;
-        public bool IsDropping => m_isDropping;
+        public bool IsJumping { get; private set; }
+        public bool IsDropping { get; private set; }
 
-        public bool OnGround
-        {
-            get { return m_onGround; }
-            set { m_onGround = value; }
-        }
+        public bool OnGround;
 
         public int DisplayLives => Lives + (m_loseLife ? -1 : 0);
 
@@ -55,19 +51,15 @@ namespace RomanReign
         const float DAMAGE_COOLDOWN = 1f;
         float m_timeSinceDamage = DAMAGE_COOLDOWN;
 
-        bool m_isJumping;
-        bool m_isDropping;
         bool m_isAttacking;
 
         bool m_loseLife;
 
-        bool m_onGround;
-
-        SoundEffect Attack1;
-        SoundEffect Attack2;
-        SoundEffect Hurt;
-        SoundEffect Jump1;
-        SoundEffect Jump2;
+        SoundEffect m_attackSound1;
+        SoundEffect m_attackSound2;
+        SoundEffect m_hurtSound;
+        SoundEffect m_jumpSound1;
+        SoundEffect m_jumpSound2;
 
         public Player(GameScreen screen, RomanReignGame game, ContentManager content)
         {
@@ -100,7 +92,7 @@ namespace RomanReign
             m_physicsBody.SetRelativeOrigin(0.5f, 0.5f);
             m_physicsBody.OnCollision += other => {
                 if ((other.Name == "wall" || other.Name == "ground") && !IsJumping && !IsDropping)
-                    m_onGround = true;
+                    OnGround = true;
                 if (other.Name == "wall" && (IsJumping || IsDropping))
                     return CollisionResponse.NoBlock;
                 return CollisionResponse.Block;
@@ -118,7 +110,7 @@ namespace RomanReign
 
             m_jumpActions.Add(() =>
                 i.IsJustPressed(Buttons.A) &&
-                (i.IsUp(Buttons.DPadDown) && !i.IsStickDown(Thumbsticks.Left, 0.5f)));
+                i.IsUp(Buttons.DPadDown) && !i.IsStickDown(Thumbsticks.Left, 0.5f));
 
             m_dropActions.Add(() =>
                 i.IsJustPressed(Keys.Z) &&
@@ -148,11 +140,11 @@ namespace RomanReign
 
             m_attackActions.Add(() => i.IsJustPressed(Buttons.X) && !m_isAttacking);
 
-            Attack1 = content.Load<SoundEffect>("Audio/sfx_player_attack1");
-            Attack2 = content.Load<SoundEffect>("Audio/sfx_player_attack2");
-            Hurt = content.Load<SoundEffect>("Audio/sfx_player_hurt");
-            Jump1 = content.Load<SoundEffect>("Audio/sfx_player_jump1");
-            Jump2 = content.Load<SoundEffect>("Audio/sfx_player_jump2");
+            m_attackSound1 = content.Load<SoundEffect>("Audio/sfx_player_attack1");
+            m_attackSound2 = content.Load<SoundEffect>("Audio/sfx_player_attack2");
+            m_hurtSound = content.Load<SoundEffect>("Audio/sfx_player_hurt");
+            m_jumpSound1 = content.Load<SoundEffect>("Audio/sfx_player_jump1");
+            m_jumpSound2 = content.Load<SoundEffect>("Audio/sfx_player_jump2");
         }
 
         public void Update(GameTime gameTime)
@@ -161,25 +153,27 @@ namespace RomanReign
 
             if (m_physicsBody.Velocity.Y >= 0)
             {
-                m_isJumping = false;
+                IsJumping = false;
             }
-            if (m_jumpActions.Any(a => a()) && m_onGround)
+            if (m_jumpActions.Any(a => a()) && OnGround)
             {
                 m_physicsBody.Velocity.Y -= 870f;
-                m_isJumping = true;
-                int Sound = Random.Next(2);
-                new[] { Jump1, Jump2 }[Sound].Play();
+                IsJumping = true;
+
+                SoundEffect[] sounds = { m_jumpSound1, m_jumpSound2 };
+                int sound = Random.Next(sounds.Length);
+                sounds[sound].Play();
             }
 
             // Dropping
 
             if (m_physicsBody.Velocity.Y <= 0)
             {
-                m_isDropping = false;
+                IsDropping = false;
             }
             if (m_dropActions.Any(a => a()))
             {
-                m_isDropping = true;
+                IsDropping = true;
             }
 
             // Movement
@@ -205,8 +199,10 @@ namespace RomanReign
             if (m_attackActions.Any(a => a()))
             {
                 m_isAttacking = true;
-                int Sound = Random.Next(2);
-                new[] { Attack1, Attack2 }[Sound].Play();
+
+                SoundEffect[] sounds = { m_attackSound1, m_attackSound2 };
+                int sound = Random.Next(sounds.Length);
+                sounds[sound].Play();
             }
 
             // Animation
@@ -291,7 +287,7 @@ namespace RomanReign
 
                 m_timeSinceDamage = 0;
 
-                Hurt.Play();
+                m_hurtSound.Play();
                 return true;
             }
 

@@ -78,51 +78,51 @@ namespace RomanReign
     /// </summary>
     class InputManager
     {
-        public GamePadState[] Gamepads => Current.Gamepads;
-        public KeyboardState Keyboard => Current.Keyboard;
-        public MouseState Mouse => Current.Mouse;
+        public GamePadState[] Gamepads => m_current.Gamepads;
+        public KeyboardState Keyboard => m_current.Keyboard;
+        public MouseState Mouse => m_current.Mouse;
 
         public InputType MostRecentInputType;
 
-        InputState Current = new InputState();
-        InputState Prev = new InputState();
+        InputState m_current = new InputState();
+        InputState m_prev = new InputState();
 
         public InputManager()
         {
             Update();
 
-            MostRecentInputType = Current.Gamepads.Any(gp => gp.IsConnected) ? InputType.Gamepad : InputType.KBM;
+            MostRecentInputType = m_current.Gamepads.Any(gp => gp.IsConnected) ? InputType.Gamepad : InputType.KBM;
         }
 
         public void Update()
         {
             // Update the previous input state with existing values.
 
-            if (!CompareMouseState(Current.Mouse, Prev.Mouse) || !Current.Keyboard.Equals(Prev.Keyboard))
+            if (!CompareMouseState(m_current.Mouse, m_prev.Mouse) || !m_current.Keyboard.Equals(m_prev.Keyboard))
             {
                 MostRecentInputType = InputType.KBM;
             }
 
             for (int i = 0; i < 4; i++)
             {
-                if (!Current.Gamepads[i].Equals(Prev.Gamepads[i]))
+                if (!m_current.Gamepads[i].Equals(m_prev.Gamepads[i]))
                     MostRecentInputType = InputType.Gamepad;
 
-                Prev.Gamepads[i] = Current.Gamepads[i];
+                m_prev.Gamepads[i] = m_current.Gamepads[i];
             }
 
-            Prev.Keyboard = Current.Keyboard;
-            Prev.Mouse = Current.Mouse;
+            m_prev.Keyboard = m_current.Keyboard;
+            m_prev.Mouse = m_current.Mouse;
 
             // Update the current input state with the latest values.
 
-            Current.Gamepads[0] = GamePad.GetState(PlayerIndex.One);
-            Current.Gamepads[1] = GamePad.GetState(PlayerIndex.Two);
-            Current.Gamepads[2] = GamePad.GetState(PlayerIndex.Three);
-            Current.Gamepads[3] = GamePad.GetState(PlayerIndex.Four);
+            m_current.Gamepads[0] = GamePad.GetState(PlayerIndex.One);
+            m_current.Gamepads[1] = GamePad.GetState(PlayerIndex.Two);
+            m_current.Gamepads[2] = GamePad.GetState(PlayerIndex.Three);
+            m_current.Gamepads[3] = GamePad.GetState(PlayerIndex.Four);
 
-            Current.Keyboard = Microsoft.Xna.Framework.Input.Keyboard.GetState();
-            Current.Mouse = Microsoft.Xna.Framework.Input.Mouse.GetState();
+            m_current.Keyboard = Microsoft.Xna.Framework.Input.Keyboard.GetState();
+            m_current.Mouse = Microsoft.Xna.Framework.Input.Mouse.GetState();
         }
 
         private bool CompareMouseState(MouseState ms1, MouseState ms2)
@@ -140,33 +140,33 @@ namespace RomanReign
 
         // These functions return true if the specified button, key or mouse button is down.
 
-        public bool IsDown(Buttons buttons, int i = 0) => Current.IsDown(buttons, i);
-        public bool IsDown(Keys keys) => Current.IsDown(keys);
-        public bool IsDown(MouseButtons buttons) => Current.IsDown(buttons);
+        public bool IsDown(Buttons buttons, int i = 0) => m_current.IsDown(buttons, i);
+        public bool IsDown(Keys keys) => m_current.IsDown(keys);
+        public bool IsDown(MouseButtons buttons) => m_current.IsDown(buttons);
 
         // These functions return true if the specified button, key or mouse button is up.
 
-        public bool IsUp(Buttons buttons, int i = 0) => Current.IsUp(buttons, i);
-        public bool IsUp(Keys keys) => Current.IsUp(keys);
-        public bool IsUp(MouseButtons buttons) => Current.IsUp(buttons);
+        public bool IsUp(Buttons buttons, int i = 0) => m_current.IsUp(buttons, i);
+        public bool IsUp(Keys keys) => m_current.IsUp(keys);
+        public bool IsUp(MouseButtons buttons) => m_current.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is down and was previously up.
 
-        public bool IsJustPressed(Buttons buttons, int i=0) => Current.IsDown(buttons, i) && Prev.IsUp(buttons, i);
-        public bool IsJustPressed(Keys keys) => Current.IsDown(keys) && Prev.IsUp(keys);
-        public bool IsJustPressed(MouseButtons buttons) => Current.IsDown(buttons) && Prev.IsUp(buttons);
+        public bool IsJustPressed(Buttons buttons, int i=0) => m_current.IsDown(buttons, i) && m_prev.IsUp(buttons, i);
+        public bool IsJustPressed(Keys keys) => m_current.IsDown(keys) && m_prev.IsUp(keys);
+        public bool IsJustPressed(MouseButtons buttons) => m_current.IsDown(buttons) && m_prev.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is up and was previously down.
 
-        public bool IsJustReleased(Buttons buttons, int i=0) => Current.IsUp(buttons, i) && Prev.IsDown(buttons, i);
-        public bool IsJustReleased(Keys keys) => Current.IsUp(keys) && Prev.IsDown(keys);
-        public bool IsJustReleased(MouseButtons buttons) => Current.IsUp(buttons) && Prev.IsDown(buttons);
+        public bool IsJustReleased(Buttons buttons, int i=0) => m_current.IsUp(buttons, i) && m_prev.IsDown(buttons, i);
+        public bool IsJustReleased(Keys keys) => m_current.IsUp(keys) && m_prev.IsDown(keys);
+        public bool IsJustReleased(MouseButtons buttons) => m_current.IsUp(buttons) && m_prev.IsDown(buttons);
 
         // These functions return true if the specified thumbstick is pressed in the specified direction.
 
-        public bool IsStickDown(Thumbsticks sticks, float tolerance=0, int i=0) => Current.IsStickDown(sticks, tolerance, i);
-        public bool IsStickUp(Thumbsticks sticks, float tolerance=0, int i=0) => Current.IsStickUp(sticks, tolerance, i);
-        public bool IsStickLeft(Thumbsticks sticks, float tolerance=0, int i=0) => Current.IsStickLeft(sticks, tolerance, i);
-        public bool IsStickRight(Thumbsticks sticks, float tolerance=0, int i=0) => Current.IsStickRight(sticks, tolerance, i);
+        public bool IsStickDown(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickDown(sticks, tolerance, i);
+        public bool IsStickUp(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickUp(sticks, tolerance, i);
+        public bool IsStickLeft(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickLeft(sticks, tolerance, i);
+        public bool IsStickRight(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickRight(sticks, tolerance, i);
     }
 }

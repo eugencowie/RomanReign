@@ -112,7 +112,7 @@ namespace RomanReign
         /// </summary>
         private bool AttemptMoveX(DynamicBody body, float x)
         {
-            if (x == 0)
+            if (Math.Abs(x) < float.Epsilon)
             {
                 return true;
             }
@@ -161,7 +161,7 @@ namespace RomanReign
         /// </summary>
         private bool AttemptMoveY(DynamicBody body, float y)
         {
-            if (y == 0)
+            if (Math.Abs(y) < float.Epsilon)
             {
                 return true;
             }

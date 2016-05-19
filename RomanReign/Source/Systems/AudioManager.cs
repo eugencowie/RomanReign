@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using System;
 
 namespace RomanReign
 {
@@ -41,12 +42,12 @@ namespace RomanReign
                 OnLoop?.Invoke();
             }
 
-            if (m_instance.Volume != TargetVolume)
+            if (Math.Abs(m_instance.Volume - TargetVolume) > float.Epsilon)
             {
                 m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
             }
 
-            if (m_instance.Pitch != TargetPitch)
+            if (Math.Abs(m_instance.Pitch - TargetPitch) > float.Epsilon)
             {
                 m_instance.Pitch = MathHelper.Lerp(m_instance.Pitch, TargetPitch, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
             }

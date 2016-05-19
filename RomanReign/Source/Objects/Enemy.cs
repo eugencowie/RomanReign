@@ -20,16 +20,12 @@ namespace RomanReign
 
         public RectangleF Bounds => m_physicsBody.Bounds;
 
-        public bool IsJumping => m_isJumping;
-        public bool IsDropping => m_isDropping;
+        public bool IsJumping { get; private set; }
+        public bool IsDropping { get; private set; }
 
-        public bool OnGround
-        {
-            get { return m_onGround; }
-            set { m_onGround = value; }
-        }
+        public bool OnGround;
 
-        public int Lives = 1;
+        public int Lives;
 
         RomanReignGame m_game;
         GameScreen m_screen;
@@ -49,28 +45,24 @@ namespace RomanReign
         List<InputAction> m_moveRightActions = new List<InputAction>();
         List<InputAction> m_attackActions = new List<InputAction>();
 
-        const float m_attackCooldown = 0.5f;
-        float m_timeSinceAttack = m_attackCooldown;
+        const float ATTACK_COOLDOWN = 0.5f;
+        float m_timeSinceAttack = ATTACK_COOLDOWN;
 
-        const float m_damageCooldown = 0.5f;
-        float m_timeSinceDamage = m_damageCooldown;
+        const float DAMAGE_COOLDOWN = 0.5f;
+        float m_timeSinceDamage = DAMAGE_COOLDOWN;
 
         int m_walkingSpeed;
 
         bool m_triggerJump;
         bool m_triggerDrop;
 
-        bool m_isJumping;
-        bool m_isDropping;
         bool m_isAttacking;
 
         bool m_loseLife;
 
-        bool m_onGround;
-
-        SoundEffect EnemyHit1;
-        SoundEffect EnemyHit2;
-        SoundEffect EnemyHit3;
+        SoundEffect m_hurtSound1;
+        SoundEffect m_hurtSound2;
+        SoundEffect m_hurtSound3;
 
         public Enemy(GameScreen screen, RomanReignGame game, ContentManager content, Property<Vector2> spawnPoint)
         {
@@ -79,7 +71,7 @@ namespace RomanReign
 
             // Set random color.
 
-            var options = new[] { Color.White, Color.LightBlue, Color.Gold };
+            Color[] options = { Color.White, Color.LightBlue, Color.Gold };
             int option = Random.Next(options.Length);
             m_color = options[option];
 
@@ -117,7 +109,7 @@ namespace RomanReign
                 if (other.Name == "wall" && (IsJumping || IsDropping))
                     return CollisionResponse.NoBlock;
                 if (other.Name == "ground" && !IsJumping && !IsDropping)
-                    m_onGround = true;
+                    OnGround = true;
                 return CollisionResponse.Block;
             };
 
@@ -152,12 +144,12 @@ namespace RomanReign
             m_attackActions.Add(() =>
                 !m_loseLife &&
                 Random.Next(100) < 2 &&
-                m_timeSinceAttack > m_attackCooldown &&
+                m_timeSinceAttack > ATTACK_COOLDOWN &&
                 Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < 60);
 
-            EnemyHit1 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt1");
-            EnemyHit2 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt2");
-            EnemyHit3 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt3");
+            m_hurtSound1 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt1");
+            m_hurtSound2 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt2");
+            m_hurtSound3 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt3");
         }
 
         public void Update(GameTime gameTime)
@@ -166,37 +158,37 @@ namespace RomanReign
 
             if (m_jumpActions.Any(a => a()))
             {
-                if (!m_isJumping)
+                if (!IsJumping)
                     m_triggerJump = true;
             }
             if (m_physicsBody.Velocity.Y > 0)
             {
-                m_isJumping = false;
+                IsJumping = false;
             }
 
             if (m_triggerJump)
             {
                 m_physicsBody.Velocity.Y -= 870f;
                 m_triggerJump = false;
-                m_isJumping = true;
+                IsJumping = true;
             }
 
             // Dropping
 
             if (m_dropActions.Any(a => a()))
             {
-                if (!m_isDropping)
+                if (!IsDropping)
                     m_triggerDrop = true;
             }
             if (m_physicsBody.Velocity.Y < 0)
             {
-                m_isDropping = false;
+                IsDropping = false;
             }
 
             if (m_triggerDrop)
             {
                 m_triggerDrop = false;
-                m_isDropping = true;
+                IsDropping = true;
             }
 
             // Movement
@@ -293,7 +285,7 @@ namespace RomanReign
         {
             // Taking damage
 
-            if (m_timeSinceDamage > m_damageCooldown && !m_loseLife)
+            if (m_timeSinceDamage > DAMAGE_COOLDOWN && !m_loseLife)
             {
                 m_loseLife = true;
 
@@ -305,8 +297,9 @@ namespace RomanReign
 
                 m_timeSinceDamage = 0;
 
-                int Sound = Random.Next(3);
-                new[] { EnemyHit1, EnemyHit2, EnemyHit3 }[Sound].Play();
+                SoundEffect[] sounds = { m_hurtSound1, m_hurtSound2, m_hurtSound3 };
+                int sound = Random.Next(sounds.Length);
+                sounds[sound].Play();
 
                 return true;
             }

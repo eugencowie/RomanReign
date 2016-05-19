@@ -67,7 +67,7 @@ namespace RomanReign
         {
             Physics = new PhysicsManager();
 
-            Hud = new Hud(this, m_game, content);
+            Hud = new Hud(this, content);
 
             Camera = new Camera(this, m_game) {
                 Origin = new Vector2(0.5f, 0.5f)
@@ -81,7 +81,7 @@ namespace RomanReign
             WaveEnemiesKilled = 1;
 
             m_game.Audio.BackgroundMusic.OnLoop += () => {
-                float pitch = 0;
+                float pitch;
                 if      (Wave < 3)  pitch = 0;
                 else if (Wave < 5)  pitch = 0.1f;
                 else if (Wave < 10) pitch = 0.2f;
@@ -146,7 +146,7 @@ namespace RomanReign
                         TimeSinceWaveStarted = 0;
                     }
 
-                    int spawnChance = 2; // out of 100
+                    int spawnChance;    // out of 100
                     if      (Wave < 3)  spawnChance = 2;
                     else if (Wave < 5)  spawnChance = 3;
                     else if (Wave < 10) spawnChance = 4;

@@ -6,14 +6,12 @@ namespace RomanReign
 {
     class Hud
     {
-        RomanReignGame m_game;
         GameScreen m_screen;
 
         SpriteFont m_gameFont;
 
-        public Hud(GameScreen screen, RomanReignGame game, ContentManager content)
+        public Hud(GameScreen screen, ContentManager content)
         {
-            m_game = game;
             m_screen = screen;
 
             m_gameFont = content.Load<SpriteFont>("Fonts/Game");

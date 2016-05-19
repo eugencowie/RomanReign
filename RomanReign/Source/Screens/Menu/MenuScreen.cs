@@ -42,7 +42,7 @@ namespace RomanReign
 
         // Sound effect used when a button is pressed.
 
-        SoundEffect SelectedSound;
+        SoundEffect m_selectedSound;
 
         // Unlike the splash screen, this screen is designed to be covered up by other menu
         // screens (such as the options screen or credits screen).  This means that we need
@@ -110,7 +110,7 @@ namespace RomanReign
 
             m_selectedButton = SelectedButton.None;
 
-            SelectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
+            m_selectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
         }
 
         /// <summary>
@@ -201,25 +201,25 @@ namespace RomanReign
                     if (m_selectedButton == SelectedButton.Start)
                     {
                         m_game.Screens.SwitchTo(new GameScreen(m_game));
-                        SelectedSound.Play();
+                        m_selectedSound.Play();
                     }
 
                     if (m_selectedButton == SelectedButton.Options)
                     {
                         m_game.Screens.Push(new OptionsScreen(m_game));
-                        SelectedSound.Play();
+                        m_selectedSound.Play();
                     }
 
                     if (m_selectedButton == SelectedButton.Credits)
                     {
                         m_game.Screens.Push(new CreditsScreen(m_game));
-                        SelectedSound.Play();
+                        m_selectedSound.Play();
                     }
 
                     if (m_selectedButton == SelectedButton.Exit)
                     {
                         m_game.Exit();
-                        SelectedSound.Play();
+                        m_selectedSound.Play();
                     }
                 }
             }

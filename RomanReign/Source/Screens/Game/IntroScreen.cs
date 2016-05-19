@@ -16,7 +16,7 @@ namespace RomanReign
         Sprite m_background;
         Sprite m_player;
 
-        SoundEffectInstance WalkingSound;
+        SoundEffectInstance m_walkingSound;
 
         float m_elapsedTime;
 
@@ -36,16 +36,13 @@ namespace RomanReign
             m_player.SourceRect = new Rectangle(0, 0, (int)(m_player.Texture.Width / 4f), m_player.Texture.Height);
             m_player.SetRelativeOrigin(0.5f, 0.5f);
 
-            WalkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
-            WalkingSound.Play();
+            m_walkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
+            m_walkingSound.Play();
         }
 
         public void UnloadContent()
         {
-            if (WalkingSound != null)
-            {
-                WalkingSound.Stop();
-            }
+            m_walkingSound?.Stop();
         }
 
         public void Update(GameTime gameTime)

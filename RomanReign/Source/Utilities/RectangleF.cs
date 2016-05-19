@@ -56,7 +56,9 @@ namespace RomanReign
 
         public bool Contains(Vector2 point)
         {
-            return (Left < point.X && point.X < Right) && (Top < point.Y && point.Y < Bottom);
+            return
+                Left < point.X && point.X < Right &&
+                Top  < point.Y && point.Y < Bottom;
         }
 
         public bool Contains(Point point)
