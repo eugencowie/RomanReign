@@ -113,11 +113,11 @@ namespace RomanReign
                 i.IsUp(Buttons.DPadDown) && !i.IsStickDown(Thumbsticks.Left, 0.5f));
 
             m_dropActions.Add(() =>
-                i.IsJustPressed(Keys.Z) &&
+                //i.IsJustPressed(Keys.Z) &&
                 i.IsDown(Keys.Down));
 
             m_dropActions.Add(() =>
-                i.IsJustPressed(Buttons.A) &&
+                //i.IsJustPressed(Buttons.A) &&
                 (i.IsDown(Buttons.DPadDown) || i.IsStickDown(Thumbsticks.Left, 0.5f)));
 
             m_moveLeftActions.Add(() =>
