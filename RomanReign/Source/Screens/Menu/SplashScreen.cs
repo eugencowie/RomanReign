@@ -52,7 +52,8 @@ namespace RomanReign
             m_game.Audio.BackgroundMusic = new LoopingMusic(content.Load<SoundEffect>("Audio/background_music")) {
                 Volume = 0f,
                 TargetVolume = 0.05f,
-                Pitch = 0f
+                Pitch = 0f,
+                TargetPitch = 0f
             };
         }
 

@@ -70,6 +70,8 @@ namespace RomanReign
         protected override void UnloadContent()
         {
             Screens.UnloadContent();
+
+            Config.WriteConfig("config.xml");
         }
 
         /// <summary>

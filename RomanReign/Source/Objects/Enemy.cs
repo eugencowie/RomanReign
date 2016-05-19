@@ -313,7 +313,7 @@ namespace RomanReign
 
                 SoundEffect[] sounds = { m_hurtSound1, m_hurtSound2, m_hurtSound3 };
                 int sound = Random.Next(sounds.Length);
-                sounds[sound].Play();
+                sounds[sound].Play(0.5f * Config.Data.Volume.SfxNormal, 0f, 0f);
 
                 return true;
             }

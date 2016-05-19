@@ -87,6 +87,7 @@ namespace RomanReign
                 else if (Wave < 10) pitch = 0.2f;
                 else                pitch = 0.3f;
                 m_game.Audio.BackgroundMusic.Pitch = pitch;
+                m_game.Audio.BackgroundMusic.TargetPitch = pitch;
             };
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the

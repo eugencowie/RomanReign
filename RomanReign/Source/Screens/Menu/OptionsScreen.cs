@@ -23,6 +23,8 @@ namespace RomanReign
         Sprite m_heading;
         Sprite m_backButton;
 
+        SpriteFont m_font;
+
         /// <summary>
         /// This constructor is run when the options menu screen object is created.
         /// </summary>
@@ -47,6 +49,8 @@ namespace RomanReign
                 Position = new Vector2(m_game.Viewport.Center.X, 600)
             };
             m_backButton.SetRelativeOrigin(0.5f, 0.5f);
+
+            m_font = content.Load<SpriteFont>("Fonts/game");
         }
 
         /// <summary>
@@ -85,6 +89,24 @@ namespace RomanReign
                     m_game.Screens.Pop();
                 }
             }
+
+            if (m_game.Input.IsJustReleased(Keys.Q))
+            {
+                Config.Data.Volume.Music -= 10;
+                m_game.Audio.BackgroundMusic.Volume = m_game.Audio.BackgroundMusic.TargetVolume * Config.Data.Volume.MusicNormal;
+            }
+
+            if (m_game.Input.IsJustReleased(Keys.E))
+            {
+                Config.Data.Volume.Music += 10;
+                m_game.Audio.BackgroundMusic.Volume = m_game.Audio.BackgroundMusic.TargetVolume * Config.Data.Volume.MusicNormal;
+            }
+
+            if (m_game.Input.IsJustReleased(Keys.A))
+                Config.Data.Volume.Sfx -= 10;
+
+            if (m_game.Input.IsJustReleased(Keys.D))
+                Config.Data.Volume.Sfx += 10;
         }
 
         /// <summary>
@@ -96,6 +118,9 @@ namespace RomanReign
 
             m_heading.Draw(spriteBatch);
             m_backButton.Draw(spriteBatch);
+
+            spriteBatch.DrawString(m_font, "Music volume: " + Config.Data.Volume.Music, new Vector2(100, 100), Color.White);
+            spriteBatch.DrawString(m_font, "Sound effect volume: " + Config.Data.Volume.Sfx, new Vector2(100, 200), Color.White);
 
             spriteBatch.End();
         }

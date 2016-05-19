@@ -1,5 +1,6 @@
 using System.IO;
 using System.Xml.Serialization;
+using Microsoft.Xna.Framework;
 
 namespace RomanReign
 {
@@ -11,10 +12,44 @@ namespace RomanReign
         public int Height;
     }
 
+    public struct Volume
+    {
+        int m_music;
+        int m_sfx;
+
+        public int Music
+        {
+            get { return m_music; }
+            set { m_music = MathHelper.Clamp(value, 0, 100); }
+        }
+
+        public int Sfx
+        {
+            get { return m_sfx; }
+            set { m_sfx = MathHelper.Clamp(value, 0, 100); }
+        }
+
+        [XmlIgnore]
+        public float MusicNormal
+        {
+            get { return Music / 100f; }
+            set { Music = (int)(value * 100f); }
+        }
+
+        [XmlIgnore]
+        public float SfxNormal
+        {
+            get { return Sfx / 100f; }
+            set { Sfx = (int)(value * 100f); }
+        }
+    }
+
     public class Config
     {
         public Difficulty Difficulty = Difficulty.Normal;
         public Resolution Resolution = new Resolution { Width = 1280, Height = 720 };
+
+        public Volume Volume = new Volume { Music = 50, Sfx = 50 };
 
         #region Static fields and methods
 

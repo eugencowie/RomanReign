@@ -11,13 +11,13 @@ namespace RomanReign
         public float Volume
         {
             get { return m_instance.Volume; }
-            set { m_instance.Volume = value; TargetVolume = value; }
+            set { m_instance.Volume = value; }
         }
 
         public float Pitch
         {
             get { return m_instance.Pitch; }
-            set { m_instance.Pitch = value; TargetPitch = value; }
+            set { m_instance.Pitch = value; }
         }
 
         public float TargetVolume;
@@ -44,7 +44,7 @@ namespace RomanReign
 
             if (Math.Abs(m_instance.Volume - TargetVolume) > float.Epsilon)
             {
-                m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
+                m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume * Config.Data.Volume.MusicNormal, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
             }
 
             if (Math.Abs(m_instance.Pitch - TargetPitch) > float.Epsilon)
