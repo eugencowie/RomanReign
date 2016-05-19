@@ -77,31 +77,31 @@ namespace RomanReign
             m_game = game;
             m_screen = screen;
 
+            // Set random color.
+
+            var options = new[] { Color.White, Color.LightBlue, Color.Gold };
+            int option = Random.Next(options.Length);
+            m_color = options[option];
+
+            Lives = option + 1;
+
+            m_walkingSpeed = (3 - option) * 3;
+
             // Load walking animation.
 
-            m_walkingSpeed = Random.Next(3, 9);
-
             m_walkingAnimation = new AnimatedSprite(4, 1, m_walkingSpeed, true, content.Load<Texture2D>("Textures/Game/enemy_walking")) {
-                Position = spawnPoint.Value
+                Position = spawnPoint.Value,
+                Color = m_color
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
             // Load attack animation.
 
             m_attackAnimation = new AnimatedSprite(4, 1, 8, false, content.Load<Texture2D>("Textures/Game/enemy_attack")) {
-                Position = spawnPoint.Value
+                Position = spawnPoint.Value,
+                Color = m_color
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
-
-            // Set random color.
-
-            var options = new [] { Color.White, Color.LightBlue, Color.Gold };
-            int option = Random.Next(options.Length);
-            m_color = options[option];
-            m_walkingAnimation.Color = m_color;
-            m_attackAnimation.Color = m_color;
-
-            Lives = option + 1;
 
             // Create physics body.
 
