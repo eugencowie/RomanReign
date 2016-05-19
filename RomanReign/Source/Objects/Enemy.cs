@@ -56,6 +56,9 @@ namespace RomanReign
         bool m_triggerJump;
         bool m_triggerDrop;
 
+        bool m_canJump;
+        bool m_canDrop;
+
         bool m_isAttacking;
 
         bool m_loseLife;
@@ -78,6 +81,9 @@ namespace RomanReign
             Lives = option + 1;
 
             m_walkingSpeed = (3 - option) * 3;
+
+            m_canJump = (Random.NextDouble() >= 0.25);
+            m_canDrop = (Random.NextDouble() >= 0.25);
 
             // Load walking animation.
 
@@ -156,7 +162,7 @@ namespace RomanReign
         {
             // Jumping
 
-            if (m_jumpActions.Any(a => a()))
+            if (m_jumpActions.Any(a => a()) && m_canJump)
             {
                 if (!IsJumping)
                     m_triggerJump = true;
@@ -175,7 +181,7 @@ namespace RomanReign
 
             // Dropping
 
-            if (m_dropActions.Any(a => a()))
+            if (m_dropActions.Any(a => a()) && m_canDrop)
             {
                 if (!IsDropping)
                     m_triggerDrop = true;
