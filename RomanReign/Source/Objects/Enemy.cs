@@ -75,15 +75,21 @@ namespace RomanReign
             // Set random color.
 
             Color[] options = { Color.White, Color.LightBlue, Color.Gold };
-            int option = Random.Next(options.Length);
+            int option;
+
+            int rand = Random.Next(100);
+            if (rand < 10) option = 2;      // 10% chance of spawning gold
+            else if (rand < 40) option = 1; // 30% chance of spawning lightblue
+            else option = 0;                // 60% chance of spawning regular
+
             m_color = options[option];
 
             Lives = option + 1;
 
             m_walkingSpeed = (3 - option) * 3;
 
-            m_canJump = (Random.NextDouble() >= 0.25);
-            m_canDrop = (Random.NextDouble() >= 0.25);
+            m_canJump = (Random.Next(100) >= 20);
+            m_canDrop = (Random.Next(100) >= 20);
 
             // Load walking animation.
 
@@ -125,27 +131,29 @@ namespace RomanReign
 
             float jumpDistance = 80 * m_walkingSpeed;
 
-            // walking speed can be 3-8
+            // walking speed can be 3-9
             if (m_walkingSpeed <= 4) jumpDistance = 80 * 4;
             if (m_walkingSpeed >= 7) jumpDistance = 80 * 7;
 
             m_jumpActions.Add(() =>
+                Random.Next(100) < 2 &&
                 Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
                 m_screen.Player.Position.Y < m_physicsBody.Position.Y - 50 &&
                 m_screen.Player.OnGround &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_dropActions.Add(() =>
+                Random.Next(100) < 2 &&
                 Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
                 m_screen.Player.Position.Y > m_physicsBody.Position.Y + 50 &&
                 m_screen.Player.OnGround &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_moveRightActions.Add(() =>
-                m_screen.Player.Position.X > m_physicsBody.Position.X + 60);
+                m_screen.Player.Position.X > m_physicsBody.Position.X + Random.Next(50, 200));
 
             m_moveLeftActions.Add(() =>
-                m_screen.Player.Position.X < m_physicsBody.Position.X - 60);
+                m_screen.Player.Position.X < m_physicsBody.Position.X - Random.Next(50, 200));
 
             m_attackActions.Add(() =>
                 !m_loseLife &&

@@ -139,7 +139,7 @@ namespace RomanReign
                     if (WaveEnemiesKilled >= WaveEnemies)
                     {
                         Wave++;
-                        WaveEnemies = (int)Math.Ceiling(WaveEnemies * 1.5f);
+                        WaveEnemies = (int)Math.Ceiling(WaveEnemies * 1.2f);
                         WaveEnemiesSpawned = 0;
                         WaveEnemiesKilled = 0;
 
