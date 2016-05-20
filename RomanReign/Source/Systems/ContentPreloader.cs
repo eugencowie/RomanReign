@@ -54,6 +54,10 @@ namespace RomanReign
                 "btn_exit_white",
                 "btn_options",
                 "btn_start",
+                "btn_start1",
+                "btn_start2",
+                "btn_start3",
+                "btn_start4",
                 "title_credits",
                 "title_menu",
                 "title_options" })
