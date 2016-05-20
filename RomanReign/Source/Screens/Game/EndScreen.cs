@@ -11,9 +11,12 @@ namespace RomanReign
 
         Sprite m_background;
 
-        public EndScreen(RomanReignGame game)
+        int m_numberOfPlayers;
+
+        public EndScreen(RomanReignGame game, int numberOfPlayers)
         {
             m_game = game;
+            m_numberOfPlayers = numberOfPlayers;
         }
 
         public void LoadContent(ContentManager content)
@@ -32,7 +35,7 @@ namespace RomanReign
         {
             if (m_game.Input.IsJustReleased(Buttons.A) || m_game.Input.IsJustReleased(Keys.Enter))
             {
-                m_game.Screens.SwitchTo(new GameScreen(m_game));
+                m_game.Screens.SwitchTo(new GameScreen(m_game, m_numberOfPlayers));
             }
 
             if (m_game.Input.IsJustReleased(Buttons.B) || m_game.Input.IsJustReleased(Keys.Escape))

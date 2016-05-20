@@ -51,6 +51,7 @@
     <Compile Include="Source\Screens\Game\GameScreen.cs" />
     <Compile Include="Source\Screens\Game\IntroScreen.cs" />
     <Compile Include="Source\Screens\Game\PauseScreen.cs" />
+    <Compile Include="Source\Screens\Menu\PlayerSelectScreen.cs" />
     <Compile Include="Source\Screens\Menu\CreditsScreen.cs" />
     <Compile Include="Source\Screens\Menu\MenuScreen.cs" />
     <Compile Include="Source\Screens\Menu\OptionsScreen.cs" />

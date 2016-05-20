@@ -37,7 +37,7 @@ namespace RomanReign
 
         // This is used to identify the selected button.
 
-        enum SelectedButton { None=0, Start=1, Options=2, Credits=3, Exit=4, Final=5 }
+        enum SelectedButton { None, Start, Options, Credits, Exit, Final }
         SelectedButton m_selectedButton;
 
         // Sound effect used when a button is pressed.
@@ -200,7 +200,7 @@ namespace RomanReign
                 {
                     if (m_selectedButton == SelectedButton.Start)
                     {
-                        m_game.Screens.SwitchTo(new GameScreen(m_game));
+                        m_game.Screens.Push(new PlayerSelectScreen(m_game));
                         m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
                     }
 

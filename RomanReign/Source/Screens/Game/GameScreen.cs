@@ -52,12 +52,17 @@ namespace RomanReign
 
         bool m_romanRain;
 
+        // The number of players.
+
+        int m_numberOfPlayers;
+
         /// <summary>
         /// This constructor is run when the game screen object is created.
         /// </summary>
-        public GameScreen(RomanReignGame game)
+        public GameScreen(RomanReignGame game, int numberOfPlayers)
         {
             m_game = game;
+            m_numberOfPlayers = numberOfPlayers;
         }
 
         /// <summary>
@@ -75,9 +80,15 @@ namespace RomanReign
 
             Map = new Map(this, m_game, content, "Maps/Test");
 
+#if DEBUG
             Players.Add(new Player(this, m_game, content, null));
-
-            Players.Add(new Player(this, m_game, content, PlayerIndex.One));
+            for (int i = 0; i < m_numberOfPlayers - 1; i++)
+#else
+            for (int i = 0; i < m_numberOfPlayers; i++)
+#endif
+            {
+                Players.Add(new Player(this, m_game, content, (PlayerIndex)i));
+            }
 
             WaveEnemies = 1;
             WaveEnemiesKilled = 1;
@@ -233,7 +244,7 @@ namespace RomanReign
 
                 if (Players.Count <= 0)
                 {
-                    m_game.Screens.Push(new EndScreen(m_game));
+                    m_game.Screens.Push(new EndScreen(m_game, m_numberOfPlayers));
                 }
 
                 if (Wave > 10)

@@ -53,9 +53,14 @@ namespace RomanReign
         bool m_invalidateCopy = true;
 
         /// <summary>
+        /// Gets the number of screens in the list.
+        /// </summary>
+        public int Count => m_screens.Count;
+
+        /// <summary>
         /// Get the top-most screen.
         /// </summary>
-        public IScreen Top => m_screens[m_screens.Count - 1];
+        public IScreen Top => m_screens.Last();
 
         public ScreenManager(ContentManager content, SpriteBatch spriteBatch)
         {
