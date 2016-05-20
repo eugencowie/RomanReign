@@ -22,7 +22,7 @@ namespace RomanReign
         public Hud Hud;
         public Camera Camera;
         public Map Map;
-        public Player Player;
+        public List<Player> Players = new List<Player>();
         public List<Enemy> Enemies = new List<Enemy>();
 
         // These variables are used for spawning enemies.
@@ -75,7 +75,9 @@ namespace RomanReign
 
             Map = new Map(this, m_game, content, "Maps/Test");
 
-            Player = new Player(this, m_game, content);
+            Players.Add(new Player(this, m_game, content, null));
+
+            Players.Add(new Player(this, m_game, content, PlayerIndex.One));
 
             WaveEnemies = 1;
             WaveEnemiesKilled = 1;
@@ -118,7 +120,8 @@ namespace RomanReign
             if (m_game.Input.IsJustReleased(Keys.F8))
             {
                 m_romanRain = !m_romanRain;
-                Player.Invincible = true;
+                foreach (var player in Players)
+                    player.Invincible = true;
             }
 #endif
 
@@ -187,10 +190,13 @@ namespace RomanReign
                     m_game.Screens.Push(new PauseScreen(m_game));
                 }
 
-                Player.Update(gameTime);
+                foreach (var player in Players)
+                {
+                    player.Update(gameTime);
 
-                if (Player.Position.Y > Map.Bounds.Bottom)
-                    Player.Position += new Vector2(0, 610);
+                    if (!player.Bounds.Intersects(Map.Bounds))
+                        player.Position += new Vector2(0, 610);
+                }
 
                 foreach (var enemy in Enemies)
                 {
@@ -223,8 +229,9 @@ namespace RomanReign
                 }
 
                 Enemies.RemoveAll(e => e.Lives <= 0);
+                Players.RemoveAll(p => p.Lives <= 0);
 
-                if (Player.Lives <= 0)
+                if (Players.Count <= 0)
                 {
                     m_game.Screens.Push(new EndScreen(m_game));
                 }
@@ -246,7 +253,9 @@ namespace RomanReign
             spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix());
 
             Map.Draw(spriteBatch);
-            Player.Draw(spriteBatch);
+
+            foreach (var player in Players)
+                player.Draw(spriteBatch);
 
             foreach (var enemy in Enemies)
                 enemy.Draw(spriteBatch);

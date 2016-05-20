@@ -139,29 +139,31 @@ namespace RomanReign
 
             m_jumpActions.Add(() =>
                 Random.Next(100) < 2 &&
-                Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
-                m_screen.Player.Position.Y < m_physicsBody.Position.Y - 50 &&
-                m_screen.Player.OnGround &&
+                m_screen.Players.Any(p =>
+                    Math.Abs((p.Position - m_physicsBody.Position).Length()) < jumpDistance &&
+                    p.Position.Y < m_physicsBody.Position.Y - 50 &&
+                    p.OnGround) &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_dropActions.Add(() =>
                 Random.Next(100) < 2 &&
-                Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < jumpDistance &&
-                m_screen.Player.Position.Y > m_physicsBody.Position.Y + 50 &&
-                m_screen.Player.OnGround &&
+                m_screen.Players.Any(p =>
+                    Math.Abs((p.Position - m_physicsBody.Position).Length()) < jumpDistance &&
+                    p.Position.Y > m_physicsBody.Position.Y + 50 &&
+                    p.OnGround) &&
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_moveRightActions.Add(() =>
-                m_screen.Player.Position.X > m_physicsBody.Position.X + Random.Next(50, 200));
+                m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First() > Random.Next(50, 200));
 
             m_moveLeftActions.Add(() =>
-                m_screen.Player.Position.X < m_physicsBody.Position.X - Random.Next(50, 200));
+                m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First() < -Random.Next(50, 200));
 
             m_attackActions.Add(() =>
                 !m_loseLife &&
                 Random.Next(100) < 2 &&
                 m_timeSinceAttack > ATTACK_COOLDOWN &&
-                Math.Abs((m_screen.Player.Position - m_physicsBody.Position).Length()) < 60);
+                Math.Abs(m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First()) < 60);
 
             m_hurtSound1 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt1");
             m_hurtSound2 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt2");
@@ -251,9 +253,9 @@ namespace RomanReign
             {
                 m_attackAnimation.Update(gameTime);
 
-                if (m_screen.Player.Bounds.Intersects(m_attackRect))
+                foreach (var player in m_screen.Players.Where(player => player.Bounds.Intersects(m_attackRect)))
                 {
-                    if (m_screen.Player.TakeDamage())
+                    if (player.TakeDamage())
                         m_physicsBody.Velocity.X *= -0.5f;
                 }
 

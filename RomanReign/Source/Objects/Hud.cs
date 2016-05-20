@@ -25,7 +25,26 @@ namespace RomanReign
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(m_gameFont, "Lives: " + m_screen.Player.DisplayLives, new Vector2(200, 60), Color.White);
+            foreach (var player in m_screen.Players)
+            {
+                int displayLives = player.DisplayLives - 1;
+
+                int padding = 5;
+                Vector2 heartScale = new Vector2(0.3f);
+                Vector2 scaledHeartSize = m_heartTexture.Bounds.Size.ToVector2() * heartScale;
+
+                float totalWidth = (displayLives * scaledHeartSize.X) + (padding * (displayLives - 1));
+
+                Vector2 playerPos = new Vector2(player.Bounds.Center.X, player.Bounds.Top);
+                Vector2 playerScreenPos = m_screen.Camera.WorldToScreen(playerPos);
+                Vector2 heartPos = new Vector2(playerScreenPos.X - (totalWidth / 2f), playerScreenPos.Y);
+
+                for (int i = 0; i < displayLives; i++)
+                {
+                    spriteBatch.Draw(m_heartTexture, heartPos, color: Color.White, scale: heartScale);
+                    heartPos.X += scaledHeartSize.X + padding;
+                }
+            }
 
             foreach (Enemy enemy in m_screen.Enemies)
             {

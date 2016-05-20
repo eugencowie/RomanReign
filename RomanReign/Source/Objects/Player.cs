@@ -61,7 +61,7 @@ namespace RomanReign
         SoundEffect m_jumpSound1;
         SoundEffect m_jumpSound2;
 
-        public Player(GameScreen screen, RomanReignGame game, ContentManager content)
+        public Player(GameScreen screen, RomanReignGame game, ContentManager content, PlayerIndex? playerIndex=null)
         {
             m_game = game;
             m_screen = screen;
@@ -104,41 +104,48 @@ namespace RomanReign
 
             InputManager i = m_game.Input;
 
-            m_jumpActions.Add(() =>
-                i.IsJustPressed(Keys.Z) &&
-                i.IsUp(Keys.Down));
+            if (playerIndex.HasValue)
+            {
+                m_jumpActions.Add(() =>
+                    i.IsJustPressed(Buttons.A, (int)playerIndex) &&
+                    i.IsUp(Buttons.DPadDown, (int)playerIndex) && !i.IsStickDown(Thumbsticks.Left, 0.5f, (int)playerIndex));
 
-            m_jumpActions.Add(() =>
-                i.IsJustPressed(Buttons.A) &&
-                i.IsUp(Buttons.DPadDown) && !i.IsStickDown(Thumbsticks.Left, 0.5f));
+                m_dropActions.Add(() =>
+                    //i.IsJustPressed(Buttons.A, (int)playerIndex) &&
+                    (i.IsDown(Buttons.DPadDown, (int)playerIndex) || i.IsStickDown(Thumbsticks.Left, 0.5f, (int)playerIndex)));
 
-            m_dropActions.Add(() =>
-                //i.IsJustPressed(Keys.Z) &&
-                i.IsDown(Keys.Down));
+                m_moveLeftActions.Add(() =>
+                    (i.IsDown(Buttons.DPadLeft, (int)playerIndex) || i.IsStickLeft(Thumbsticks.Left, (int)playerIndex)) &&
+                    (i.IsUp(Buttons.DPadRight, (int)playerIndex) && !i.IsStickRight(Thumbsticks.Left, (int)playerIndex)));
 
-            m_dropActions.Add(() =>
-                //i.IsJustPressed(Buttons.A) &&
-                (i.IsDown(Buttons.DPadDown) || i.IsStickDown(Thumbsticks.Left, 0.5f)));
+                m_moveRightActions.Add(() =>
+                    (i.IsDown(Buttons.DPadRight, (int)playerIndex) || i.IsStickRight(Thumbsticks.Left, (int)playerIndex)) &&
+                    (i.IsUp(Buttons.DPadLeft, (int)playerIndex) && !i.IsStickLeft(Thumbsticks.Left, (int)playerIndex)));
 
-            m_moveLeftActions.Add(() =>
-                i.IsDown(Keys.Left) &&
-                i.IsUp(Keys.Right));
+                m_attackActions.Add(() =>
+                    i.IsJustPressed(Buttons.X, (int)playerIndex) && !m_isAttacking);
+            }
+            else
+            {
+                m_jumpActions.Add(() =>
+                    i.IsJustPressed(Keys.Z) &&
+                    i.IsUp(Keys.Down));
 
-            m_moveLeftActions.Add(() =>
-                (i.IsDown(Buttons.DPadLeft) || i.IsStickLeft(Thumbsticks.Left)) &&
-                (i.IsUp(Buttons.DPadRight) && !i.IsStickRight(Thumbsticks.Left)));
+                m_dropActions.Add(() =>
+                    //i.IsJustPressed(Keys.Z) &&
+                    i.IsDown(Keys.Down));
 
-            m_moveRightActions.Add(() =>
-                i.IsDown(Keys.Right) &&
-                i.IsUp(Keys.Left));
+                m_moveLeftActions.Add(() =>
+                    i.IsDown(Keys.Left) &&
+                    i.IsUp(Keys.Right));
 
-            m_moveRightActions.Add(() =>
-                (i.IsDown(Buttons.DPadRight) || i.IsStickRight(Thumbsticks.Left)) &&
-                (i.IsUp(Buttons.DPadLeft) && !i.IsStickLeft(Thumbsticks.Left)));
+                m_moveRightActions.Add(() =>
+                    i.IsDown(Keys.Right) &&
+                    i.IsUp(Keys.Left));
 
-            m_attackActions.Add(() => i.IsJustPressed(Keys.X) && !m_isAttacking);
-
-            m_attackActions.Add(() => i.IsJustPressed(Buttons.X) && !m_isAttacking);
+                m_attackActions.Add(() =>
+                    i.IsJustPressed(Keys.X) && !m_isAttacking);
+            }
 
             m_attackSound1 = content.Load<SoundEffect>("Audio/sfx_player_attack1");
             m_attackSound2 = content.Load<SoundEffect>("Audio/sfx_player_attack2");

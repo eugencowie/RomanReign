@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanReign
 {
@@ -25,8 +27,13 @@ namespace RomanReign
 
         public void Update(GameTime gameTime)
         {
-            var targetPosition = m_screen.Player.Position;
-            Position = Vector2.Lerp(Position, targetPosition, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (m_screen.Players.Count > 0)
+            {
+                List<Vector2> targets = m_screen.Players.Select(player => player.Position).ToList();
+                Vector2 average = targets.Aggregate(Vector2.Zero, (current, t) => current + t) / targets.Count;
+
+                Position = Vector2.Lerp(Position, average, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
 
             // Constrain the camera to the bounds of the map sprite.
             if (Bounds.Left < m_screen.Map.Bounds.Left)
