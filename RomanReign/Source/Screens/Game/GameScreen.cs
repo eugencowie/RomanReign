@@ -67,7 +67,7 @@ namespace RomanReign
         {
             Physics = new PhysicsManager();
 
-            Hud = new Hud(this, content);
+            Hud = new Hud(this, m_game, content);
 
             Camera = new Camera(this, m_game) {
                 Origin = new Vector2(0.5f, 0.5f)

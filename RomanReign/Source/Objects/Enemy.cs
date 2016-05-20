@@ -27,6 +27,8 @@ namespace RomanReign
 
         public int Lives;
 
+        public int DisplayLives => Lives + (m_loseLife ? -1 : 0);
+
         RomanReignGame m_game;
         GameScreen m_screen;
 
@@ -37,7 +39,7 @@ namespace RomanReign
 
         RectangleF m_attackRect;
 
-        Color m_color;
+        public Color Color;
 
         List<InputAction> m_jumpActions = new List<InputAction>();
         List<InputAction> m_dropActions = new List<InputAction>();
@@ -82,7 +84,7 @@ namespace RomanReign
             else if (rand < 40) option = 1; // 30% chance of spawning lightblue
             else option = 0;                // 60% chance of spawning regular
 
-            m_color = options[option];
+            Color = options[option];
 
             Lives = option + 1;
 
@@ -95,7 +97,7 @@ namespace RomanReign
 
             m_walkingAnimation = new AnimatedSprite(4, 1, m_walkingSpeed, true, content.Load<Texture2D>("Textures/Game/enemy_walking")) {
                 Position = spawnPoint.Value,
-                Color = m_color
+                Color = Color
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
@@ -103,7 +105,7 @@ namespace RomanReign
 
             m_attackAnimation = new AnimatedSprite(4, 1, 8, false, content.Load<Texture2D>("Textures/Game/enemy_attack")) {
                 Position = spawnPoint.Value,
-                Color = m_color
+                Color = Color
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
@@ -267,13 +269,13 @@ namespace RomanReign
 
             if (m_timeSinceDamage < 0.2f)
             {
-                m_walkingAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : m_color);
-                m_attackAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : m_color);
+                m_walkingAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color);
+                m_attackAnimation.Color = (Lives == 1 ? new Color(Color.White, 5) : Color);
             }
             else
             {
-                m_walkingAnimation.Color = m_color;
-                m_attackAnimation.Color = m_color;
+                m_walkingAnimation.Color = Color;
+                m_attackAnimation.Color = Color;
 
                 if (m_loseLife)
                 {
