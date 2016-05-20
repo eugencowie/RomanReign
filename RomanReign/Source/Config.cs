@@ -1,6 +1,6 @@
+using Microsoft.Xna.Framework;
 using System.IO;
 using System.Xml.Serialization;
-using Microsoft.Xna.Framework;
 
 namespace RomanReign
 {

@@ -119,8 +119,8 @@ namespace RomanReign
             m_heading.Draw(spriteBatch);
             m_backButton.Draw(spriteBatch);
 
-            spriteBatch.DrawString(m_font, "Music volume: " + Config.Data.Volume.Music, new Vector2(100, 100), Color.White);
-            spriteBatch.DrawString(m_font, "Sound effect volume: " + Config.Data.Volume.Sfx, new Vector2(100, 200), Color.White);
+            spriteBatch.DrawString(m_font, "Music volume: " + Config.Data.Volume.Music + "%", new Vector2(100, 100), Color.White);
+            spriteBatch.DrawString(m_font, "Sound effect volume: " + Config.Data.Volume.Sfx + "%", new Vector2(100, 200), Color.White);
 
             spriteBatch.End();
         }
