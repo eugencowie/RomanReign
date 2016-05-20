@@ -44,7 +44,7 @@ namespace RomanReign
                 content.Load<Texture2D>("Textures/Game/" + texture);
             }
 
-            content.Load<Texture2D>("Textures/HUD/test");
+            content.Load<Texture2D>("Textures/HUD/heart");
 
             foreach (string texture in new[] {
                 "bg_splash",

@@ -133,18 +133,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Game/bg_pause.png
 
-#begin Textures/HUD/test.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/HUD/test.png
-
 #begin Textures/Menu/btn_exit_white.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -308,4 +296,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/sfx_player_walking_long.wav
+
+#begin Textures/HUD/heart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/HUD/heart.png
 
