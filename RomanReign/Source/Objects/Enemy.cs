@@ -283,6 +283,9 @@ namespace RomanReign
                 {
                     Lives--;
                     m_loseLife = false;
+
+                    if (Lives <= 0 && Color == Color.Gold && m_screen.Players.Any(p => p.Lives < 4) && Random.NextDouble() >= 0.5)
+                        m_screen.Pickups.Add(new Pickup(m_screen, m_game.Content, Position));
                 }
             }
 

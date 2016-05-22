@@ -264,6 +264,17 @@ namespace RomanReign
             }
 
             m_timeSinceDamage += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Pickups
+
+            if (Lives < 4)
+            {
+                foreach (var pickup in m_screen.Pickups.Where(p => p.Bounds.Intersects(Bounds)).ToList())
+                {
+                    m_screen.Pickups.Remove(pickup);
+                    Lives++;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

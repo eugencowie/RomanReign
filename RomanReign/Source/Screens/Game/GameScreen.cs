@@ -24,6 +24,7 @@ namespace RomanReign
         public Map Map;
         public List<Player> Players = new List<Player>();
         public List<Enemy> Enemies = new List<Enemy>();
+        public List<Pickup> Pickups = new List<Pickup>();
 
         // These variables are used for spawning enemies.
 
@@ -270,6 +271,9 @@ namespace RomanReign
 
             foreach (var enemy in Enemies)
                 enemy.Draw(spriteBatch);
+
+            foreach (var pickup in Pickups)
+                pickup.Draw(spriteBatch);
 
             spriteBatch.End();
 
