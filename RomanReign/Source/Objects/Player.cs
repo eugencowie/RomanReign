@@ -29,7 +29,7 @@ namespace RomanReign
 
         public int DisplayLives => Lives + (m_loseLife ? -1 : 0);
 
-        public int Lives = 3;
+        public int Lives = 4;
         public bool Invincible;
 
         RomanReignGame m_game;
@@ -98,7 +98,7 @@ namespace RomanReign
                 return CollisionResponse.Block;
             };
 
-            m_screen.Physics.AddRigidBody(m_physicsBody);
+            m_screen.Physics.AddDynamicBody(m_physicsBody);
 
             // Set up input events.
 

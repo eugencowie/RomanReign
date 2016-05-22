@@ -96,7 +96,7 @@ namespace RomanReign
             }
         }
 
-        public void AddRigidBody(DynamicBody body)
+        public void AddDynamicBody(DynamicBody body)
         {
             m_dynamicBodies.Add(body);
         }
