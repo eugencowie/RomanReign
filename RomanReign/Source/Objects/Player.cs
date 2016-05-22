@@ -273,7 +273,7 @@ namespace RomanReign
             {
                 foreach (var pickup in m_screen.Pickups.Where(p => p.Bounds.Intersects(Bounds)).ToList())
                 {
-                    m_pickupSound.Play();
+                    m_pickupSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
                     m_screen.Pickups.Remove(pickup);
                     Lives++;
                 }
