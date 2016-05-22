@@ -60,6 +60,7 @@ namespace RomanReign
         SoundEffect m_hurtSound;
         SoundEffect m_jumpSound1;
         SoundEffect m_jumpSound2;
+        SoundEffect m_pickupSound;
 
         public Player(GameScreen screen, RomanReignGame game, ContentManager content, PlayerIndex? playerIndex=null)
         {
@@ -152,6 +153,7 @@ namespace RomanReign
             m_hurtSound = content.Load<SoundEffect>("Audio/sfx_player_hurt");
             m_jumpSound1 = content.Load<SoundEffect>("Audio/sfx_player_jump1");
             m_jumpSound2 = content.Load<SoundEffect>("Audio/sfx_player_jump2");
+            m_pickupSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
         }
 
         public void Update(GameTime gameTime)
@@ -271,6 +273,7 @@ namespace RomanReign
             {
                 foreach (var pickup in m_screen.Pickups.Where(p => p.Bounds.Intersects(Bounds)).ToList())
                 {
+                    m_pickupSound.Play();
                     m_screen.Pickups.Remove(pickup);
                     Lives++;
                 }
