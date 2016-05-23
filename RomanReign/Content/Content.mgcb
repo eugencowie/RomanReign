@@ -232,11 +232,6 @@
 /processorParam:Quality=Best
 /build:Audio/background_music.ogg
 
-#begin Video\main_menu.wmv
-/importer:WmvImporter
-/processor:VideoProcessor
-/build:Video\main_menu.wmv
-
 #begin Audio/sfx_enemy_grunt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -356,4 +351,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Menu/btn_start4.png
+
+#begin Video/main_menu.mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:Video/main_menu.mp4
 
