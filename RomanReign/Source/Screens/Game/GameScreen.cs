@@ -94,15 +94,7 @@ namespace RomanReign
             WaveEnemies = 1;
             WaveEnemiesKilled = 1;
 
-            m_game.Audio.BackgroundMusic.OnLoop += () => {
-                float pitch;
-                if      (Wave < 3)  pitch = 0;
-                else if (Wave < 5)  pitch = 0.1f;
-                else if (Wave < 10) pitch = 0.2f;
-                else                pitch = 0.3f;
-                m_game.Audio.BackgroundMusic.Pitch = pitch;
-                m_game.Audio.BackgroundMusic.TargetPitch = pitch;
-            };
+            m_game.Audio.BackgroundMusic.OnLoop += OnBackgroundMusicLoop;
 
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
@@ -115,6 +107,9 @@ namespace RomanReign
         /// </summary>
         public void UnloadContent()
         {
+            m_game.Audio.BackgroundMusic.OnLoop -= OnBackgroundMusicLoop;
+            m_game.Audio.BackgroundMusic.Pitch = -0.15f;
+            m_game.Audio.BackgroundMusic.TargetPitch = -0.15f;
         }
 
         /// <summary>
@@ -313,6 +308,22 @@ namespace RomanReign
 
             if (other is EndScreen)
                 m_gameOver = false;
+        }
+
+        private void OnBackgroundMusicLoop()
+        {
+            float pitch;
+
+            if (Wave < 5) pitch = -0.15f;
+            else if (Wave < 8) pitch = 0.0f;
+            else if (Wave < 10) pitch = 0.15f;
+            else if (Wave < 15) pitch = 0.25f;
+            else if (Wave < 20) pitch = 0.35f;
+            else if (Wave < 22) pitch = 0.5f;
+            else pitch = 0.6f;
+
+            m_game.Audio.BackgroundMusic.Pitch = pitch;
+            m_game.Audio.BackgroundMusic.TargetPitch = pitch;
         }
     }
 }
