@@ -67,14 +67,9 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
-            // Load background video.
-
-            if (m_videoPlayer == null)
-                m_videoPlayer = new VideoPlayer();
-
-            m_backgroundVideo = content.Load<Video>("Video/main_menu");
-
             m_game.Audio.BackgroundMusic.TargetVolume = 0.5f;
+
+            m_selectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
 
             // These next sprites are all special because we want the origin of the sprite
             // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
@@ -110,7 +105,15 @@ namespace RomanReign
 
             m_selectedButton = SelectedButton.None;
 
-            m_selectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
+            // Load background video.
+
+            m_backgroundVideo = content.Load<Video>("Video/main_menu");
+
+            if (m_videoPlayer == null)
+                m_videoPlayer = new VideoPlayer();
+
+            m_videoPlayer.Play(m_backgroundVideo);
+            m_videoPlayer.Volume = 0f;
         }
 
         /// <summary>
@@ -121,6 +124,8 @@ namespace RomanReign
         public void UnloadContent()
         {
             m_game.Audio.BackgroundMusic.TargetVolume = 0.2f;
+
+            m_videoPlayer.Stop();
         }
 
         /// <summary>
@@ -262,6 +267,9 @@ namespace RomanReign
             }
 
             spriteBatch.End();
+
+            // Fix memory leak where video texture is not disposed.
+            videoTexture?.Dispose();
         }
 
         /// <summary>
