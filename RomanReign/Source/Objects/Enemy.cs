@@ -160,10 +160,11 @@ namespace RomanReign
                 m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First() < -Random.Next(50, 200));
 
             m_attackActions.Add(() =>
-                !m_loseLife &&
+                !m_loseLife && !m_isAttacking && !IsJumping && !IsDropping &&
                 Random.Next(100) < 2 &&
                 m_timeSinceAttack > ATTACK_COOLDOWN &&
-                Math.Abs(m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First()) < 60);
+                Math.Abs(GetDistanceToClosestPlayer().Y) < 60 &&
+                Math.Abs(GetDistanceToClosestPlayer().X) < 60);
 
             m_hurtSound1 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt1");
             m_hurtSound2 = content.Load<SoundEffect>("Audio/sfx_enemy_grunt2");
@@ -326,6 +327,11 @@ namespace RomanReign
             }
 
             return false;
+        }
+
+        private Vector2 GetDistanceToClosestPlayer()
+        {
+            return m_screen.Players.Select(p => p.Position - m_physicsBody.Position).OrderBy(v => Math.Abs(v.Length())).First();
         }
     }
 }
