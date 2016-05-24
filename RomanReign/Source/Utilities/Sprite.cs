@@ -63,7 +63,7 @@ namespace RomanReign
 
         public virtual void SetRelativeOrigin(Vector2 origin)
         {
-            Origin = Texture.Bounds.Size.ToVector2() * origin;
+            Origin = Size * origin;
         }
 
         public void SetRelativeOrigin(float originX, float originY)

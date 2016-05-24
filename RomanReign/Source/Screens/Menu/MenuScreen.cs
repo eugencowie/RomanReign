@@ -26,14 +26,14 @@ namespace RomanReign
         Video m_backgroundVideo;
         static VideoPlayer m_videoPlayer;
 
-        // We have a sprite for the heading (or title) of the screen and then a whole
-        // bunch of sprites for all of the various buttons.
+        // We need a whole bunch of sprites for all of the various buttons.
 
-        Sprite m_heading;
         Sprite m_startButton;
         Sprite m_optionsButton;
         Sprite m_creditsButton;
         Sprite m_exitButton;
+
+        Texture2D m_buttonBackground;
 
         // This is used to identify the selected button.
 
@@ -71,35 +71,36 @@ namespace RomanReign
 
             m_selectedSound = content.Load<SoundEffect>("Audio/sfx_menu_select");
 
-            // These next sprites are all special because we want the origin of the sprite
-            // texture (i.e. the 0,0 coordinate) to be in the center of the sprite (which
-            // makes positioning them easier). To do this, we set the origin property. The
-            // origin property is a Vector2 where 0,0 is top-left and 1,1 is bottom-right.
+            // Load the button textures.
 
-            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_menu")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 100)
-            };
-            m_heading.SetRelativeOrigin(0.5f, 0.5f);
-
-            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 300)
-            };
+            m_startButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_play"));
+            m_startButton.SetRelativeScale(0.75f, 0.75f);
             m_startButton.SetRelativeOrigin(0.5f, 0.5f);
 
+            float posX = m_game.Viewport.Right - (m_startButton.Bounds.Size.X / 2f) - 50;
+            float posY = m_game.Viewport.Height - (m_startButton.Bounds.Size.Y / 2f) - 50 - (75 * 3);
+
+            m_startButton.Position = new Vector2(posX, posY);
+
             m_optionsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_options")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 400)
+                Position = new Vector2(posX, posY += 75)
             };
-            m_optionsButton.SetRelativeOrigin(0.5f, 0.5f);
 
             m_creditsButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_credits")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 500)
+                Position = new Vector2(posX, posY += 75)
             };
-            m_creditsButton.SetRelativeOrigin(0.5f, 0.5f);
 
-            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_exit")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 600)
+            m_exitButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_quit")) {
+                Position = new Vector2(posX, posY += 75)
             };
-            m_exitButton.SetRelativeOrigin(0.5f, 0.5f);
+
+            foreach (Sprite button in new[] { m_optionsButton, m_creditsButton, m_exitButton })
+            {
+                button.SetRelativeScale(0.75f, 0.75f);
+                button.SetRelativeOrigin(0.5f, 0.5f);
+            }
+
+            m_buttonBackground = content.Load<Texture2D>("Textures/Menu/btn_background");
 
             // Set the initial selected button to none.
 
@@ -259,11 +260,11 @@ namespace RomanReign
 
             if (!m_isCovered)
             {
-                m_heading.Draw(spriteBatch);
-                m_startButton.Draw(spriteBatch);
-                m_optionsButton.Draw(spriteBatch);
-                m_creditsButton.Draw(spriteBatch);
-                m_exitButton.Draw(spriteBatch);
+                foreach (Sprite button in new[] { m_startButton, m_optionsButton, m_creditsButton, m_exitButton })
+                {
+                    spriteBatch.Draw(m_buttonBackground, button.Bounds, Color.White);
+                    button.Draw(spriteBatch);
+                }
             }
 
             spriteBatch.End();

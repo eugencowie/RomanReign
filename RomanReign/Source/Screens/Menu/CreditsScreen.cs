@@ -16,11 +16,11 @@ namespace RomanReign
 
         RomanReignGame m_game;
 
-        // We need a sprite for the heading (or title) of the screen as well as a sprite
-        // for the back button.
+        // We need a sprite for the back button.
 
-        Sprite m_heading;
         Sprite m_backButton;
+
+        Texture2D m_buttonBackground;
 
         /// <summary>
         /// This constructor is run when the credits menu screen object is created.
@@ -37,15 +37,16 @@ namespace RomanReign
         {
             // See Screens/Menu/MenuSreen.cs for an explanation of how sprite origins work.
 
-            m_heading = new Sprite(content.Load<Texture2D>("Textures/Menu/title_credits")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 100)
-            };
-            m_heading.SetRelativeOrigin(0.5f, 0.5f);
-
-            m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_back")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 600)
-            };
+            m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_back"));
+            m_backButton.SetRelativeScale(0.75f, 0.75f);
             m_backButton.SetRelativeOrigin(0.5f, 0.5f);
+
+            float posX = m_game.Viewport.Right - (m_backButton.Bounds.Size.X / 2f) - 50;
+            float posY = m_game.Viewport.Height - (m_backButton.Bounds.Size.Y / 2f) - 50;
+
+            m_backButton.Position = new Vector2(posX, posY);
+
+            m_buttonBackground = content.Load<Texture2D>("Textures/Menu/btn_background");
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
-            m_heading.Draw(spriteBatch);
+            spriteBatch.Draw(m_buttonBackground, m_backButton.Bounds, Color.White);
             m_backButton.Draw(spriteBatch);
 
             spriteBatch.End();

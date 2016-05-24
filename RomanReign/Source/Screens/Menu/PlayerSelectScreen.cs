@@ -15,6 +15,8 @@ namespace RomanReign
         Sprite m_start3;
         Sprite m_start4;
 
+        Texture2D m_buttonBackground;
+
         enum SelectedButton { None, Start1, Start2, Start3, Start4, Final }
         SelectedButton m_selectedButton;
 
@@ -27,25 +29,34 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            m_start1 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start1")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 300)
-            };
+            m_start1 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_1player"));
+            m_start1.SetRelativeScale(0.75f, 0.75f);
             m_start1.SetRelativeOrigin(0.5f, 0.5f);
 
-            m_start2 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start2")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 400)
-            };
-            m_start2.SetRelativeOrigin(0.5f, 0.5f);
+            float posX = m_game.Viewport.Right - (m_start1.Bounds.Size.X / 2f) - 50;
+            float posY = m_game.Viewport.Height - (m_start1.Bounds.Size.Y / 2f) - 50 - (75 * 3);
 
-            m_start3 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start3")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 500)
-            };
-            m_start3.SetRelativeOrigin(0.5f, 0.5f);
+            m_start1.Position = new Vector2(posX, posY);
 
-            m_start4 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_start4")) {
-                Position = new Vector2(m_game.Viewport.Center.X, 600)
+            m_start2 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_2player")) {
+                Position = new Vector2(posX, posY += 75)
             };
-            m_start4.SetRelativeOrigin(0.5f, 0.5f);
+
+            m_start3 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_3player")) {
+                Position = new Vector2(posX, posY += 75)
+            };
+
+            m_start4 = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_4player")) {
+                Position = new Vector2(posX, posY += 75)
+            };
+
+            foreach (Sprite button in new[] { m_start2, m_start3, m_start4 })
+            {
+                button.SetRelativeScale(0.75f, 0.75f);
+                button.SetRelativeOrigin(0.5f, 0.5f);
+            }
+
+            m_buttonBackground = content.Load<Texture2D>("Textures/Menu/btn_background");
 
             m_selectedButton = SelectedButton.None;
 
@@ -130,10 +141,11 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
-            m_start1.Draw(spriteBatch);
-            m_start2.Draw(spriteBatch);
-            m_start3.Draw(spriteBatch);
-            m_start4.Draw(spriteBatch);
+            foreach (Sprite button in new[] { m_start1, m_start2, m_start3, m_start4 })
+            {
+                spriteBatch.Draw(m_buttonBackground, button.Bounds, Color.White);
+                button.Draw(spriteBatch);
+            }
 
             spriteBatch.End();
         }

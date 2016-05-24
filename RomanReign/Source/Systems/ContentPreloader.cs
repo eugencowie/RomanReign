@@ -48,19 +48,16 @@ namespace RomanReign
 
             foreach (string texture in new[] {
                 "bg_splash",
+                "btn_1player",
+                "btn_2player",
+                "btn_3player",
+                "btn_4player",
                 "btn_back",
                 "btn_credits",
-                "btn_exit",
-                "btn_exit_white",
                 "btn_options",
-                "btn_start",
-                "btn_start1",
-                "btn_start2",
-                "btn_start3",
-                "btn_start4",
-                "title_credits",
-                "title_menu",
-                "title_options" })
+                "btn_play",
+                "btn_quit",
+                "btn_resume" })
             {
                 content.Load<Texture2D>("Textures/Menu/" + texture);
             }
