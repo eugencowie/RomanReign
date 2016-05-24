@@ -154,12 +154,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/game.spritefont
 
-#begin Audio/background_music.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/background_music.ogg
-
 #begin Audio/sfx_enemy_grunt1.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -344,4 +338,10 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Menu/btn_menu.png
+
+#begin Audio/background_music.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/background_music.mp3
 
