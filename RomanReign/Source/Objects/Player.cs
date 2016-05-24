@@ -69,14 +69,20 @@ namespace RomanReign
 
             // Load walking animation.
 
-            m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/player_walking")) {
+            string texture = "player1";
+            if (playerIndex != null)
+            {
+                texture = "player" + ((int)playerIndex + 1);
+            }
+
+            m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/" + texture  + "_walking")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_walkingAnimation.SetRelativeOrigin(0.5f, 0.5f);
 
             // Load attack animation.
 
-            m_attackAnimation = new AnimatedSprite(5, 1, 20, false, content.Load<Texture2D>("Textures/Game/player_attack")) {
+            m_attackAnimation = new AnimatedSprite(5, 1, 20, false, content.Load<Texture2D>("Textures/Game/" + texture + "_attack")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
             };
             m_attackAnimation.SetRelativeOrigin(0.5f, 0.5f);

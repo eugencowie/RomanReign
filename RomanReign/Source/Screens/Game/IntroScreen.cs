@@ -32,7 +32,7 @@ namespace RomanReign
             };
             m_background.SetRelativeOrigin(0.5f, 0.5f);
 
-            m_player = new Sprite(content.Load<Texture2D>("Textures/Game/player_walking"));
+            m_player = new Sprite(content.Load<Texture2D>("Textures/Game/player1_walking"));
             m_player.SourceRect = new Rectangle(0, 0, (int)(m_player.Texture.Width / 4f), m_player.Texture.Height);
             m_player.SetRelativeOrigin(0.5f, 0.5f);
 

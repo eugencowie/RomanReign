@@ -38,8 +38,14 @@ namespace RomanReign
                 "bg_pause",
                 "enemy_attack",
                 "enemy_walking",
-                "player_attack",
-                "player_walking" })
+                "player1_attack",
+                "player1_walking",
+                "player2_attack",
+                "player2_walking",
+                "player3_attack",
+                "player3_walking",
+                "player4_attack",
+                "player4_walking" })
             {
                 content.Load<Texture2D>("Textures/Game/" + texture);
             }
