@@ -345,6 +345,18 @@
 /processorParam:Quality=Best
 /build:Audio/background_music.mp3
 
+#begin Textures/Game/player1_attack.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Game/player1_attack.png
+
 #begin Textures/Game/player1_walking.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -356,6 +368,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Game/player1_walking.png
+
+#begin Textures/Game/player2_attack.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Game/player2_attack.png
 
 #begin Textures/Game/player2_walking.png
 /importer:TextureImporter
@@ -369,6 +393,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Game/player2_walking.png
 
+#begin Textures/Game/player3_attack.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Game/player3_attack.png
+
 #begin Textures/Game/player3_walking.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -380,6 +416,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Textures/Game/player3_walking.png
+
+#begin Textures/Game/player4_attack.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Game/player4_attack.png
 
 #begin Textures/Game/player4_walking.png
 /importer:TextureImporter
