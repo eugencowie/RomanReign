@@ -67,7 +67,7 @@ namespace RomanReign
                 case Thumbsticks.Right: return Gamepads[i].ThumbSticks.Right;
 
                 default:
-                    throw new ArgumentOutOfRangeException("thumcstick " + sticks + " does not exist");
+                    throw new ArgumentOutOfRangeException("thumbstick " + sticks + " does not exist");
             }
         }
     }
