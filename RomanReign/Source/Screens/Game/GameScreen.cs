@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RomanReign
 {
@@ -23,6 +24,7 @@ namespace RomanReign
         public Camera Camera;
         public Map Map;
         public List<Player> Players = new List<Player>();
+        public List<Player> DeadPlayers = new List<Player>();
         public List<Enemy> Enemies = new List<Enemy>();
         public List<Pickup> Pickups = new List<Pickup>();
 
@@ -155,6 +157,12 @@ namespace RomanReign
                         WaveEnemiesKilled = 0;
 
                         TimeSinceWaveStarted = 0;
+
+                        foreach (var player in DeadPlayers)
+                            player.Lives = 1;
+
+                        Players.AddRange(DeadPlayers);
+                        DeadPlayers.Clear();
                     }
 
                     int spawnChance;    // out of 100
@@ -236,6 +244,8 @@ namespace RomanReign
                 }
 
                 Enemies.RemoveAll(e => e.Lives <= 0);
+
+                DeadPlayers.AddRange(Players.Where(p => p.Lives <= 0));
                 Players.RemoveAll(p => p.Lives <= 0);
 
                 if (Players.Count <= 0)
