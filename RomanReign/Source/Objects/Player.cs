@@ -72,7 +72,11 @@ namespace RomanReign
             string texture = "player1";
             if (playerIndex != null)
             {
+#if DEBUG
+                texture = "player" + ((int)playerIndex + 2);
+#else
                 texture = "player" + ((int)playerIndex + 1);
+#endif
             }
 
             m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/" + texture  + "_walking")) {

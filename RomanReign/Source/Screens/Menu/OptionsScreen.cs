@@ -218,7 +218,7 @@ namespace RomanReign
                     if (m_selectedDirection == SelectedDirection.Right)
                         Config.Data.Volume.Music += 10;
 
-                    m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                    m_selectedSound.Play(0.25f * Config.Data.Volume.MusicNormal, 0f, 0f);
                 }
 
                 if (m_selectedButton == SelectedButton.Sfx)
@@ -279,8 +279,8 @@ namespace RomanReign
             m_sfxButton.Draw(spriteBatch);
 
 #if DEBUG
-            spriteBatch.DrawString(m_font, "Music volume: " + Config.Data.Volume.Music + "%", new Vector2(100, 100), Color.Black);
-            spriteBatch.DrawString(m_font, "Sound effect volume: " + Config.Data.Volume.Sfx + "%", new Vector2(100, 200), Color.Black);
+            //spriteBatch.DrawString(m_font, "Music volume: " + Config.Data.Volume.Music + "%", new Vector2(100, 100), Color.Black);
+            //spriteBatch.DrawString(m_font, "Sound effect volume: " + Config.Data.Volume.Sfx + "%", new Vector2(100, 200), Color.Black);
 #endif
 
             spriteBatch.End();

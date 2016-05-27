@@ -224,7 +224,6 @@ namespace RomanReign
                         bool spawnOnWall = (Random.NextDouble() >= 0.5);
                         float posY = spawnOnWall ? 373 : 610;
 
-                        // TODO: fix spawn points
                         Property<Vector2> spawnPoint = new Vector2(posX, posY);
                         spawnPoint.Name = "enemy";
                         Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
@@ -269,7 +268,6 @@ namespace RomanReign
                         bool spawnOnWall = (Random.NextDouble() >= 0.5);
                         float posY = spawnOnWall ? 373 : 610;
 
-                        // TODO: fix spawn points
                         enemy.Position = new Vector2(posX, posY);
                     }
 
