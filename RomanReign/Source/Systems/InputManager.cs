@@ -21,22 +21,22 @@ namespace RomanReign
 
         // These functions return true if the specified button, key or mouse button is down.
 
-        public bool IsDown(Buttons buttons, int i = 0) => Gamepads[i].IsButtonDown(buttons);
+        public bool IsDown(Buttons buttons, PlayerIndex i=0) => Gamepads[(int)i].IsButtonDown(buttons);
         public bool IsDown(Keys keys) => Keyboard.IsKeyDown(keys);
         public bool IsDown(MouseButtons buttons) => (GetMouseButtonState(buttons) == ButtonState.Pressed);
 
         // These functions return true if the specified button, key or mouse button is up.
 
-        public bool IsUp(Buttons buttons, int i = 0) => Gamepads[i].IsButtonUp(buttons);
+        public bool IsUp(Buttons buttons, PlayerIndex i=0) => Gamepads[(int)i].IsButtonUp(buttons);
         public bool IsUp(Keys keys) => Keyboard.IsKeyUp(keys);
         public bool IsUp(MouseButtons buttons) => (GetMouseButtonState(buttons) == ButtonState.Released);
 
         // These functions return true if the specified thumbstick is pressed in the specified direction.
 
-        public bool IsStickDown(Thumbsticks sticks, float tolerance=0, int i=0) => GetThumbStick(sticks, i).Y < -tolerance;
-        public bool IsStickUp(Thumbsticks sticks, float tolerance=0, int i=0) => GetThumbStick(sticks, i).Y > tolerance;
-        public bool IsStickLeft(Thumbsticks sticks, float tolerance=0, int i=0) => GetThumbStick(sticks, i).X < -tolerance;
-        public bool IsStickRight(Thumbsticks sticks, float tolerance=0, int i=0) => GetThumbStick(sticks, i).X > tolerance;
+        public bool IsStickDown (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).Y < -tolerance;
+        public bool IsStickUp   (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).Y > tolerance;
+        public bool IsStickLeft (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).X < -tolerance;
+        public bool IsStickRight(Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).X > tolerance;
 
         /// <summary>
         /// Helper function for getting a ButtonState using our MouseButtons enumerator.
@@ -59,12 +59,12 @@ namespace RomanReign
         /// <summary>
         /// Helper function for getting a thumbstick Vector2 using out Thumbsticks enumerator.
         /// </summary>
-        private Vector2 GetThumbStick(Thumbsticks sticks, int i=0)
+        private Vector2 GetThumbStick(Thumbsticks sticks, PlayerIndex i=0)
         {
             switch (sticks)
             {
-                case Thumbsticks.Left: return Gamepads[i].ThumbSticks.Left;
-                case Thumbsticks.Right: return Gamepads[i].ThumbSticks.Right;
+                case Thumbsticks.Left: return Gamepads[(int)i].ThumbSticks.Left;
+                case Thumbsticks.Right: return Gamepads[(int)i].ThumbSticks.Right;
 
                 default:
                     throw new ArgumentOutOfRangeException("thumbstick " + sticks + " does not exist");
@@ -140,33 +140,33 @@ namespace RomanReign
 
         // These functions return true if the specified button, key or mouse button is down.
 
-        public bool IsDown(Buttons buttons, int i = 0) => m_current.IsDown(buttons, i);
+        public bool IsDown(Buttons buttons, PlayerIndex i=0) => m_current.IsDown(buttons, i);
         public bool IsDown(Keys keys) => m_current.IsDown(keys);
         public bool IsDown(MouseButtons buttons) => m_current.IsDown(buttons);
 
         // These functions return true if the specified button, key or mouse button is up.
 
-        public bool IsUp(Buttons buttons, int i = 0) => m_current.IsUp(buttons, i);
+        public bool IsUp(Buttons buttons, PlayerIndex i=0) => m_current.IsUp(buttons, i);
         public bool IsUp(Keys keys) => m_current.IsUp(keys);
         public bool IsUp(MouseButtons buttons) => m_current.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is down and was previously up.
 
-        public bool IsJustPressed(Buttons buttons, int i=0) => m_current.IsDown(buttons, i) && m_prev.IsUp(buttons, i);
+        public bool IsJustPressed(Buttons buttons, PlayerIndex i=0) => m_current.IsDown(buttons, i) && m_prev.IsUp(buttons, i);
         public bool IsJustPressed(Keys keys) => m_current.IsDown(keys) && m_prev.IsUp(keys);
         public bool IsJustPressed(MouseButtons buttons) => m_current.IsDown(buttons) && m_prev.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is up and was previously down.
 
-        public bool IsJustReleased(Buttons buttons, int i=0) => m_current.IsUp(buttons, i) && m_prev.IsDown(buttons, i);
+        public bool IsJustReleased(Buttons buttons, PlayerIndex i=0) => m_current.IsUp(buttons, i) && m_prev.IsDown(buttons, i);
         public bool IsJustReleased(Keys keys) => m_current.IsUp(keys) && m_prev.IsDown(keys);
         public bool IsJustReleased(MouseButtons buttons) => m_current.IsUp(buttons) && m_prev.IsDown(buttons);
 
         // These functions return true if the specified thumbstick is pressed in the specified direction.
 
-        public bool IsStickDown(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickDown(sticks, tolerance, i);
-        public bool IsStickUp(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickUp(sticks, tolerance, i);
-        public bool IsStickLeft(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickLeft(sticks, tolerance, i);
-        public bool IsStickRight(Thumbsticks sticks, float tolerance=0, int i=0) => m_current.IsStickRight(sticks, tolerance, i);
+        public bool IsStickDown (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickDown(sticks, i, tolerance);
+        public bool IsStickUp   (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickUp(sticks, i, tolerance);
+        public bool IsStickLeft (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickLeft(sticks, i, tolerance);
+        public bool IsStickRight(Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickRight(sticks, i, tolerance);
     }
 }

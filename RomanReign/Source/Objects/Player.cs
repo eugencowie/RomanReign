@@ -114,23 +114,23 @@ namespace RomanReign
             if (playerIndex.HasValue)
             {
                 m_jumpActions.Add(() =>
-                    i.IsJustPressed(Buttons.A, (int)playerIndex) &&
-                    i.IsUp(Buttons.DPadDown, (int)playerIndex) && !i.IsStickDown(Thumbsticks.Left, 0.5f, (int)playerIndex));
+                    i.IsJustPressed(Buttons.A, playerIndex.Value) &&
+                    i.IsUp(Buttons.DPadDown, playerIndex.Value) && !i.IsStickDown(Thumbsticks.Left, playerIndex.Value, 0.5f));
 
                 m_dropActions.Add(() =>
-                    //i.IsJustPressed(Buttons.A, (int)playerIndex) &&
-                    (i.IsDown(Buttons.DPadDown, (int)playerIndex) || i.IsStickDown(Thumbsticks.Left, 0.5f, (int)playerIndex)));
+                    //i.IsJustPressed(Buttons.A, (int)playerIndex.Value) &&
+                    (i.IsDown(Buttons.DPadDown, playerIndex.Value) || i.IsStickDown(Thumbsticks.Left, playerIndex.Value, 0.5f)));
 
                 m_moveLeftActions.Add(() =>
-                    (i.IsDown(Buttons.DPadLeft, (int)playerIndex) || i.IsStickLeft(Thumbsticks.Left, (int)playerIndex)) &&
-                    (i.IsUp(Buttons.DPadRight, (int)playerIndex) && !i.IsStickRight(Thumbsticks.Left, (int)playerIndex)));
+                    (i.IsDown(Buttons.DPadLeft, playerIndex.Value) || i.IsStickLeft(Thumbsticks.Left, playerIndex.Value)) &&
+                    (i.IsUp(Buttons.DPadRight, playerIndex.Value) && !i.IsStickRight(Thumbsticks.Left, playerIndex.Value)));
 
                 m_moveRightActions.Add(() =>
-                    (i.IsDown(Buttons.DPadRight, (int)playerIndex) || i.IsStickRight(Thumbsticks.Left, (int)playerIndex)) &&
-                    (i.IsUp(Buttons.DPadLeft, (int)playerIndex) && !i.IsStickLeft(Thumbsticks.Left, (int)playerIndex)));
+                    (i.IsDown(Buttons.DPadRight, playerIndex.Value) || i.IsStickRight(Thumbsticks.Left, playerIndex.Value)) &&
+                    (i.IsUp(Buttons.DPadLeft, playerIndex.Value) && !i.IsStickLeft(Thumbsticks.Left, playerIndex.Value)));
 
                 m_attackActions.Add(() =>
-                    i.IsJustPressed(Buttons.X, (int)playerIndex) && !m_isAttacking);
+                    i.IsJustPressed(Buttons.X, playerIndex.Value) && !m_isAttacking);
             }
             else
             {
