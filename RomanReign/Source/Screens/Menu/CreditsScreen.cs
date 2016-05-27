@@ -41,8 +41,8 @@ namespace RomanReign
             m_backButton.SetRelativeScale(0.75f, 0.75f);
             m_backButton.SetRelativeOrigin(0.5f, 0.5f);
 
-            float posX = m_game.Viewport.Right - (m_backButton.Bounds.Size.X / 2f) - 50;
-            float posY = m_game.Viewport.Height - (m_backButton.Bounds.Size.Y / 2f) - 50;
+            float posX = m_game.Viewport.Right - (m_backButton.Bounds.Size.X / 2f) - 80;
+            float posY = m_game.Viewport.Height - (m_backButton.Bounds.Size.Y / 2f) - 80;
 
             m_backButton.Position = new Vector2(posX, posY);
 
