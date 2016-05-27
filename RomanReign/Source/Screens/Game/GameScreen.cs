@@ -58,7 +58,7 @@ namespace RomanReign
 
         // The number of players.
 
-        int m_numberOfPlayers;
+        public int NumberOfPlayers;
         bool m_suppressIntro;
 
         // Score.
@@ -73,7 +73,7 @@ namespace RomanReign
         public GameScreen(RomanReignGame game, int numberOfPlayers, bool suppressIntro=false)
         {
             m_game = game;
-            m_numberOfPlayers = numberOfPlayers;
+            NumberOfPlayers = numberOfPlayers;
             m_suppressIntro = suppressIntro;
         }
 
@@ -94,9 +94,9 @@ namespace RomanReign
 
 #if DEBUG
             Players.Add(new Player(this, m_game, content, null));
-            for (int i = 0; i < m_numberOfPlayers - 1; i++)
+            for (int i = 0; i < NumberOfPlayers - 1; i++)
 #else
-            for (int i = 0; i < m_numberOfPlayers; i++)
+            for (int i = 0; i < NumberOfPlayers; i++)
 #endif
             {
                 Players.Add(new Player(this, m_game, content, (PlayerIndex)i));
@@ -107,7 +107,7 @@ namespace RomanReign
 
             m_game.Audio.BackgroundMusic.OnLoop += OnBackgroundMusicLoop;
 
-            m_highScoreFile = "highscore-" + m_numberOfPlayers + "player.txt";
+            m_highScoreFile = "highscore-" + NumberOfPlayers + "player.txt";
             if (File.Exists(m_highScoreFile))
             {
                 try { int.TryParse(File.ReadAllText(m_highScoreFile), out HighScore); }
@@ -290,7 +290,7 @@ namespace RomanReign
 
                 if (Players.Count <= 0)
                 {
-                    m_game.Screens.Push(new EndScreen(m_game, m_numberOfPlayers));
+                    m_game.Screens.Push(new EndScreen(this, m_game, NumberOfPlayers));
                 }
 
                 if (Wave > 10)
