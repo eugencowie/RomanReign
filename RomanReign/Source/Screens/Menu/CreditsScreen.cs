@@ -20,7 +20,11 @@ namespace RomanReign
 
         Sprite m_backButton;
 
+        Sprite m_background;
+
         Texture2D m_buttonBackground;
+
+        SpriteFont m_font;
 
         /// <summary>
         /// This constructor is run when the credits menu screen object is created.
@@ -35,6 +39,10 @@ namespace RomanReign
         /// </summary>
         public void LoadContent(ContentManager content)
         {
+            m_background = new Sprite(content.Load<Texture2D>("Textures/Menu/bg_credits")) {
+                Size = m_game.Viewport.Size.ToVector2()
+            };
+
             // See Screens/Menu/MenuSreen.cs for an explanation of how sprite origins work.
 
             m_backButton = new Sprite(content.Load<Texture2D>("Textures/Menu/btn_back"));
@@ -47,6 +55,8 @@ namespace RomanReign
             m_backButton.Position = new Vector2(posX, posY);
 
             m_buttonBackground = content.Load<Texture2D>("Textures/Menu/btn_background");
+
+            m_font = content.Load<SpriteFont>("Fonts/menu");
         }
 
         /// <summary>
@@ -94,8 +104,23 @@ namespace RomanReign
         {
             spriteBatch.Begin();
 
+            m_background.Draw(spriteBatch);
+
             spriteBatch.Draw(m_buttonBackground, m_backButton.Bounds, Color.White);
             m_backButton.Draw(spriteBatch);
+
+            string text =
+                "This game was developed by:\n\n" +
+                "Eugén Cowie\n" +
+                "Jordan Rawson\n" +
+                "Gary Mulhall\n" +
+                "Ross Thompson\n" +
+                "Andrew Callaghan\n\n" +
+                "Special thanks to:\n\n" +
+                "West College Scotland\n" +
+                "Lochfield Primary School";
+
+            spriteBatch.DrawString(m_font, text, new Vector2(300, 150), Color.Black);
 
             spriteBatch.End();
         }

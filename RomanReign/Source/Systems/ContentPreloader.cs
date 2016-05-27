@@ -58,6 +58,7 @@ namespace RomanReign
 
             foreach (string texture in new[] {
                 "bg_splash",
+                "bg_credits",
                 "btn_1player",
                 "btn_2player",
                 "btn_3player",
