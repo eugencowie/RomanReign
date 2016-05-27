@@ -59,6 +59,7 @@ namespace RomanReign
         // The number of players.
 
         int m_numberOfPlayers;
+        bool m_suppressIntro;
 
         // Score.
 
@@ -69,10 +70,11 @@ namespace RomanReign
         /// <summary>
         /// This constructor is run when the game screen object is created.
         /// </summary>
-        public GameScreen(RomanReignGame game, int numberOfPlayers)
+        public GameScreen(RomanReignGame game, int numberOfPlayers, bool suppressIntro=false)
         {
             m_game = game;
             m_numberOfPlayers = numberOfPlayers;
+            m_suppressIntro = suppressIntro;
         }
 
         /// <summary>
@@ -112,9 +114,12 @@ namespace RomanReign
                 catch { HighScore = 0; }
             }
 
-            // Load the intro cutscene AFTER the game content has been loaded, so that when the
-            // intro is finished the game can start immediately without needing to load anything.
-            m_game.Screens.Push(new IntroScreen(m_game));
+            if (!m_suppressIntro)
+            {
+                // Load the intro cutscene AFTER the game content has been loaded, so that when the
+                // intro is finished the game can start immediately without needing to load anything.
+                m_game.Screens.Push(new IntroScreen(m_game));
+            }
         }
 
         /// <summary>

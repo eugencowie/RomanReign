@@ -35,7 +35,7 @@ namespace RomanReign
         {
             if (m_game.Input.IsJustReleased(Buttons.A) || m_game.Input.IsJustReleased(Keys.Enter))
             {
-                m_game.Screens.SwitchTo(new GameScreen(m_game, m_numberOfPlayers));
+                m_game.Screens.SwitchTo(new GameScreen(m_game, m_numberOfPlayers, true));
             }
 
             if (m_game.Input.IsJustReleased(Buttons.B) || m_game.Input.IsJustReleased(Keys.Escape))
