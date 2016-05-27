@@ -40,7 +40,6 @@ namespace RomanReign
 
             m_walkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
             m_walkingSound.Volume = 0.5f * Config.Data.Volume.SfxNormal;
-            m_walkingSound.Play();
 
             m_game.Screens.Push(new TutorialScreen(m_game));
         }
@@ -54,6 +53,9 @@ namespace RomanReign
         {
             if (m_paused)
                 return;
+
+            if (m_walkingSound?.State != SoundState.Playing)
+                m_walkingSound?.Play();
 
             // Display the each image sequentially with a delay of 0.75 seconds between each one.
             if (m_elapsedTime < 0.75f)
