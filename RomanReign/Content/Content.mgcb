@@ -507,3 +507,9 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Menu/btn_options_base.png
 
+#begin Fonts/wave.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/wave.spritefont
+

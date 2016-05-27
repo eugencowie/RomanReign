@@ -12,6 +12,7 @@ namespace RomanReign
         Texture2D m_heartTexture;
 
         SpriteFont m_gameFont;
+        SpriteFont m_waveFont;
 
         public Hud(GameScreen screen, RomanReignGame game, ContentManager content)
         {
@@ -20,7 +21,8 @@ namespace RomanReign
 
             m_heartTexture = content.Load<Texture2D>("Textures/HUD/heart");
 
-            m_gameFont = content.Load<SpriteFont>("Fonts/Game");
+            m_gameFont = content.Load<SpriteFont>("Fonts/game");
+            m_waveFont = content.Load<SpriteFont>("Fonts/wave");
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -74,7 +76,7 @@ namespace RomanReign
 
             if (m_screen.TimeSinceWaveStarted < GameScreen.WAVE_COOLDOWN)
             {
-                spriteBatch.DrawString(m_gameFont, "NEW WAVE IN  " + (int)(GameScreen.WAVE_COOLDOWN - m_screen.TimeSinceWaveStarted + 1), new Vector2(500, 260), Color.White);
+                spriteBatch.DrawString(m_waveFont, "NEW WAVE IN  " + (int)(GameScreen.WAVE_COOLDOWN - m_screen.TimeSinceWaveStarted + 1), new Vector2(500, 260), Color.White);
             }
         }
     }
