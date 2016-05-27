@@ -33,8 +33,8 @@ namespace RomanReign
             m_start1.SetRelativeScale(0.75f, 0.75f);
             m_start1.SetRelativeOrigin(0.5f, 0.5f);
 
-            float posX = m_game.Viewport.Right - (m_start1.Bounds.Size.X / 2f) - 50;
-            float posY = m_game.Viewport.Height - (m_start1.Bounds.Size.Y / 2f) - 50 - (75 * 3);
+            float posX = m_game.Viewport.Right - (m_start1.Bounds.Size.X / 2f) - 80;
+            float posY = m_game.Viewport.Height - (m_start1.Bounds.Size.Y / 2f) - 80 - (75 * 3);
 
             m_start1.Position = new Vector2(posX, posY);
 
