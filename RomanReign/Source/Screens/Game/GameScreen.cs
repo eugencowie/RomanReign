@@ -125,6 +125,7 @@ namespace RomanReign
 
             if (m_game.Input.IsJustReleased(Keys.F7))
                 m_hideHud = !m_hideHud;
+#endif
 
             if (m_game.Input.IsJustReleased(Keys.F8))
             {
@@ -132,20 +133,34 @@ namespace RomanReign
                 foreach (var player in Players)
                     player.Invincible = true;
             }
-#endif
 
             Camera.Update(gameTime);
 
             if (!m_paused && !m_gameOver)
             {
+                if (m_game.Input.IsJustReleased(Keys.NumPad5))
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
+                        spawnPoint.Name = "enemy";
+                        Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
+                        WaveEnemiesSpawned++;
+                    }
+                }
+
                 if (m_romanRain)
                 {
                     if (Enemies.Count > 300)
+                    {
                         Enemies.RemoveAt(0);
+                        WaveEnemiesSpawned--;
+                    }
 
                     Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
                     spawnPoint.Name = "enemy";
                     Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
+                    WaveEnemiesSpawned++;
                 }
                 else
                 {
@@ -153,7 +168,7 @@ namespace RomanReign
                     {
                         Wave++;
                         WaveEnemies = (int)Math.Ceiling(WaveEnemies * 1.2f);
-                        WaveEnemiesSpawned = 0;
+                        WaveEnemiesSpawned = Enemies.Count;
                         WaveEnemiesKilled = 0;
 
                         TimeSinceWaveStarted = 0;
