@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RomanReign
@@ -59,6 +60,12 @@ namespace RomanReign
 
         int m_numberOfPlayers;
 
+        // Score.
+
+        public int Score;
+        public int HighScore;
+        string m_highScoreFile;
+
         /// <summary>
         /// This constructor is run when the game screen object is created.
         /// </summary>
@@ -98,6 +105,13 @@ namespace RomanReign
 
             m_game.Audio.BackgroundMusic.OnLoop += OnBackgroundMusicLoop;
 
+            m_highScoreFile = "highscore-" + m_numberOfPlayers + "player.txt";
+            if (File.Exists(m_highScoreFile))
+            {
+                try { int.TryParse(File.ReadAllText(m_highScoreFile), out HighScore); }
+                catch { HighScore = 0; }
+            }
+
             // Load the intro cutscene AFTER the game content has been loaded, so that when the
             // intro is finished the game can start immediately without needing to load anything.
             m_game.Screens.Push(new IntroScreen(m_game));
@@ -112,6 +126,8 @@ namespace RomanReign
             m_game.Audio.BackgroundMusic.OnLoop -= OnBackgroundMusicLoop;
             m_game.Audio.BackgroundMusic.Pitch = -0.15f;
             m_game.Audio.BackgroundMusic.TargetPitch = -0.15f;
+
+            File.WriteAllText(m_highScoreFile, HighScore.ToString());
         }
 
         /// <summary>
@@ -258,10 +274,14 @@ namespace RomanReign
                     }
                 }
 
+                Score += Enemies.Count(e => e.Lives <= 0);
                 Enemies.RemoveAll(e => e.Lives <= 0);
 
                 DeadPlayers.AddRange(Players.Where(p => p.Lives <= 0));
                 Players.RemoveAll(p => p.Lives <= 0);
+
+                if (Score > HighScore)
+                    HighScore = Score;
 
                 if (Players.Count <= 0)
                 {
