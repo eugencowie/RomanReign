@@ -279,9 +279,9 @@ namespace RomanReign
 
             // Pickups
 
-            if (Lives < 4)
+            foreach (var pickup in m_screen.Pickups.Where(p => p.Bounds.Intersects(Bounds)).ToList())
             {
-                foreach (var pickup in m_screen.Pickups.Where(p => p.Bounds.Intersects(Bounds)).ToList())
+                if (Lives < 4)
                 {
                     m_pickupSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
                     m_screen.Pickups.Remove(pickup);
