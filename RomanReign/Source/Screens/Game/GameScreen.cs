@@ -159,14 +159,23 @@ namespace RomanReign
 
             if (!m_paused && !m_gameOver)
             {
-                if (m_game.Input.IsJustReleased(Keys.NumPad5))
+                if (m_game.Input.IsJustReleased(Keys.NumPad8))
                 {
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 20; i++)
                     {
                         Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
                         spawnPoint.Name = "enemy";
                         Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                         WaveEnemiesSpawned++;
+                    }
+                }
+
+                if (m_game.Input.IsJustReleased(Keys.NumPad2))
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Vector2 spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
+                        Pickups.Add(new Pickup(this, m_game, m_game.Content, spawnPoint));
                     }
                 }
 
