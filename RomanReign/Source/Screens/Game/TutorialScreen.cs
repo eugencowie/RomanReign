@@ -20,10 +20,12 @@ namespace RomanReign
 
         public void LoadContent(ContentManager content)
         {
-            m_tutorialSprites = new List<Texture2D>();
+            m_tutorialSprites = new List<Texture2D> {
+                content.Load<Texture2D>("Textures/Game/bg_tutorial1"),
+                content.Load<Texture2D>("Textures/Game/bg_tutorial2"),
+                content.Load<Texture2D>("Textures/Game/bg_tutorial3")
+            };
 
-            m_tutorialSprites.Add(content.Load<Texture2D>("Textures/Game/bg_tutorial1"));
-            m_tutorialSprites.Add(content.Load<Texture2D>("Textures/Game/bg_tutorial2"));
         }
 
         public void UnloadContent()

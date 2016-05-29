@@ -40,6 +40,7 @@ namespace RomanReign
                 "bg_pause",
                 "bg_tutorial1",
                 "bg_tutorial2",
+                "bg_tutorial3",
                 "enemy_attack",
                 "enemy_walking",
                 "player1_attack",
