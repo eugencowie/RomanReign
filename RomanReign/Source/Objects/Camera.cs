@@ -34,6 +34,10 @@ namespace RomanReign
 
                 Position = Vector2.Lerp(Position, average, 10 * (float)gameTime.ElapsedGameTime.TotalSeconds);
             }
+            else
+            {
+                Position = Vector2.Lerp(Position, m_screen.Map.Bounds.Center.ToVector2(), (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
 
             // Constrain the camera to the bounds of the map sprite.
             if (Bounds.Left < m_screen.Map.Bounds.Left)

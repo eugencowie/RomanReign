@@ -154,12 +154,15 @@ namespace RomanReign
                 Math.Abs(m_physicsBody.Velocity.Y) < 0.001f);
 
             m_moveRightActions.Add(() =>
+                m_screen.Players.Count > 0 &&
                 m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First() > Random.Next(50, 200));
 
             m_moveLeftActions.Add(() =>
+                m_screen.Players.Count > 0 &&
                 m_screen.Players.Select(p => p.Position.X - m_physicsBody.Position.X).OrderBy(Math.Abs).First() < -Random.Next(50, 200));
 
             m_attackActions.Add(() =>
+                m_screen.Players.Count > 0 &&
                 !m_loseLife && !m_isAttacking && !IsJumping && !IsDropping &&
                 Random.Next(100) < 2 &&
                 m_timeSinceAttack > ATTACK_COOLDOWN &&

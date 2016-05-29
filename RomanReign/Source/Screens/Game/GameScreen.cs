@@ -49,7 +49,6 @@ namespace RomanReign
         // when it is not, which is what we use these boolean variables for.
 
         bool m_paused;
-        bool m_gameOver;
         bool m_hideHud;
 
         // This boolean is used to toggle the 'roman rain' mode.
@@ -135,6 +134,25 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
+            if (Players.Count <= 0 && m_romanRain)
+            {
+                if (m_game.Input.IsJustReleased(Buttons.Start))
+                    m_game.Screens.Push(new EndScreen(this, m_game, NumberOfPlayers));
+            }
+
+#if DEBUG
+            // advance to next wave
+            if (m_game.Input.IsJustReleased(Keys.Q))
+                WaveEnemiesKilled = WaveEnemies;
+
+            // add 60 kills
+            if (m_game.Input.IsJustReleased(Keys.W))
+            {
+                WaveEnemiesKilled += 60;
+                WaveEnemiesSpawned += 60;
+            }
+#endif
+
             if (m_game.Input.IsJustReleased(Keys.F5))
                 m_game.Debug.Enabled = !m_game.Debug.Enabled;
 
@@ -150,7 +168,7 @@ namespace RomanReign
 
             Camera.Update(gameTime);
 
-            if (!m_paused && !m_gameOver)
+            if (!m_paused)
             {
                 if (m_game.Input.IsJustReleased(Keys.NumPad8))
                 {
@@ -167,7 +185,7 @@ namespace RomanReign
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        Vector2 spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
+                        Vector2 spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), -100);
                         Pickups.Add(new Pickup(this, m_game, m_game.Content, spawnPoint));
                     }
                 }
@@ -180,10 +198,12 @@ namespace RomanReign
                         WaveEnemiesSpawned--;
                     }
 
-                    Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), 0);
+                    Property<Vector2> spawnPoint = new Vector2(Random.Next(Map.Bounds.Right), -100);
                     spawnPoint.Name = "enemy";
                     Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                     WaveEnemiesSpawned++;
+
+                    Pickups.Clear();
                 }
                 else
                 {
@@ -230,6 +250,14 @@ namespace RomanReign
                         spawnPoint.Name = "enemy";
                         Enemies.Add(new Enemy(this, m_game, m_game.Content, spawnPoint));
                         WaveEnemiesSpawned++;
+
+                        // The game gets pretty boring from this point on, so enable 'roman reign'
+                        // mode if anyone gets this far.
+
+                        if (Wave >= 25)
+                        {
+                            m_romanRain = true;
+                        }
                     }
                 }
 
@@ -254,7 +282,9 @@ namespace RomanReign
                 {
                     enemy.Update(gameTime);
 
-                    if (!Map.Bounds.Contains(enemy.Position))
+                    Rectangle bounds = Map.Bounds;
+                    bounds.Inflate(200, 200);
+                    if (!bounds.Contains(enemy.Position))
                     {
                         // 50% chance of spawning on the left
                         bool spawnOnLeft = (Random.NextDouble() >= 0.5);
@@ -288,14 +318,9 @@ namespace RomanReign
                 if (Score > HighScore)
                     HighScore = Score;
 
-                if (Players.Count <= 0)
+                if (Players.Count <= 0 && !m_romanRain)
                 {
                     m_game.Screens.Push(new EndScreen(this, m_game, NumberOfPlayers));
-                }
-
-                if (Wave > 10)
-                {
-                    // TODO: 'you won' screen
                 }
             }
         }
@@ -322,7 +347,7 @@ namespace RomanReign
 
             spriteBatch.End();
 
-            if (!m_paused && !m_gameOver && !m_hideHud)
+            if (!m_paused && !m_hideHud)
             {
                 // Now we want to draw the HUD without our coordinates being transformed using the
                 // camera, so we need to call spriteBatch.Begin() again, this time without using
@@ -341,11 +366,8 @@ namespace RomanReign
         /// </summary>
         public void Covered(IScreen other)
         {
-            if (other is PauseScreen || other is IntroScreen)
+            if (other is PauseScreen || other is IntroScreen || other is EndScreen)
                 m_paused = true;
-
-            if (other is EndScreen)
-                m_gameOver = true;
         }
 
         /// <summary>
@@ -353,11 +375,8 @@ namespace RomanReign
         /// </summary>
         public void Uncovered(IScreen other)
         {
-            if (other is PauseScreen || other is IntroScreen)
+            if (other is PauseScreen || other is IntroScreen || other is EndScreen)
                 m_paused = false;
-
-            if (other is EndScreen)
-                m_gameOver = false;
         }
 
         private void OnBackgroundMusicLoop()
