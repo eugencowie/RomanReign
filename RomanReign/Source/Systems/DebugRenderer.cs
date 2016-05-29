@@ -15,7 +15,6 @@ namespace RomanReign
 
         public DebugRenderer(GraphicsDevice device, SpriteBatch spriteBatch)
         {
-#if DEBUG
             m_spriteBatch = spriteBatch;
 
             // Create a 1x1 pixel semi-transparent white texture.
@@ -23,17 +22,14 @@ namespace RomanReign
             Color[] color = new Color[1];
             color[0] = new Color(Color.White, 127);
             m_debugPixel.SetData(color);
-#endif
         }
 
         public void Draw(Rectangle rectangle, Color? color = null)
         {
-#if DEBUG
             if (Enabled && m_spriteBatch != null && m_debugPixel != null)
             {
                 m_spriteBatch.Draw(m_debugPixel, rectangle, color ?? Color.Red);
             }
-#endif
         }
 
         public void Draw(Point position, Point size, Color? color = null)

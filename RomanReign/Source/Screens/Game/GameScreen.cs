@@ -92,12 +92,7 @@ namespace RomanReign
 
             Map = new Map(this, m_game, content, "Maps/Test");
 
-#if DEBUG
-            Players.Add(new Player(this, m_game, content, null));
-            for (int i = 0; i < NumberOfPlayers - 1; i++)
-#else
             for (int i = 0; i < NumberOfPlayers; i++)
-#endif
             {
                 Players.Add(new Player(this, m_game, content, (PlayerIndex)i));
             }
@@ -140,13 +135,11 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-#if DEBUG
             if (m_game.Input.IsJustReleased(Keys.F5))
                 m_game.Debug.Enabled = !m_game.Debug.Enabled;
 
             if (m_game.Input.IsJustReleased(Keys.F7))
                 m_hideHud = !m_hideHud;
-#endif
 
             if (m_game.Input.IsJustReleased(Keys.F8))
             {

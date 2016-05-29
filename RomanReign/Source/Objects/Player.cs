@@ -62,22 +62,14 @@ namespace RomanReign
         SoundEffect m_jumpSound2;
         SoundEffect m_pickupSound;
 
-        public Player(GameScreen screen, RomanReignGame game, ContentManager content, PlayerIndex? playerIndex=null)
+        public Player(GameScreen screen, RomanReignGame game, ContentManager content, PlayerIndex playerIndex)
         {
             m_game = game;
             m_screen = screen;
 
             // Load walking animation.
 
-            string texture = "player1";
-            if (playerIndex != null)
-            {
-#if DEBUG
-                texture = "player" + ((int)playerIndex + 2);
-#else
-                texture = "player" + ((int)playerIndex + 1);
-#endif
-            }
+            string texture = "player" + ((int)playerIndex + 1);
 
             m_walkingAnimation = new AnimatedSprite(4, 1, 8, true, content.Load<Texture2D>("Textures/Game/" + texture  + "_walking")) {
                 Position = m_screen.Map.Info.PlayerSpawn.Value
@@ -115,28 +107,27 @@ namespace RomanReign
 
             InputManager i = m_game.Input;
 
-            if (playerIndex.HasValue)
-            {
                 m_jumpActions.Add(() =>
-                    i.IsJustPressed(Buttons.A, playerIndex.Value) &&
-                    i.IsUp(Buttons.DPadDown, playerIndex.Value) && !i.IsStickDown(Thumbsticks.Left, playerIndex.Value, 0.5f));
+                    i.IsJustPressed(Buttons.A, playerIndex) &&
+                    i.IsUp(Buttons.DPadDown, playerIndex) && !i.IsStickDown(Thumbsticks.Left, playerIndex, 0.5f));
 
                 m_dropActions.Add(() =>
                     //i.IsJustPressed(Buttons.A, (int)playerIndex.Value) &&
-                    (i.IsDown(Buttons.DPadDown, playerIndex.Value) || i.IsStickDown(Thumbsticks.Left, playerIndex.Value, 0.5f)));
+                    (i.IsDown(Buttons.DPadDown, playerIndex) || i.IsStickDown(Thumbsticks.Left, playerIndex, 0.5f)));
 
                 m_moveLeftActions.Add(() =>
-                    (i.IsDown(Buttons.DPadLeft, playerIndex.Value) || i.IsStickLeft(Thumbsticks.Left, playerIndex.Value)) &&
-                    (i.IsUp(Buttons.DPadRight, playerIndex.Value) && !i.IsStickRight(Thumbsticks.Left, playerIndex.Value)));
+                    (i.IsDown(Buttons.DPadLeft, playerIndex) || i.IsStickLeft(Thumbsticks.Left, playerIndex)) &&
+                    (i.IsUp(Buttons.DPadRight, playerIndex) && !i.IsStickRight(Thumbsticks.Left, playerIndex)));
 
                 m_moveRightActions.Add(() =>
-                    (i.IsDown(Buttons.DPadRight, playerIndex.Value) || i.IsStickRight(Thumbsticks.Left, playerIndex.Value)) &&
-                    (i.IsUp(Buttons.DPadLeft, playerIndex.Value) && !i.IsStickLeft(Thumbsticks.Left, playerIndex.Value)));
+                    (i.IsDown(Buttons.DPadRight, playerIndex) || i.IsStickRight(Thumbsticks.Left, playerIndex)) &&
+                    (i.IsUp(Buttons.DPadLeft, playerIndex) && !i.IsStickLeft(Thumbsticks.Left, playerIndex)));
 
                 m_attackActions.Add(() =>
-                    i.IsJustPressed(Buttons.X, playerIndex.Value) && !m_isAttacking);
-            }
-            else
+                    i.IsJustPressed(Buttons.X, playerIndex) && !m_isAttacking);
+
+            // keyboard controls for player one
+            if (playerIndex == PlayerIndex.One)
             {
                 m_jumpActions.Add(() =>
                     i.IsJustPressed(Keys.Z) &&
