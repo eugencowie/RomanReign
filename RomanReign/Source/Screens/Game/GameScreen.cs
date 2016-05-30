@@ -254,7 +254,7 @@ namespace RomanReign
                         // The game gets pretty boring from this point on, so enable 'roman reign'
                         // mode if anyone gets this far.
 
-                        if (Wave >= 25)
+                        if (Wave >= 20)
                         {
                             m_romanRain = true;
                         }
