@@ -29,6 +29,8 @@ namespace RomanReign
         public List<Enemy> Enemies = new List<Enemy>();
         public List<Pickup> Pickups = new List<Pickup>();
 
+        public string PlayerNames = string.Empty;
+
         // These variables are used for spawning enemies.
 
         public int Wave;
@@ -63,8 +65,6 @@ namespace RomanReign
         // Score.
 
         public int Score;
-        public int HighScore;
-        string m_highScoreFile;
 
         /// <summary>
         /// This constructor is run when the game screen object is created.
@@ -101,13 +101,6 @@ namespace RomanReign
 
             m_game.Audio.BackgroundMusic.OnLoop += OnBackgroundMusicLoop;
 
-            m_highScoreFile = "highscore-" + NumberOfPlayers + "player.txt";
-            if (File.Exists(m_highScoreFile))
-            {
-                try { int.TryParse(File.ReadAllText(m_highScoreFile), out HighScore); }
-                catch { HighScore = 0; }
-            }
-
             if (!m_suppressIntro)
             {
                 // Load the intro cutscene AFTER the game content has been loaded, so that when the
@@ -125,8 +118,6 @@ namespace RomanReign
             m_game.Audio.BackgroundMusic.OnLoop -= OnBackgroundMusicLoop;
             m_game.Audio.BackgroundMusic.Pitch = -0.15f;
             m_game.Audio.BackgroundMusic.TargetPitch = -0.15f;
-
-            File.WriteAllText(m_highScoreFile, HighScore.ToString());
         }
 
         /// <summary>
@@ -137,7 +128,7 @@ namespace RomanReign
             if (Players.Count <= 0 && m_romanRain)
             {
                 if (m_game.Input.IsJustReleased(Buttons.Start))
-                    m_game.Screens.Push(new EndScreen(this, m_game, NumberOfPlayers));
+                    m_game.Screens.Push(new EndScreen(this, m_game));
             }
 
 #if DEBUG
@@ -315,12 +306,9 @@ namespace RomanReign
                 DeadPlayers.AddRange(Players.Where(p => p.Lives <= 0));
                 Players.RemoveAll(p => p.Lives <= 0);
 
-                if (Score > HighScore)
-                    HighScore = Score;
-
                 if (Players.Count <= 0 && !m_romanRain)
                 {
-                    m_game.Screens.Push(new EndScreen(this, m_game, NumberOfPlayers));
+                    m_game.Screens.Push(new EndScreen(this, m_game));
                 }
             }
         }

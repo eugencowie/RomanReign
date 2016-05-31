@@ -38,6 +38,8 @@ namespace RomanReign
         public bool IsStickLeft (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).X < -tolerance;
         public bool IsStickRight(Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => GetThumbStick(sticks, i).X > tolerance;
 
+        public Keys[] GetKeysDown() => Keyboard.GetPressedKeys();
+
         /// <summary>
         /// Helper function for getting a ButtonState using our MouseButtons enumerator.
         /// </summary>
@@ -84,6 +86,10 @@ namespace RomanReign
 
         public InputType MostRecentInputType;
 
+        public delegate void OnKeyEventDelegate(Keys key);
+        public event OnKeyEventDelegate OnKeyJustPressed;
+        public event OnKeyEventDelegate OnKeyJustReleased;
+
         InputState m_current = new InputState();
         InputState m_prev = new InputState();
 
@@ -96,6 +102,19 @@ namespace RomanReign
 
         public void Update()
         {
+            Keys[] down = m_current.GetKeysDown();
+            Keys[] prevDown = m_prev.GetKeysDown();
+
+            foreach (Keys key in down.Where(k => !prevDown.Contains(k)))
+            {
+                OnKeyJustPressed?.Invoke(key);
+            }
+
+            foreach (Keys key in prevDown.Where(k => !down.Contains(k)))
+            {
+                OnKeyJustReleased?.Invoke(key);
+            }
+
             // Update the previous input state with existing values.
 
             if (!CompareMouseState(m_current.Mouse, m_prev.Mouse) || !m_current.Keyboard.Equals(m_prev.Keyboard))
@@ -168,5 +187,7 @@ namespace RomanReign
         public bool IsStickUp   (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickUp(sticks, i, tolerance);
         public bool IsStickLeft (Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickLeft(sticks, i, tolerance);
         public bool IsStickRight(Thumbsticks sticks, PlayerIndex i=0, float tolerance=0) => m_current.IsStickRight(sticks, i, tolerance);
+
+        public Keys[] GetKeysDown() => m_current.GetKeysDown();
     }
 }

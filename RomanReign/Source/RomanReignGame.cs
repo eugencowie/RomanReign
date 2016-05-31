@@ -51,6 +51,8 @@ namespace RomanReign
         /// </summary>
         protected override void LoadContent()
         {
+            HighScoreTable.ReadHighScores("highscores.xml");
+
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Input = new InputManager();
@@ -70,6 +72,8 @@ namespace RomanReign
         protected override void UnloadContent()
         {
             Screens.UnloadContent();
+
+            HighScoreTable.WriteHighScores("highscores.xml");
 
             Config.WriteConfig("config.xml");
         }

@@ -50,7 +50,9 @@
     <Compile Include="Source\Objects\Player.cs" />
     <Compile Include="Source\Screens\Game\EndScreen.cs" />
     <Compile Include="Source\Screens\Game\GameScreen.cs" />
+    <Compile Include="Source\Screens\Game\HighScoreScreen.cs" />
     <Compile Include="Source\Screens\Game\IntroScreen.cs" />
+    <Compile Include="Source\Screens\Game\NameEntryScreen.cs" />
     <Compile Include="Source\Screens\Game\PauseScreen.cs" />
     <Compile Include="Source\Screens\Game\TutorialScreen.cs" />
     <Compile Include="Source\Screens\Menu\PlayerSelectScreen.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Source\Systems\PhysicsManager.cs" />
     <Compile Include="Source\Systems\ScreenManager.cs" />
     <Compile Include="Source\Utilities\AnimatedSprite.cs" />
+    <Compile Include="Source\Utilities\HighScoreTable.cs" />
     <Compile Include="Source\Utilities\RectangleF.cs" />
     <Compile Include="Source\Utilities\Sprite.cs" />
   </ItemGroup>
