@@ -113,7 +113,9 @@ namespace RomanReign
             if (m_videoPlayer == null)
                 m_videoPlayer = new VideoPlayer();
 
-            m_videoPlayer.Play(m_backgroundVideo);
+            try { m_videoPlayer.Play(m_backgroundVideo); }
+            catch { }
+
             m_videoPlayer.Volume = 0f;
         }
 
@@ -136,7 +138,9 @@ namespace RomanReign
         {
             if (m_videoPlayer.State != MediaState.Playing)
             {
-                m_videoPlayer.Play(m_backgroundVideo);
+                try { m_videoPlayer.Play(m_backgroundVideo); }
+                catch { }
+
                 m_videoPlayer.Volume = 0f;
             }
 
