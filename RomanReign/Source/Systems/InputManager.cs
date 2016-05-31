@@ -22,14 +22,14 @@ namespace RomanReign
         // These functions return true if the specified button, key or mouse button is down.
 
         public bool IsDown(Buttons buttons, PlayerIndex i=0) => Gamepads[(int)i].IsButtonDown(buttons);
-        public bool IsDown(Keys keys) => Keyboard.IsKeyDown(keys);
-        public bool IsDown(MouseButtons buttons) => (GetMouseButtonState(buttons) == ButtonState.Pressed);
+        public bool IsDown(Keys keys)                        => Keyboard.IsKeyDown(keys);
+        public bool IsDown(MouseButtons buttons)             => (GetMouseButtonState(buttons) == ButtonState.Pressed);
 
         // These functions return true if the specified button, key or mouse button is up.
 
         public bool IsUp(Buttons buttons, PlayerIndex i=0) => Gamepads[(int)i].IsButtonUp(buttons);
-        public bool IsUp(Keys keys) => Keyboard.IsKeyUp(keys);
-        public bool IsUp(MouseButtons buttons) => (GetMouseButtonState(buttons) == ButtonState.Released);
+        public bool IsUp(Keys keys)                        => Keyboard.IsKeyUp(keys);
+        public bool IsUp(MouseButtons buttons)             => (GetMouseButtonState(buttons) == ButtonState.Released);
 
         // These functions return true if the specified thumbstick is pressed in the specified direction.
 
@@ -47,9 +47,9 @@ namespace RomanReign
         {
             switch (buttons)
             {
-                case MouseButtons.Left: return Mouse.LeftButton;
-                case MouseButtons.Middle: return Mouse.MiddleButton;
-                case MouseButtons.Right: return Mouse.RightButton;
+                case MouseButtons.Left:     return Mouse.LeftButton;
+                case MouseButtons.Middle:   return Mouse.MiddleButton;
+                case MouseButtons.Right:    return Mouse.RightButton;
                 case MouseButtons.XButton1: return Mouse.XButton1;
                 case MouseButtons.XButton2: return Mouse.XButton2;
 
@@ -65,7 +65,7 @@ namespace RomanReign
         {
             switch (sticks)
             {
-                case Thumbsticks.Left: return Gamepads[(int)i].ThumbSticks.Left;
+                case Thumbsticks.Left:  return Gamepads[(int)i].ThumbSticks.Left;
                 case Thumbsticks.Right: return Gamepads[(int)i].ThumbSticks.Right;
 
                 default:
@@ -76,7 +76,7 @@ namespace RomanReign
 
     /// <summary>
     /// Keeps track of the current and previous input states and provides helper functions
-    /// for checking if buttons or keys are pressed in one state and released in another.
+    /// for checking if keys or keys are pressed in one state and released in another.
     /// </summary>
     class InputManager
     {
@@ -160,26 +160,26 @@ namespace RomanReign
         // These functions return true if the specified button, key or mouse button is down.
 
         public bool IsDown(Buttons buttons, PlayerIndex i=0) => m_current.IsDown(buttons, i);
-        public bool IsDown(Keys keys) => m_current.IsDown(keys);
-        public bool IsDown(MouseButtons buttons) => m_current.IsDown(buttons);
+        public bool IsDown(Keys keys)                        => m_current.IsDown(keys);
+        public bool IsDown(MouseButtons buttons)             => m_current.IsDown(buttons);
 
         // These functions return true if the specified button, key or mouse button is up.
 
         public bool IsUp(Buttons buttons, PlayerIndex i=0) => m_current.IsUp(buttons, i);
-        public bool IsUp(Keys keys) => m_current.IsUp(keys);
-        public bool IsUp(MouseButtons buttons) => m_current.IsUp(buttons);
+        public bool IsUp(Keys keys)                        => m_current.IsUp(keys);
+        public bool IsUp(MouseButtons buttons)             => m_current.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is down and was previously up.
 
         public bool IsJustPressed(Buttons buttons, PlayerIndex i=0) => m_current.IsDown(buttons, i) && m_prev.IsUp(buttons, i);
-        public bool IsJustPressed(Keys keys) => m_current.IsDown(keys) && m_prev.IsUp(keys);
-        public bool IsJustPressed(MouseButtons buttons) => m_current.IsDown(buttons) && m_prev.IsUp(buttons);
+        public bool IsJustPressed(Keys keys)                        => m_current.IsDown(keys) && m_prev.IsUp(keys);
+        public bool IsJustPressed(MouseButtons buttons)             => m_current.IsDown(buttons) && m_prev.IsUp(buttons);
 
         // These functions return true if the specified button, key or mouse button is up and was previously down.
 
         public bool IsJustReleased(Buttons buttons, PlayerIndex i=0) => m_current.IsUp(buttons, i) && m_prev.IsDown(buttons, i);
-        public bool IsJustReleased(Keys keys) => m_current.IsUp(keys) && m_prev.IsDown(keys);
-        public bool IsJustReleased(MouseButtons buttons) => m_current.IsUp(buttons) && m_prev.IsDown(buttons);
+        public bool IsJustReleased(Keys keys)                        => m_current.IsUp(keys) && m_prev.IsDown(keys);
+        public bool IsJustReleased(MouseButtons buttons)             => m_current.IsUp(buttons) && m_prev.IsDown(buttons);
 
         // These functions return true if the specified thumbstick is pressed in the specified direction.
 
