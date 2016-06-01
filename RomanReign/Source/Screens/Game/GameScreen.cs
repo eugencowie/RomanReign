@@ -55,7 +55,7 @@ namespace RomanReign
 
         // This boolean is used to toggle the 'roman rain' mode.
 
-        bool m_romanRain;
+        public bool RomanRain;
 
         // The number of players.
 
@@ -125,7 +125,7 @@ namespace RomanReign
         /// </summary>
         public void Update(GameTime gameTime)
         {
-            if (Players.Count <= 0 && m_romanRain)
+            if (Players.Count <= 0 && RomanRain)
             {
                 if (m_game.Input.IsJustReleased(Buttons.Start))
                     m_game.Screens.Push(new EndScreen(this, m_game));
@@ -152,7 +152,7 @@ namespace RomanReign
 
             if (m_game.Input.IsJustReleased(Keys.F8))
             {
-                m_romanRain = !m_romanRain;
+                RomanRain = !RomanRain;
                 foreach (var player in Players)
                     player.Invincible = true;
             }
@@ -181,7 +181,7 @@ namespace RomanReign
                     }
                 }
 
-                if (m_romanRain)
+                if (RomanRain)
                 {
                     if (Enemies.Count > 300)
                     {
@@ -247,7 +247,7 @@ namespace RomanReign
 
                         if (Config.Data.Internal.WaveLimit > 1 && Wave >= Config.Data.Internal.WaveLimit)
                         {
-                            m_romanRain = true;
+                            RomanRain = true;
                         }
                     }
                 }
@@ -306,7 +306,7 @@ namespace RomanReign
                 DeadPlayers.AddRange(Players.Where(p => p.Lives <= 0));
                 Players.RemoveAll(p => p.Lives <= 0);
 
-                if (Players.Count <= 0 && !m_romanRain)
+                if (Players.Count <= 0 && !RomanRain)
                 {
                     m_game.Screens.Push(new EndScreen(this, m_game));
                 }

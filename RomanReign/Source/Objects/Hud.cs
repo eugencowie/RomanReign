@@ -80,6 +80,11 @@ namespace RomanReign
             {
                 spriteBatch.DrawString(m_waveFont, "NEW WAVE IN  " + (int)(GameScreen.WAVE_COOLDOWN - m_screen.TimeSinceWaveStarted + 1), new Vector2(500, 260), Color.White);
             }
+
+            if (m_screen.RomanRain && m_screen.Players.Count <= 0)
+            {
+                spriteBatch.DrawString(m_waveFont, "PRESS START TO CONTINUE", new Vector2(450, 250), Color.White);
+            }
         }
     }
 }
