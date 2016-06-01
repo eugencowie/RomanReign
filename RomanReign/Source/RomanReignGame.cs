@@ -36,7 +36,7 @@ namespace RomanReign
             {
                 PreferredBackBufferWidth = Config.Data.Resolution.Width,
                 PreferredBackBufferHeight = Config.Data.Resolution.Height,
-                IsFullScreen = false
+                IsFullScreen = Config.Data.Resolution.Fullscreen
             };
 
             IsMouseVisible = true;
