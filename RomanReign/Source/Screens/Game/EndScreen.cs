@@ -67,7 +67,7 @@ namespace RomanReign
                     $"You got to wave {m_screen.Wave}!\n\n" +
                     $"You killed {m_screen.Score} enemies!\n\n" +
                     (m_screen.Score >= HighScoreTable.GetLowestScore(m_screen.NumberOfPlayers).Score ? "NEW HIGH SCORE!\n\n" : "") +
-                    $"The high score for {m_screen.NumberOfPlayers} player is {HighScoreTable.GetLowestScore(m_screen.NumberOfPlayers).Score}.";
+                    $"The high score for {m_screen.NumberOfPlayers} player is {HighScoreTable.GetHighestScore(m_screen.NumberOfPlayers).Score}.";
 
                 spriteBatch.DrawString(m_font, text, new Vector2(450, 350), Color.Black);
             }
