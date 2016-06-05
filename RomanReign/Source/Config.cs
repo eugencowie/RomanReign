@@ -53,7 +53,7 @@ namespace RomanReign
     public class Config
     {
         public Difficulty Difficulty = Difficulty.Normal;
-        public Resolution Resolution = new Resolution { Width = 1280, Height = 720, Fullscreen = true };
+        public Resolution Resolution = new Resolution { Width = 1280, Height = 720, Fullscreen = false };
         public Volume Volume = new Volume { Music = 50, Sfx = 50 };
 
         public Internal Internal = new Internal { WaveLimit = 15 };
