@@ -111,7 +111,7 @@ namespace RomanReign
 
             string text =
                 "This game was developed by:\n\n" +
-                "Eugén Cowie\n" +
+                "EugÃ©n Cowie\n" +
                 "Jordan Rawson\n" +
                 "Gary Mulhall\n" +
                 "Ross Thompson\n" +
