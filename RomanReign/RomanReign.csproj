@@ -40,13 +40,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Config.cs" />
-    <Compile Include="Source\Objects\Pickup.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\RomanReignGame.cs" />
     <Compile Include="Source\Objects\Camera.cs" />
     <Compile Include="Source\Objects\Enemy.cs" />
     <Compile Include="Source\Objects\Hud.cs" />
     <Compile Include="Source\Objects\Map.cs" />
+    <Compile Include="Source\Objects\Pickup.cs" />
     <Compile Include="Source\Objects\Player.cs" />
     <Compile Include="Source\Screens\Game\EndScreen.cs" />
     <Compile Include="Source\Screens\Game\GameScreen.cs" />
@@ -85,10 +85,11 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- Tell the MonoGame Content Builder to put the output files in a single build direcrory. -->
+  <!-- Tell the MonoGame Content Builder to put the output files in a single build directory. -->
   <PropertyGroup>
-    <ParentOutputDir>$(ProjectDir)Content\Build\bin</ParentOutputDir>
-    <ParentIntermediateDir>$(ProjectDir)Content\Build\obj</ParentIntermediateDir>
+    <ContentRootDirectory>Content</ContentRootDirectory>
+    <ParentOutputDir>$(ProjectDir)$(ContentRootDirectory)\Build\bin</ParentOutputDir>
+    <ParentIntermediateDir>$(ProjectDir)$(ContentRootDirectory)\Build\obj</ParentIntermediateDir>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
