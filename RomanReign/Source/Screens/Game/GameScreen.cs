@@ -245,7 +245,7 @@ namespace RomanReign
                         // The game gets pretty boring from this point on, so enable 'roman reign'
                         // mode if anyone gets this far.
 
-                        if (Config.Data.Internal.WaveLimit > 1 && Wave >= Config.Data.Internal.WaveLimit)
+                        if (m_game.Config.Data.Internal.WaveLimit > 1 && Wave >= m_game.Config.Data.Internal.WaveLimit)
                         {
                             RomanRain = true;
                         }

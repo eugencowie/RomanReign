@@ -55,11 +55,11 @@ namespace RomanReign
 
             spriteBatch.DrawString(m_font, "HIGH SCORES", new Vector2(450, 150), Color.Black);
 
-            string names = string.Join("\n", HighScoreTable.GetScores(m_screen.NumberOfPlayers).Select(s => s.Name));
+            string names = string.Join("\n", m_game.Leaderboard.GetScores(m_screen.NumberOfPlayers).Select(s => s.Name));
             spriteBatch.DrawString(m_font, names, new Vector2(450, 250), Color.Black);
 
             string scores = string.Empty;
-            foreach (int score in HighScoreTable.GetScores(m_screen.NumberOfPlayers).Select(s => s.Score))
+            foreach (int score in m_game.Leaderboard.GetScores(m_screen.NumberOfPlayers).Select(s => s.Score))
             {
                 if (score < 1000)
                     scores += "0";

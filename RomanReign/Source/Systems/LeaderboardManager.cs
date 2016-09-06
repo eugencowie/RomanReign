@@ -5,24 +5,30 @@ using System.Xml.Serialization;
 
 namespace RomanReign
 {
-    public class HighScoreEntry
+    public class LeaderboardEntry
     {
         public string Name = string.Empty;
         public int Score = 0;
     }
 
-    public class HighScoreTable
+    public class Leaderboard
     {
-        public List<HighScoreEntry> OnePlayer = new List<HighScoreEntry>();
-        public List<HighScoreEntry> TwoPlayer = new List<HighScoreEntry>();
-        public List<HighScoreEntry> ThreePlayer = new List<HighScoreEntry>();
-        public List<HighScoreEntry> FourPlayer = new List<HighScoreEntry>();
+        public List<LeaderboardEntry> OnePlayer = new List<LeaderboardEntry>();
+        public List<LeaderboardEntry> TwoPlayer = new List<LeaderboardEntry>();
+        public List<LeaderboardEntry> ThreePlayer = new List<LeaderboardEntry>();
+        public List<LeaderboardEntry> FourPlayer = new List<LeaderboardEntry>();
+    }
 
-        #region Static fields and methods
+    public class LeaderboardManager
+    {
+        public Leaderboard Data = new Leaderboard();
 
-        public static HighScoreTable Data = new HighScoreTable();
+        public LeaderboardManager(string path)
+        {
+            Read(path);
+        }
 
-        public static void ReadHighScores(string path)
+        public void Read(string path)
         {
             if (!File.Exists(path))
                 return;
@@ -30,12 +36,12 @@ namespace RomanReign
             XmlSerializer xml = new XmlSerializer(Data.GetType());
             using (StreamReader reader = new StreamReader(path))
             {
-                try { Data = (HighScoreTable)xml.Deserialize(reader.BaseStream); }
-                catch { Data = new HighScoreTable(); }
+                try { Data = (Leaderboard)xml.Deserialize(reader.BaseStream); }
+                catch { Data = new Leaderboard(); }
             }
         }
 
-        public static void WriteHighScores(string path)
+        public void Write(string path)
         {
             XmlSerializer xml = new XmlSerializer(Data.GetType());
 
@@ -43,44 +49,44 @@ namespace RomanReign
                 xml.Serialize(writer.BaseStream, Data);
         }
 
-        public static HighScoreEntry GetLowestScore(int players)
+        public LeaderboardEntry GetLowestScore(int players)
         {
-            List<HighScoreEntry> scores = GetScores(players);
+            List<LeaderboardEntry> scores = GetScores(players);
 
-            return scores?.Count > 0 ? scores.Last() : new HighScoreEntry();
+            return scores?.Count > 0 ? scores.Last() : new LeaderboardEntry();
         }
 
-        public static HighScoreEntry GetHighestScore(int players)
+        public LeaderboardEntry GetHighestScore(int players)
         {
-            List<HighScoreEntry> scores = GetScores(players);
+            List<LeaderboardEntry> scores = GetScores(players);
 
-            return scores?.Count > 0 ? scores.First() : new HighScoreEntry();
+            return scores?.Count > 0 ? scores.First() : new LeaderboardEntry();
         }
 
-        public static void AddHighScore(int players, string name, int score)
+        public void AddHighScore(int players, string name, int score)
         {
             switch (players)
             {
                 case 1:
-                    Data.OnePlayer.Add(new HighScoreEntry { Name = name, Score = score });
+                    Data.OnePlayer.Add(new LeaderboardEntry { Name = name, Score = score });
                     Data.OnePlayer = Data.OnePlayer.OrderByDescending(hs => hs.Score).ToList();
                     while (Data.OnePlayer.Count > 10)
                         Data.OnePlayer.RemoveAt(Data.OnePlayer.Count - 1);
                     break;
                 case 2:
-                    Data.TwoPlayer.Add(new HighScoreEntry { Name = name, Score = score });
+                    Data.TwoPlayer.Add(new LeaderboardEntry { Name = name, Score = score });
                     Data.TwoPlayer = Data.TwoPlayer.OrderByDescending(hs => hs.Score).ToList();
                     while (Data.TwoPlayer.Count > 10)
                         Data.TwoPlayer.RemoveAt(Data.TwoPlayer.Count - 1);
                     break;
                 case 3:
-                    Data.ThreePlayer.Add(new HighScoreEntry { Name = name, Score = score });
+                    Data.ThreePlayer.Add(new LeaderboardEntry { Name = name, Score = score });
                     Data.ThreePlayer = Data.ThreePlayer.OrderByDescending(hs => hs.Score).ToList();
                     while (Data.ThreePlayer.Count > 10)
                         Data.ThreePlayer.RemoveAt(Data.ThreePlayer.Count - 1);
                     break;
                 case 4:
-                    Data.FourPlayer.Add(new HighScoreEntry { Name = name, Score = score });
+                    Data.FourPlayer.Add(new LeaderboardEntry { Name = name, Score = score });
                     Data.FourPlayer = Data.FourPlayer.OrderByDescending(hs => hs.Score).ToList();
                     while (Data.FourPlayer.Count > 10)
                         Data.FourPlayer.RemoveAt(Data.FourPlayer.Count - 1);
@@ -88,7 +94,7 @@ namespace RomanReign
             }
         }
 
-        public static List<HighScoreEntry> GetScores(int players)
+        public List<LeaderboardEntry> GetScores(int players)
         {
             switch (players)
             {
@@ -108,7 +114,5 @@ namespace RomanReign
                     return null;
             }
         }
-
-        #endregion
     }
 }

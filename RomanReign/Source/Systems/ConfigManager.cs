@@ -57,12 +57,18 @@ namespace RomanReign
         public Volume Volume = new Volume { Music = 50, Sfx = 50 };
 
         public Internal Internal = new Internal { WaveLimit = 15 };
+    }
 
-        #region Static fields and methods
+    public class ConfigManager
+    {
+        public Config Data = new Config();
 
-        public static Config Data = new Config();
+        public ConfigManager(string path)
+        {
+            Read(path);
+        }
 
-        public static void ReadConfig(string path)
+        public void Read(string path)
         {
             if (File.Exists(path))
             {
@@ -75,14 +81,12 @@ namespace RomanReign
             }
         }
 
-        public static void WriteConfig(string path)
+        public void Write(string path)
         {
             XmlSerializer xml = new XmlSerializer(Data.GetType());
 
             using (StreamWriter writer = new StreamWriter(path))
                 xml.Serialize(writer.BaseStream, Data);
         }
-
-        #endregion
     }
 }

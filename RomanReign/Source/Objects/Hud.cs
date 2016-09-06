@@ -73,7 +73,7 @@ namespace RomanReign
             spriteBatch.DrawString(m_gameFont, "Wave: " + m_screen.Wave, new Vector2(200, 130), Color.White);
             spriteBatch.DrawString(m_gameFont, "Enemies: " + m_screen.WaveEnemiesKilled + " / " + m_screen.WaveEnemies, new Vector2(200, 160), Color.White);
 
-            spriteBatch.DrawString(m_gameFont, "High Score: " + HighScoreTable.GetHighestScore(m_screen.NumberOfPlayers).Score, new Vector2(900, 130), Color.White);
+            spriteBatch.DrawString(m_gameFont, "High Score: " + m_game.Leaderboard.GetHighestScore(m_screen.NumberOfPlayers).Score, new Vector2(900, 130), Color.White);
             spriteBatch.DrawString(m_gameFont, "Score: " + m_screen.Score, new Vector2(900, 160), Color.White);
 
             if (m_screen.TimeSinceWaveStarted < GameScreen.WAVE_COOLDOWN)

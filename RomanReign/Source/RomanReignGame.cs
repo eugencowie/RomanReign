@@ -17,6 +17,10 @@ namespace RomanReign
 
         public Rectangle Viewport => GraphicsDevice.Viewport.Bounds;
 
+        public ConfigManager Config;
+
+        public LeaderboardManager Leaderboard;
+
         public InputManager Input;
         public ScreenManager Screens;
         public DebugRenderer Debug;
@@ -30,10 +34,9 @@ namespace RomanReign
         /// </summary>
         public RomanReignGame()
         {
-            Config.ReadConfig("config.xml");
+            Config = new ConfigManager("config.xml");
 
-            var graphics = new GraphicsDeviceManager(this)
-            {
+            var graphics = new GraphicsDeviceManager(this) {
                 PreferredBackBufferWidth = Config.Data.Resolution.Width,
                 PreferredBackBufferHeight = Config.Data.Resolution.Height,
                 IsFullScreen = Config.Data.Resolution.Fullscreen
@@ -51,7 +54,7 @@ namespace RomanReign
         /// </summary>
         protected override void LoadContent()
         {
-            HighScoreTable.ReadHighScores("highscores.xml");
+            Leaderboard = new LeaderboardManager("highscores.xml");
 
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -73,9 +76,9 @@ namespace RomanReign
         {
             Screens.UnloadContent();
 
-            HighScoreTable.WriteHighScores("highscores.xml");
+            Leaderboard.Write("highscores.xml");
 
-            Config.WriteConfig("config.xml");
+            Config.Write("config.xml");
         }
 
         /// <summary>

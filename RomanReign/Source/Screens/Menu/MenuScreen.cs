@@ -211,25 +211,25 @@ namespace RomanReign
                     if (m_selectedButton == SelectedButton.Start)
                     {
                         m_game.Screens.Push(new PlayerSelectScreen(m_game));
-                        m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                        m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                     }
 
                     if (m_selectedButton == SelectedButton.Options)
                     {
                         m_game.Screens.Push(new OptionsScreen(m_game));
-                        m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                        m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                     }
 
                     if (m_selectedButton == SelectedButton.Credits)
                     {
                         m_game.Screens.Push(new CreditsScreen(m_game));
-                        m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                        m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                     }
 
                     if (m_selectedButton == SelectedButton.Exit)
                     {
                         m_game.Exit();
-                        m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                        m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                     }
                 }
             }

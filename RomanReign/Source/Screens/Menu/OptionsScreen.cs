@@ -213,36 +213,36 @@ namespace RomanReign
                 if (m_selectedButton == SelectedButton.Music)
                 {
                     if (m_selectedDirection == SelectedDirection.Left)
-                        Config.Data.Volume.Music -= 10;
+                        m_game.Config.Data.Volume.Music -= 10;
 
                     if (m_selectedDirection == SelectedDirection.Right)
-                        Config.Data.Volume.Music += 10;
+                        m_game.Config.Data.Volume.Music += 10;
 
-                    m_selectedSound.Play(0.25f * Config.Data.Volume.MusicNormal, 0f, 0f);
+                    m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.MusicNormal, 0f, 0f);
                 }
 
                 if (m_selectedButton == SelectedButton.Sfx)
                 {
                     if (m_selectedDirection == SelectedDirection.Left)
-                        Config.Data.Volume.Sfx -= 10;
+                        m_game.Config.Data.Volume.Sfx -= 10;
 
                     if (m_selectedDirection == SelectedDirection.Right)
-                        Config.Data.Volume.Sfx += 10;
+                        m_game.Config.Data.Volume.Sfx += 10;
 
-                    m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                    m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                 }
 
                 if (m_selectedButton == SelectedButton.Back)
                 {
                     m_game.Screens.Pop();
-                    m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                    m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                 }
             }
 
             if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.B))
             {
                 m_game.Screens.Pop();
-                m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
             }
         }
 
@@ -267,14 +267,14 @@ namespace RomanReign
             spriteBatch.Draw(m_buttonBackground, m_musicButton.Bounds, Color.White);
             spriteBatch.Draw(m_buttonBase, m_musicButton.Bounds, m_musicButton.Color);
             var bar = new RectangleF(m_musicButton.Bounds);
-            bar.Width *= Config.Data.Volume.MusicNormal;
+            bar.Width *= m_game.Config.Data.Volume.MusicNormal;
             spriteBatch.Draw(m_buttonBackground, bar.ToRect(), Color.Lime);
             m_musicButton.Draw(spriteBatch);
 
             spriteBatch.Draw(m_buttonBackground, m_sfxButton.Bounds, Color.White);
             spriteBatch.Draw(m_buttonBase, m_sfxButton.Bounds, m_sfxButton.Color);
             bar = new RectangleF(m_sfxButton.Bounds);
-            bar.Width *= Config.Data.Volume.SfxNormal;
+            bar.Width *= m_game.Config.Data.Volume.SfxNormal;
             spriteBatch.Draw(m_buttonBackground, bar.ToRect(), Color.Lime);
             m_sfxButton.Draw(spriteBatch);
 

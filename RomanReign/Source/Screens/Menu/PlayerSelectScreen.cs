@@ -128,7 +128,7 @@ namespace RomanReign
             if (m_game.Input.IsJustReleased(MouseButtons.Left) || m_game.Input.IsJustReleased(Buttons.A))
             {
                 m_game.Screens.SwitchTo(new GameScreen(m_game, (int)m_selectedButton));
-                m_selectedSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                m_selectedSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
             }
 
             if (m_game.Input.IsJustReleased(Keys.Escape) || m_game.Input.IsJustReleased(Buttons.B))

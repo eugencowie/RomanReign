@@ -37,7 +37,7 @@ namespace RomanReign
             {
                 if (m_screen.PlayerNames.Length > 0 && !string.IsNullOrWhiteSpace(m_screen.PlayerNames))
                 {
-                    HighScoreTable.AddHighScore(m_screen.NumberOfPlayers, m_screen.PlayerNames, m_screen.Score);
+                    m_game.Leaderboard.AddHighScore(m_screen.NumberOfPlayers, m_screen.PlayerNames, m_screen.Score);
                     m_game.Screens.Pop();
                 }
             }

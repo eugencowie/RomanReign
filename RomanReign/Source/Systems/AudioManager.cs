@@ -26,8 +26,11 @@ namespace RomanReign
         public delegate void OnLoopDelegate();
         public event OnLoopDelegate OnLoop;
 
-        public LoopingMusic(SoundEffect soundEffect)
+        private RomanReignGame m_game;
+
+        public LoopingMusic(RomanReignGame game, SoundEffect soundEffect)
         {
+            m_game = game;
             m_instance = soundEffect.CreateInstance();
 
             TargetVolume = 1f;
@@ -44,7 +47,7 @@ namespace RomanReign
 
             if (Math.Abs(m_instance.Volume - TargetVolume) > float.Epsilon)
             {
-                m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume * Config.Data.Volume.MusicNormal, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
+                m_instance.Volume = MathHelper.Lerp(m_instance.Volume, TargetVolume * m_game.Config.Data.Volume.MusicNormal, (float)gameTime.ElapsedGameTime.TotalSeconds/2);
             }
 
             if (Math.Abs(m_instance.Pitch - TargetPitch) > float.Epsilon)

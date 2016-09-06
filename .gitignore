@@ -2,7 +2,6 @@
 .vs/
 *.suo
 *.user
-*.DotSettings
 
 # Build directory
 bin/

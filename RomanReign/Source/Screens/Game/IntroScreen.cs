@@ -39,7 +39,7 @@ namespace RomanReign
             m_player.SetRelativeOrigin(0.5f, 0.5f);
 
             m_walkingSound = content.Load<SoundEffect>("Audio/sfx_player_walking_long").CreateInstance();
-            m_walkingSound.Volume = 0.5f * Config.Data.Volume.SfxNormal;
+            m_walkingSound.Volume = 0.5f * m_game.Config.Data.Volume.SfxNormal;
 
             m_game.Screens.Push(new TutorialScreen(m_game));
         }

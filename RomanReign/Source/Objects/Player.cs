@@ -172,7 +172,7 @@ namespace RomanReign
 
                 SoundEffect[] sounds = { m_jumpSound1, m_jumpSound2 };
                 int sound = Random.Next(sounds.Length);
-                sounds[sound].Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                sounds[sound].Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
             }
 
             // Dropping
@@ -212,7 +212,7 @@ namespace RomanReign
 
                 SoundEffect[] sounds = { m_attackSound1, m_attackSound2 };
                 int sound = Random.Next(sounds.Length);
-                sounds[sound].Play(0.5f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                sounds[sound].Play(0.5f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
             }
 
             // Animation
@@ -274,7 +274,7 @@ namespace RomanReign
             {
                 if (Lives < 4)
                 {
-                    m_pickupSound.Play(0.25f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                    m_pickupSound.Play(0.25f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                     m_screen.Pickups.Remove(pickup);
                     Lives++;
                 }
@@ -309,7 +309,7 @@ namespace RomanReign
 
                 m_timeSinceDamage = 0;
 
-                m_hurtSound.Play(0.5f * Config.Data.Volume.SfxNormal, 0f, 0f);
+                m_hurtSound.Play(0.5f * m_game.Config.Data.Volume.SfxNormal, 0f, 0f);
                 return true;
             }
 

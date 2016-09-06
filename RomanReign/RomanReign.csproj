@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Config.cs" />
+    <Compile Include="Source\Systems\ConfigManager.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Source\RomanReignGame.cs" />
     <Compile Include="Source\Objects\Camera.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Source\Systems\PhysicsManager.cs" />
     <Compile Include="Source\Systems\ScreenManager.cs" />
     <Compile Include="Source\Utilities\AnimatedSprite.cs" />
-    <Compile Include="Source\Utilities\HighScoreTable.cs" />
+    <Compile Include="Source\Systems\LeaderboardManager.cs" />
     <Compile Include="Source\Utilities\RectangleF.cs" />
     <Compile Include="Source\Utilities\Sprite.cs" />
   </ItemGroup>

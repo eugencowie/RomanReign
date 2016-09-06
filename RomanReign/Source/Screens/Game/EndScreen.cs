@@ -31,8 +31,8 @@ namespace RomanReign
 
             m_font = content.Load<SpriteFont>("Fonts/game");
 
-            if (HighScoreTable.GetScores(m_screen.NumberOfPlayers).Count < 10 ||
-                m_screen.Score >= HighScoreTable.GetLowestScore(m_screen.NumberOfPlayers).Score)
+            if (m_game.Leaderboard.GetScores(m_screen.NumberOfPlayers).Count < 10 ||
+                m_screen.Score >= m_game.Leaderboard.GetLowestScore(m_screen.NumberOfPlayers).Score)
             {
                 m_game.Screens.Push(new NameEntryScreen(m_screen, m_game));
             }
@@ -66,8 +66,8 @@ namespace RomanReign
                 string text =
                     $"You got to wave {m_screen.Wave}!\n\n" +
                     $"You killed {m_screen.Score} enemies!\n\n" +
-                    (m_screen.Score >= HighScoreTable.GetLowestScore(m_screen.NumberOfPlayers).Score ? "NEW HIGH SCORE!\n\n" : "") +
-                    $"The high score for {m_screen.NumberOfPlayers} player is {HighScoreTable.GetHighestScore(m_screen.NumberOfPlayers).Score}.";
+                    (m_screen.Score >= m_game.Leaderboard.GetLowestScore(m_screen.NumberOfPlayers).Score ? "NEW HIGH SCORE!\n\n" : "") +
+                    $"The high score for {m_screen.NumberOfPlayers} player is {m_game.Leaderboard.GetHighestScore(m_screen.NumberOfPlayers).Score}.";
 
                 spriteBatch.DrawString(m_font, text, new Vector2(450, 350), Color.Black);
             }

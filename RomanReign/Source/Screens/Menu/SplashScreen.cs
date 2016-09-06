@@ -49,7 +49,7 @@ namespace RomanReign
                 Size = m_game.Viewport.Size.ToVector2()
             };
 
-            m_game.Audio.BackgroundMusic = new LoopingMusic(content.Load<SoundEffect>("Audio/background_music")) {
+            m_game.Audio.BackgroundMusic = new LoopingMusic(m_game, content.Load<SoundEffect>("Audio/background_music")) {
                 Volume = 0f,
                 TargetVolume = 0.05f,
                 Pitch = -0.15f,
